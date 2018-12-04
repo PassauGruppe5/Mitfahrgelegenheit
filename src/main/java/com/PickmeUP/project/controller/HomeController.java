@@ -1,4 +1,4 @@
-package com.PickmeUP.project.Controller;
+package com.PickmeUP.project.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +13,7 @@ class HomeController {
     @GetMapping("/")
     String index(Model model) {
         model.addAttribute("now", LocalDateTime.now());
+
         return "index";
     }
 
