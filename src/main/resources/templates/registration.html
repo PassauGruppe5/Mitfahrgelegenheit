@@ -5,11 +5,11 @@
     <link href="registration.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div style = "text-align: center;" class="registration-text">
-        <table align="center">
-            <tr> <h1 style="font-size:50px">PickmeUP</h1></tr>
-            <tr> <h3>Registrierung</h3></tr>
-            <tr>
+<div style = "text-align: center;" class="registration-text">
+    <table align="center">
+        <tr> <h1 style="font-size:50px">PickmeUP</h1></tr>
+        <tr> <h3>Registrierung</h3></tr>
+        <tr>
             <form action="#" th:action="@{/}" th:object="${user}" method="post">
                 <p><input type="text" placeholder="Vorname" th:field="*{first_name}" required /></p>
                 <p><input type="text" placeholder="Nachname" th:field="*{last_name}" required/></p>
@@ -20,19 +20,19 @@
                 <p><input type ="checkbox" onclick="hidePassword()">Passwort anzeigen</p>
                 <p><input type="Submit" value="Registrieren"/></p>
             </form>
-            </tr>
-        </table>
+        </tr>
+    </table>
 </div>
-    <script>
-        function hidePassword() {
-            var x = document.getElementById("passwort");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
+<script>
+    function hidePassword() {
+        var x = document.getElementById("passwort");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
         }
-    </script>
+    }
+</script>
 </body>
 </html>
 
