@@ -1,26 +1,25 @@
 package com.PickmeUP.project.controller;
 
+import com.PickmeUP.project.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.time.LocalDateTime;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-class HomeController {
+public class HomeController {
 
     @GetMapping("/")
-    String index(Model model) {
-        model.addAttribute("now", LocalDateTime.now());
-
+    public String userForm(Model model) {
+        model.addAttribute("user", new User());
         return "index";
     }
 
-    @GetMapping("properties")
-    @ResponseBody
-    java.util.Properties properties() {
-        return System.getProperties();
+    @PostMapping("/")
+    public String userSubmit(@ModelAttribute User user) {
+
+        return "result";
     }
+
 }
