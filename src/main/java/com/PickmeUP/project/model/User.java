@@ -1,7 +1,5 @@
 package com.PickmeUP.project.model;
 
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.*;
 
 @Entity
