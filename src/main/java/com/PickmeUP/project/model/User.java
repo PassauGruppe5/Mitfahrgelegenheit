@@ -1,7 +1,5 @@
 package com.PickmeUP.project.model;
 
-import com.sun.javafx.beans.IDProperty;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
