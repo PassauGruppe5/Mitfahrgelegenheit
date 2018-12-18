@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:form="">
+<head>
+    <title>Registrierung - PickmeUP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="registration.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class = "topbar-header">
+  <header class="topbar">
+
+  </header>
+</div>
+<div style = "text-align: center;" class="body-background">
+    <table align="center">
+        <tr> <h1 style="font-size:50px">PickmeUP</h1></tr>
+        <tr> <h3>Registrierung</h3></tr>
+        <tr>
+            <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+                <p><input type="text" placeholder="Vorname" th:field="*{first_name}" required /></p>
+                <p><input type="text" placeholder="Nachname" th:field="*{last_name}" required/></p>
+                <p><input placeholder="Geburtstag" class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" th:field="*{birth}"required/></p>
+                <p><input type="email" placeholder="Email" th:field="*{email}"required/></p>
+                <p><input type="text" placeholder="Telefonnummer" th:field="*{phone}" required/></p>
+                <p><input type="password" placeholder="Passwort" id="passwort" th:field="*{password}" required/>
+                <p><input type ="checkbox" onclick="hidePassword()">Passwort anzeigen</p>
+                <p><input type="Submit" value="Registrieren"/></p>
+            </form>
+        </tr>
+    </table>
+</div>
+<div>
+
+</div>
+<script>
+    function hidePassword() {
+        var x = document.getElementById("passwort");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+</body>
+</html>
+
+
