@@ -1,6 +1,6 @@
 package com.PickmeUP.project.model;
 
-
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -10,37 +10,38 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, columnDefinition = "int(10)")
     private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false, columnDefinition = "VARCHAR(30)" )
     private String first_name;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, columnDefinition = "VARCHAR(30)")
     private String last_name;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)")
     private String email;
 
-    @Column (name = "phone")
+    @Column (name = "phone" , nullable = false, columnDefinition = "VARCHAR(15)")
     private String phone;
 
-    @Column (name = "password")
+    @Column (name = "password" , nullable = false, columnDefinition = "CHAR(60)")
     private String password;
 
-    @Column (name = "birth")
+    @Column (name = "birth", columnDefinition = "DATE")
     private String birth;
 
-    @Column (name = "bonus_id")
+    @Column (name = "bonus_id", nullable = false, columnDefinition = "INT(3)")
     private int bonus_id;
 
-    @Column (name = "admin")
-    private String admin;
+    @Column (name = "admin" , nullable = false, columnDefinition = "CHAR(1)")
+    private String admin = "N";
 
-    @Column (name = "active")
-    private String active;
+    @Column (name = "active", nullable = false, columnDefinition = "CHAR(1)")
+    private String active = "Y";
 
-    @Column (name = "creation")
+    @Column (name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
     private Timestamp creation;
 
     public void setLast_name(String last_name){this.last_name = last_name;}
@@ -76,4 +77,5 @@ public class User {
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation(){return this.creation;}
 
-}
+    }
+
