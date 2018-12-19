@@ -10,10 +10,10 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false, columnDefinition = "int(10)")
+    @Column(name = "user_id", nullable = false, columnDefinition = "int(10) unsigned zerofill")
     private int id;
 
-    @Column(name = "first_name", nullable = false, columnDefinition = "VARCHAR(30)" )
+    @Column(name = "first_name", nullable = false, columnDefinition = "VARCHAR(30) " )
     private String first_name;
 
     @Column(name = "last_name", nullable = false, columnDefinition = "VARCHAR(30)")
@@ -31,7 +31,7 @@ public class User {
     @Column (name = "birth", columnDefinition = "DATE")
     private String birth;
 
-    @Column (name = "bonus_id", nullable = false, columnDefinition = "INT(3)")
+    @Column (name = "bonus_id", nullable = false, columnDefinition = "INT(3) unsigned zerofill")
     private int bonus_id;
 
     @Column (name = "admin" , nullable = false, columnDefinition = "CHAR(1)")
@@ -77,5 +77,5 @@ public class User {
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation(){return this.creation;}
 
-    }
+}
 
