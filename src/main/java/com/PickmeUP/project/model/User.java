@@ -77,5 +77,5 @@ public class User {
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation(){return this.creation;}
 
-    }
+}
 
