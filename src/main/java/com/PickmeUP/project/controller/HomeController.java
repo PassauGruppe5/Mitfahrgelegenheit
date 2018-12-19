@@ -16,7 +16,6 @@ class HomeController {
         model.addAttribute("now", LocalDateTime.now());
 
         return "index";
-        //test push
     }
 
     @GetMapping("properties")
