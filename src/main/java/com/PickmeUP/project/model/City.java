@@ -11,7 +11,7 @@ import java.util.List;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "city_id", nullable = false, columnDefinition = "INT(5)")
+    @Column(name = "id", nullable = false, columnDefinition = "INT(5)")
     private int id;
 
     @Column(name = "city_name", nullable = false, columnDefinition = "VARCHAR(30)")

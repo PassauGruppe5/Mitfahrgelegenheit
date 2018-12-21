@@ -4,14 +4,15 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "REPEAT")
 public class Repeat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "repeat_id", nullable = false, columnDefinition = "CHAR(1)")
-    private int id;
+    @Column(name = "id", nullable = false, columnDefinition = "CHAR(1)")
+    private String id;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -20,12 +21,15 @@ public class Repeat {
     @CreationTimestamp
     private Timestamp creation;
 
-    public void setId(int id) {
-        this.id = id;
+    @OneToMany (mappedBy = "repeat")
+    private List<Trip> trips;
+
+    public String getId() {
+        return this.id;
     }
 
-    public int getId() {
-        return this.id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -36,11 +40,12 @@ public class Repeat {
         this.description = description;
     }
 
+    public Timestamp getCreation() {
+        return this.creation;
+    }
+
     public void setCreation(Timestamp creation) {
         this.creation = creation;
     }
 
-    public Timestamp getCreation() {
-        return this.creation;
-    }
 }

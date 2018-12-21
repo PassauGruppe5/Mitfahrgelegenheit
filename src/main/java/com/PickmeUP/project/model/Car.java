@@ -4,13 +4,14 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "CAR")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "car_id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
+    @Column(name = "id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
     private int id;
 
     @Column(name = "colour", nullable = false, columnDefinition = "TEXT")
@@ -25,6 +26,9 @@ public class Car {
     @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
     @CreationTimestamp
     private Timestamp creation;
+
+    @OneToMany (mappedBy = "car")
+    private List<Trip> trips;
 
     public void setId(int id) {
         this.id = id;

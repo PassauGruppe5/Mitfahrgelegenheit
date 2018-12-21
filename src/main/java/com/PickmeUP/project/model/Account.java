@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "account_id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
+    @Column(name = "id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
     private int id;
 
     @Column(name = "balance", nullable = false, columnDefinition = "DECIMAL(15,2)")

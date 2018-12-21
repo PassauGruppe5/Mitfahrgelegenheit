@@ -11,7 +11,7 @@ import java.util.List;
 public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "bonus_id", nullable = false, columnDefinition = "INT(3) UNSIGNED ZEROFILL")
+    @Column(name = "id", nullable = false, columnDefinition = "INT(3) UNSIGNED ZEROFILL")
     private int id;
 
     @Column(name = "description", columnDefinition = "TEXT")

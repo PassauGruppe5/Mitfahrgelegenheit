@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Stop {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "stop_id", nullable = false, columnDefinition = "INT(2)")
+    @Column(name = "id", nullable = false, columnDefinition = "INT(2)")
     private int id;
 
     @Column(name = "arrival_time", nullable = false, columnDefinition = "DATETIME")
