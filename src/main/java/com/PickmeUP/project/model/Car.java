@@ -1,5 +1,7 @@
 package com.PickmeUP.project.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -8,8 +10,21 @@ import java.sql.Timestamp;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "car_id")
+    @Column(name = "car_id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
     private int id;
+
+    @Column(name = "colour", nullable = false, columnDefinition = "TEXT")
+    private String colour;
+
+    @Column(name = "type", nullable = false, columnDefinition = "TEXT")
+    private String type;
+
+    @Column(name = "licence", nullable = false, columnDefinition = "CHAR(8)")
+    private String licence;
+
+    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    private Timestamp creation;
 
     public void setId(int id) {
         this.id = id;
@@ -19,9 +34,6 @@ public class Car {
         return this.id;
     }
 
-    @Column(name = "colour")
-    private String colour;
-
     public void setColour(String colour) {
         this.colour = colour;
     }
@@ -29,9 +41,6 @@ public class Car {
     public String getColour() {
         return this.colour;
     }
-
-    @Column(name = "type")
-    private String type;
 
     public void setType(String type) {
         this.type = type;
@@ -41,10 +50,6 @@ public class Car {
         return this.type;
     }
 
-    @Column(name = "licence")
-    //CHAR (8) muss noch implementiert werden
-    private String licence;
-
     public void setLicence(String licence) {
         this.licence = licence;
     }
@@ -52,9 +57,6 @@ public class Car {
     public String getLicence() {
         return this.licence;
     }
-
-    @Column(name = "creation")
-    private Timestamp creation;
 
     public void setCreation(Timestamp creation) {
         this.creation = creation;

@@ -1,15 +1,28 @@
 package com.PickmeUP.project.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "BONUS")
 public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "bonus_id")
+    @Column(name = "bonus_id", nullable = false, columnDefinition = "INT(3) UNSIGNED ZEROFILL")
     private int id;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    private Timestamp creation;
+
+    @OneToMany (mappedBy = "bonus")
+    private List<User> users;
 
     public void setId(int id) {
         this.id = id;
@@ -19,9 +32,6 @@ public class Bonus {
         return this.id;
     }
 
-    @Column(name = "description")
-    private String description;
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -29,9 +39,6 @@ public class Bonus {
     public String getDescription() {
         return this.description;
     }
-
-    @Column(name = "creation")
-    private Timestamp creation;
 
     public void setCreation(Timestamp creation) {
         this.creation = creation;
