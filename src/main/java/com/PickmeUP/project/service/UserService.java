@@ -1,39 +1,43 @@
 package com.PickmeUP.project.service;
 
+import com.PickmeUP.project.model.Role;
 import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.repository.RoleRepository;
 import com.PickmeUP.project.repository.UserRepository;
-import com.PickmeUP.project.validation.EmailExistsError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 
-@Service
-public class UserService{
+@Service("userService")
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    @Autowired
+    public UserService(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User addUser(User user) throws EmailExistsError {
-
-        if (userRepository.existsByEmail(user.getEmail())){
-            return null;
-        }
-
-
-        User userToSave = new User();
-        userToSave.setPassword(passwordEncoder.encode(user.getPassword()));
-        userToSave.setEmail(user.getEmail());
-        userToSave.setBirth(user.getBirth());
-        userToSave.setFirst_name(user.getFirst_name());
-        userToSave.setLast_name(user.getLast_name());
-        userToSave.setPhone(user.getPhone());
-
-        return userRepository.save(userToSave);
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
+
+    public void saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
+        Role userRole = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+
 }
