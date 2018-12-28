@@ -1,11 +1,13 @@
 package com.PickmeUP.project.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,18 +42,18 @@ public class User {
     @Column(name = "birth")
     @NotEmpty(message = "*Bitte geben Sie Ihren Geburtstag an")
     private String birth;
+    @Column(name = "creation")
+    @CreationTimestamp
+    private Timestamp creation;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    @ManyToOne
+    @JoinTable(name = "user_bonus", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "bonus_id"))
+    private Bonus bonus;
 
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String encodedPassword) {
-        this.password = encodedPassword;
-    }
+    public String getPassword() { return this.password; }
+    public void setPassword(String encodedPassword) {this.password = encodedPassword; }
 
     public void setActive(int active) {
         this.active = active;
@@ -72,4 +74,7 @@ public class User {
 
     public String getBirth(){return this.birth;}
     public void setBirth(String birth){this.birth = birth;}
+
+    public Bonus getBonus(){return this.bonus;}
+    public void setBonus(Bonus bonus){this.bonus = bonus;}
 }

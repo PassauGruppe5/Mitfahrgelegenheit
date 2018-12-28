@@ -1,7 +1,9 @@
 package com.PickmeUP.project.service;
 
+import com.PickmeUP.project.model.Bonus;
 import com.PickmeUP.project.model.Role;
 import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.repository.BonusRepository;
 import com.PickmeUP.project.repository.RoleRepository;
 import com.PickmeUP.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private BonusRepository bonusRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
-                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+                       BCryptPasswordEncoder bCryptPasswordEncoder,
+                       BonusRepository bonusRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.bonusRepository = bonusRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -35,6 +40,8 @@ public class UserService {
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
+        Bonus userBonus = bonusRepository.findById(1);
+        user.setBonus(userBonus);
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
