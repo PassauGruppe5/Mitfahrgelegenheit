@@ -19,24 +19,31 @@ public class User {
     @Column(name = "user_id")
     private int id;
     @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    @Email(message = "*Bitte geben Sie eine gültige Email an")
+    @NotEmpty(message = "*Bitte geben Sie eine Email an")
     private String email;
     @Column(name = "password")
-    @Length(min = 8, message = "*Your password must have at least 8 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @Length(min = 8, message = "*Ihr Passwort muss mindestens 8 Zeichen lang sein")
+    @NotEmpty(message = "*Bitte geben Sie ein Passwort ein")
     private String password;
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Vornamen an")
     private String name;
     @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Nachnamen an")
     private String lastName;
     @Column(name = "active")
     private int active;
+    @Column(name = "phone")
+    @NotEmpty(message = "*Bitte geben Sie Ihre Handynummer an")
+    private String phone;
+    @Column(name = "birth")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Geburtstag an")
+    private String birth;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
 
     public String getPassword() {
         return this.password;
@@ -54,15 +61,15 @@ public class User {
         this.roles = roles;
     }
 
-    public String getEmail() {
-        return this.email;
-    }
+    public String getEmail() {return this.email; }
 
-    public String getName() {
-        return this.name;
-    }
+    public String getName() {return this.name; }
 
-    public String getLastName() {
-        return this.lastName;
-    }
+    public String getLastName() {return this.lastName; }
+
+    public String getPhone(){return this.phone;}
+    public void setPhone(String phone){this.phone = phone;}
+
+    public String getBirth(){return this.birth;}
+    public void setBirth(String birth){this.birth = birth;}
 }
