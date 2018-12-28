@@ -23,7 +23,7 @@ public class User {
     @NotEmpty(message = "*Please provide an email")
     private String email;
     @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @Length(min = 8, message = "*Your password must have at least 8 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
     @Column(name = "name")
@@ -42,12 +42,12 @@ public class User {
         return this.password;
     }
 
-    public void setPassword(String encode) {
-        this.password = encode;
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
     }
 
-    public void setActive(int i) {
-        this.active = i;
+    public void setActive(int active) {
+        this.active = active;
     }
 
     public void setRoles(HashSet<Role> roles) {
