@@ -22,7 +22,14 @@ public class LoginController {
     @RequestMapping(value={"/"}, method = RequestMethod.GET)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        if(user != null){
+            modelAndView.addObject("userName",  user.getName() + " " + user.getLastName());
+            modelAndView.setViewName("Home_Angemeldet");
+        }
+        else { modelAndView.setViewName("Home_Unangemeldet"); }
+
         return modelAndView;
     }
 
