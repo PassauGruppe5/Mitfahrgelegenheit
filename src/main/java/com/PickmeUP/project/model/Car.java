@@ -11,19 +11,19 @@ import java.util.List;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
+    @Column(name = "car_id")
     private int id;
 
-    @Column(name = "colour", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "colour")
     private String colour;
 
-    @Column(name = "type", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "type")
     private String type;
 
-    @Column(name = "licence", nullable = false, columnDefinition = "CHAR(8)")
+    @Column(name = "licence")
     private String licence;
 
-    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "creation")
     @CreationTimestamp
     private Timestamp creation;
 

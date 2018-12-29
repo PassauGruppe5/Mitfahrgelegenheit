@@ -7,8 +7,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "REPEAT")
-public class Repeat {
+@Table(name = "REPEATS")
+public class Repeats {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, columnDefinition = "CHAR(1)")
@@ -21,7 +21,7 @@ public class Repeat {
     @CreationTimestamp
     private Timestamp creation;
 
-    @OneToMany (mappedBy = "repeat")
+    @OneToMany (mappedBy = "repeats")
     private List<Trip> trips;
 
     public String getId() {

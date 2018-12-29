@@ -47,7 +47,7 @@ public class Trip {
     private Car car;
 
     @ManyToOne
-    private Repeat repeat;
+    private Repeats repeats;
 
     @ManyToOne
     private User driver;

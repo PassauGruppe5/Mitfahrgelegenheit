@@ -1,8 +1,8 @@
 package com.PickmeUP.project.repository;
 
-import com.PickmeUP.project.model.Repeat;
+import com.PickmeUP.project.model.Repeats;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RepeatRepository extends JpaRepository<Repeat, Long> {
-    Repeat findById(int id);
+public interface RepeatRepository extends JpaRepository<Repeats, Long> {
+    Repeats findById(int id);
 }

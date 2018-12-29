@@ -3,11 +3,14 @@ package com.PickmeUP.project.model;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,8 +43,9 @@ public class User {
     @NotEmpty(message = "*Bitte geben Sie Ihre Handynummer an")
     private String phone;
     @Column(name = "birth")
-    @NotEmpty(message = "*Bitte geben Sie Ihren Geburtstag an")
-    private String birth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "*Bitte geben Sie Ihren Geburtstag an")
+    private Date birth;
     @Column(name = "creation")
     @CreationTimestamp
     private Timestamp creation;
@@ -72,8 +76,8 @@ public class User {
     public String getPhone(){return this.phone;}
     public void setPhone(String phone){this.phone = phone;}
 
-    public String getBirth(){return this.birth;}
-    public void setBirth(String birth){this.birth = birth;}
+    public Date getBirth(){return this.birth;}
+    public void setBirth(Date birth){this.birth = birth;}
 
     public Bonus getBonus(){return this.bonus;}
     public void setBonus(Bonus bonus){this.bonus = bonus;}
