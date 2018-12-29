@@ -1,50 +1,25 @@
 package com.PickmeUP.project.model;
 
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
+@Data
 @Entity
-@Table(name = "BONUS")
+@Table(name = "bonus")
 public class Bonus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, columnDefinition = "INT(3) UNSIGNED ZEROFILL")
+    @Column(name = "bonus_id")
     private int id;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
-    @CreationTimestamp
-    private Timestamp creation;
+    public void setId(int id) {this.id = id;}
+    public int getId() { return id; }
 
-    @OneToMany (mappedBy = "bonus")
-    private List<User> users;
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setCreation(Timestamp creation) {
-        this.creation = creation;
-    }
-
-    public Timestamp getCreation() {
-        return this.creation;
-    }
+    public void setDescription(String description) {this.description = description; }
+    public String getDescription() { return description; }
 }

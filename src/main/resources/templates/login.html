@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <title>Pickme Up Login</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+      <style>
+      body{
+
+    background: url(https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
+    background-size: auto;
+
+          }
+
+    .form-conatiner{
+
+    border:1px solid white;
+    padding: 50px 60px;
+    margin-top:20vh;
+    -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+
+          }
+
+
+      </style>
+  </head>
+  <body>
+  <div class="container-fluid bg">
+      <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-12"></div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+
+ <form form th:action="@{/login}" method="POST" class="form-signin">
+ <h1><font color=#fff>Anmeldung</font></h1>
+  <div class="form-group">
+      <label for="E-Mail"><font color=#fff>Email-Adresse</font></label>
+    <input type="email"  name="email" id="email" class="form-control" th:placeholder="Email-Adresse" required>
+  </div>
+  <div class="form-group">
+    <label for="Passwort"><font color=#fff>Passwort</font></label>
+    <input type="password" id="password" name="password" class="form-control" th:placeholder="Passwort" required>
+  </div>
+  <div align="center" th:if="${param.error}">
+      <p style="font-size: 20; color: #FF1C19;">Email oder Passwort inkorrekt</p>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+</form>
+
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12"></div>
+  </div>
+  </div>
+  </body>
+</html>
+
+

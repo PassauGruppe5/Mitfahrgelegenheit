@@ -1,138 +1,80 @@
 package com.PickmeUP.project.model;
 
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@Data
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, columnDefinition = "INT(10) UNSIGNED ZEROFILL")
+    @Column(name = "user_id")
     private int id;
-
-    @Column(name = "first_name", nullable = false, columnDefinition = "VARCHAR(30) ")
-    private String first_name;
-
-    @Column(name = "last_name", nullable = false, columnDefinition = "VARCHAR(30)")
-    private String last_name;
-
-    @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "email")
+    @Email(message = "*Bitte geben Sie eine gültige Email an")
+    @NotEmpty(message = "*Bitte geben Sie eine Email an")
     private String email;
-
-    @Column(name = "phone", nullable = false, columnDefinition = "VARCHAR(15)")
-    private String phone;
-
-    @Column(name = "password", nullable = false, columnDefinition = "CHAR(60)")
+    @Column(name = "password")
+    @Length(min = 8, message = "*Ihr Passwort muss mindestens 8 Zeichen lang sein")
+    @NotEmpty(message = "*Bitte geben Sie ein Passwort ein")
     private String password;
-
-    @Column(name = "birth", columnDefinition = "DATE")
+    @Column(name = "name")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Vornamen an")
+    private String name;
+    @Column(name = "last_name")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Nachnamen an")
+    private String lastName;
+    @Column(name = "active")
+    private int active;
+    @Column(name = "phone")
+    @NotEmpty(message = "*Bitte geben Sie Ihre Handynummer an")
+    private String phone;
+    @Column(name = "birth")
+    @NotEmpty(message = "*Bitte geben Sie Ihren Geburtstag an")
     private String birth;
-
-    @Column(name = "admin", nullable = false, columnDefinition = "CHAR(1)")
-    private String admin = "N";
-
-    @Column(name = "active", nullable = false, columnDefinition = "CHAR(1)")
-    private String active = "Y";
-
-    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "creation")
     @CreationTimestamp
     private Timestamp creation;
-
-    @OneToMany (mappedBy = "driver")
-    private List<Trip> trips;
-
-    @OneToMany (mappedBy = "publisher")
-    private List<Rating> published_ratings;
-
-    @OneToMany (mappedBy = "receiver")
-    private List<Rating> received_ratings;
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
     @ManyToOne
+    @JoinTable(name = "user_bonus", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "bonus_id"))
     private Bonus bonus;
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
+    public String getPassword() { return this.password; }
+    public void setPassword(String encodedPassword) {this.password = encodedPassword; }
 
-    public String getLast_name() {
-        return this.last_name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getFirst_name() {
-        return this.first_name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
-    public String getBirth() {
-        return this.birth;
-    }
-
-    public void setAdmin(String admin) {
-        this.admin = admin;
-    }
-
-    public String getAdmin() {
-        return this.admin;
-    }
-
-    public void setActive(String active) {
+    public void setActive(int active) {
         this.active = active;
     }
 
-    public String getActive() {
-        return this.active;
+    public void setRoles(HashSet<Role> roles) {
+        this.roles = roles;
     }
 
-    public void setCreation(Timestamp creation) {
-        this.creation = creation;
-    }
+    public String getEmail() {return this.email; }
 
-    public Timestamp getCreation() {
-        return this.creation;
-    }
+    public String getName() {return this.name; }
 
+    public String getLastName() {return this.lastName; }
+
+    public String getPhone(){return this.phone;}
+    public void setPhone(String phone){this.phone = phone;}
+
+    public String getBirth(){return this.birth;}
+    public void setBirth(String birth){this.birth = birth;}
+
+    public Bonus getBonus(){return this.bonus;}
+    public void setBonus(Bonus bonus){this.bonus = bonus;}
 }
-
