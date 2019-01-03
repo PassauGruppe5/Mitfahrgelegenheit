@@ -19,4 +19,8 @@ public class AccountService {
     }
 
     public Account findbyUser(User user) {return accountRepository.findByUser(user);}
+
+    public void updateAccount(Account account){
+        accountRepository.save(account);
+    }
 }

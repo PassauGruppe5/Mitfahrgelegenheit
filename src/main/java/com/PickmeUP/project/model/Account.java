@@ -51,11 +51,11 @@ public class Account {
         return this.creation;
     }
 
-    public void plusBalance(int plus){
+    public void plusBalance(Double plus){
         this.balance= this.balance + plus;
     }
 
-    public void minusBalance(int minus){
+    public void minusBalance(Double minus){
         this.balance = this.balance - minus;
     }
 }
