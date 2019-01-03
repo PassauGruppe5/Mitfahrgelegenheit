@@ -14,7 +14,7 @@ public class Account {
     private int id;
 
     @Column(name = "balance", nullable = false, columnDefinition = "DECIMAL(15,2)")
-    private double balance = 0.00;
+    private double balance ;
 
     @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -31,6 +31,10 @@ public class Account {
         return this.id;
     }
 
+    public User getUser() {return user;}
+
+    public void setUser(User user) {this.user = user;}
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
@@ -45,5 +49,13 @@ public class Account {
 
     public Timestamp getCreation() {
         return this.creation;
+    }
+
+    public void plusBalance(int plus){
+        this.balance= this.balance + plus;
+    }
+
+    public void minusBalance(int minus){
+        this.balance = this.balance - minus;
     }
 }

@@ -81,6 +81,4 @@ public class LoginController {
         modelAndView.setViewName("/");
         return modelAndView;
     }
-
-
 }

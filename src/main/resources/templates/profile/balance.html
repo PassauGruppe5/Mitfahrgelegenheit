@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>PickmeUp-Guthaben</title>
+</head>
+<body>
+    <p th:object = "${user}">
+        <div th:text="${user.name}"></div>
+    </p>
+    <p th:object="${account}">
+        <div th:text="${account.balance}"></div>
+    </p>
+</p>
+</body>
+</html>
