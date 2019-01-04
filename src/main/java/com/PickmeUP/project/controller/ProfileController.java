@@ -1,10 +1,12 @@
 package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
+import com.PickmeUP.project.model.Transaction;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.repository.AccountRepository;
 import com.PickmeUP.project.service.AccountService;
 import com.PickmeUP.project.service.UserService;
+import com.PickmeUP.project.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +22,15 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private AccountService accountService;
+
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @RequestMapping(value={"/profile/overwiev"}, method = RequestMethod.GET)
     public ModelAndView showProfileOverwiew() {
@@ -80,6 +87,7 @@ public class ProfileController {
         User user = userService.findUserByEmail(auth.getName());
         Account accountToUpdate = accountRepository.getOne(accountService.findbyUser(user).getId());
         ModelAndView modelAndView = new ModelAndView();
+        Transaction transaction = new Transaction();
         if (account.getBalance()<= 0) {
             modelAndView.setViewName("/profile/payment-in");
             modelAndView.addObject("errorMessage", "Der Betrag muss mindestens 0.01 betragen.");
@@ -87,6 +95,10 @@ public class ProfileController {
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()+account.getBalance());
             accountService.updateAccount(accountToUpdate);
+            transaction.setMessage("Einzahlung an eigenes Konto.");
+            transaction.setAmount(account.getBalance());
+            transaction.setReceiverAndTransmitter(user);
+            transactionService.saveTransaction(transaction);
             modelAndView.addObject("user",user);
             modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich eingebucht.");
@@ -118,6 +130,7 @@ public class ProfileController {
         User user = userService.findUserByEmail(auth.getName());
         Account accountToUpdate = accountRepository.getOne(accountService.findbyUser(user).getId());
         ModelAndView modelAndView = new ModelAndView();
+        Transaction transaction = new Transaction();
         if (accountToUpdate.getBalance()-account.getBalance()< 0) {
             modelAndView.setViewName("/profile/payment-out");
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
@@ -125,6 +138,10 @@ public class ProfileController {
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()-account.getBalance());
             accountService.updateAccount(accountToUpdate);
+            transaction.setMessage("Auszahlung von eigenem Konto.");
+            transaction.setAmount(account.getBalance());
+            transaction.setReceiverAndTransmitter(user);
+            transactionService.saveTransaction(transaction);
             modelAndView.addObject("user",user);
             modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich abgebucht.");

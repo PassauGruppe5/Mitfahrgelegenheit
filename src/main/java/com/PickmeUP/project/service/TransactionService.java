@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-class TransactionService {
+public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-    private Transaction transaction = new Transaction();
+
+    public void saveTransaction(Transaction transaction){transactionRepository.save(transaction);}
 }

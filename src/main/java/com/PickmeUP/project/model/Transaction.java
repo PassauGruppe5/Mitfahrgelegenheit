@@ -23,10 +23,15 @@ public class Transaction {
     @CreationTimestamp
     private Timestamp creation;
 
+    @OneToOne
+    private User receiver;
+
+    @OneToOne
+    private User transmitter;
+
     public int getId() {
         return this.id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -34,7 +39,6 @@ public class Transaction {
     public double getAmount() {
         return amount;
     }
-
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -42,7 +46,6 @@ public class Transaction {
     public String getMessage() {
         return message;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -50,8 +53,16 @@ public class Transaction {
     public Timestamp getCreation() {
         return this.creation;
     }
-
     public void setCreation(Timestamp creation) {
         this.creation = creation;
     }
+
+    public User getReceiver(){return this.receiver;}
+    public void setReceiver(User receiver){this.receiver = receiver;}
+
+    public User getTransmitter(){return this.transmitter;}
+    public void setRTransmitter(User transmitter){this.receiver = transmitter;}
+
+    public void setReceiverAndTransmitter(User both){this.receiver = both; this.transmitter=both;}
+
 }
