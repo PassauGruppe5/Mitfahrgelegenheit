@@ -32,7 +32,6 @@ public class Rating {
     public int getId() {
         return this.id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -40,7 +39,6 @@ public class Rating {
     public String getMessage() {
         return message;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -48,7 +46,6 @@ public class Rating {
     public int getGrade() {
         return grade;
     }
-
     public void setGrade(int grade) {
         this.grade = grade;
     }
@@ -56,8 +53,13 @@ public class Rating {
     public Timestamp getCreation() {
         return this.creation;
     }
-
     public void setCreation(Timestamp creation) {
         this.creation = creation;
     }
+
+    public User getPublisher(){return this.publisher;}
+    public void setPublisher(User publisher){this.publisher=publisher;}
+
+    public User getReceiver() {return receiver;}
+    public void setReceiver(User receiver) {this.receiver = receiver; }
 }

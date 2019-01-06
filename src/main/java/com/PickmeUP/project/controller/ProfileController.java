@@ -1,9 +1,11 @@
 package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
+import com.PickmeUP.project.model.Rating;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.repository.AccountRepository;
 import com.PickmeUP.project.service.AccountService;
+import com.PickmeUP.project.service.RatingService;
 import com.PickmeUP.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -11,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -24,6 +27,8 @@ public class ProfileController {
     private AccountService accountService;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private RatingService ratingService;
 
     @RequestMapping(value={"/profile/overwiev"}, method = RequestMethod.GET)
     public ModelAndView showProfileOverwiew() {
@@ -130,6 +135,39 @@ public class ProfileController {
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich abgebucht.");
             modelAndView.setViewName("/profile/payment-out");
         }
+        return modelAndView;
+    }
+
+    @RequestMapping(value="profile/show", method = RequestMethod.GET)
+    public ModelAndView showUserProfile(@RequestParam("id") int id){
+    ModelAndView modelAndView = new ModelAndView();
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User userToView = userService.findUserByEmail(auth.getName());
+    User userToShow = userService.findUserById(id);
+    Rating rating = new Rating();
+    modelAndView.addObject("userToShow", userToShow);
+    modelAndView.addObject("rating", rating);
+    modelAndView.setViewName("profile/show");
+
+    return modelAndView;
+
+    }
+
+    @RequestMapping(value="profile/show", method = RequestMethod.POST)
+    public ModelAndView handleRatingForm(@Valid Rating rating,@RequestParam String usr){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User userToView = userService.findUserByEmail(auth.getName());
+        int usrAsInt = Integer.parseInt(usr);
+        User userToShow = userService.findUserById(usrAsInt);
+        rating.setReceiver(userToShow);
+        rating.setPublisher(userToView);
+        ratingService.saveRating(rating);
+        modelAndView.addObject("userToShow", userToShow);
+        modelAndView.addObject("userToView", userToView);
+        modelAndView.addObject("rating", rating);
+        modelAndView.setViewName("/Home_Angemeldet");
+
         return modelAndView;
     }
 }

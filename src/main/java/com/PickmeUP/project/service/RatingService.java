@@ -11,5 +11,6 @@ public class RatingService {
 
     @Autowired
     private RatingRepository ratingRepository;
-    private Rating rating = new Rating();
+
+    public void saveRating(Rating rating){ratingRepository.save(rating);}
 }

@@ -84,4 +84,6 @@ public class User {
 
     public Bonus getBonus(){return this.bonus;}
     public void setBonus(Bonus bonus){this.bonus = bonus;}
+
+    public int getId(){return this.id;}
     }
