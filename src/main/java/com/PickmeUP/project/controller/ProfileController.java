@@ -1,14 +1,14 @@
 package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
-import com.PickmeUP.project.model.Transaction;
 import com.PickmeUP.project.model.Rating;
+import com.PickmeUP.project.model.Transaction;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.repository.AccountRepository;
 import com.PickmeUP.project.service.AccountService;
 import com.PickmeUP.project.service.RatingService;
-import com.PickmeUP.project.service.UserService;
 import com.PickmeUP.project.service.TransactionService;
+import com.PickmeUP.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -181,6 +182,17 @@ public class ProfileController {
         modelAndView.addObject("rating", rating);
         modelAndView.setViewName("/Home_Angemeldet");
 
+        return modelAndView;
+    }
+
+    @RequestMapping(value="profile/rating",method = RequestMethod.GET)
+    public ModelAndView showRatings(@RequestParam("id") int id){
+        ModelAndView modelAndView = new ModelAndView();
+        User userToShow = userService.findUserById(id);
+        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
+        modelAndView.addObject("user",userToShow);
+        modelAndView.addObject("ratingList",ratingList);
+        modelAndView.setViewName("/profile/rating");
         return modelAndView;
     }
 }

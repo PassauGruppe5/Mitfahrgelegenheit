@@ -5,6 +5,8 @@ import com.PickmeUP.project.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class RatingService {
@@ -12,5 +14,10 @@ public class RatingService {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Autowired
+    private UserService userService;
+
     public void saveRating(Rating rating){ratingRepository.save(rating);}
+
+    public List<Rating> getRatingsOfUser(int id){return ratingRepository.findByReceiver(userService.findUserById(id));}
 }
