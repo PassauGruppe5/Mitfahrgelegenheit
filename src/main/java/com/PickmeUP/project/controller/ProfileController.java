@@ -141,8 +141,6 @@ public class ProfileController {
     @RequestMapping(value="profile/show", method = RequestMethod.GET)
     public ModelAndView showUserProfile(@RequestParam("id") int id){
     ModelAndView modelAndView = new ModelAndView();
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    User userToView = userService.findUserByEmail(auth.getName());
     User userToShow = userService.findUserById(id);
     Rating rating = new Rating();
     modelAndView.addObject("userToShow", userToShow);
