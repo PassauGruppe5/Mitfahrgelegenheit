@@ -25,10 +25,12 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if(user != null){
-            modelAndView.addObject("userName",  user.getName() + " " + user.getLastName());
+            modelAndView.addObject("user", user);
             modelAndView.setViewName("Home_Angemeldet");
         }
-        else { modelAndView.setViewName("Home_Unangemeldet"); }
+        else {
+            modelAndView.setViewName("Home_Unangemeldet");
+        }
 
         return modelAndView;
     }
