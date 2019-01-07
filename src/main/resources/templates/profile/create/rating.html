@@ -9,7 +9,7 @@
     <p th:object = "${userToShow}">
         <div th:text="${userToShow.name}+' '+${userToShow.lastName} "></div>
     </p>
-    <form class="form-conatiner" autocomplete="off" action="#" th:action="@{/profile/show}"
+    <form class="form-conatiner" autocomplete="off" action="#" th:action="@{/profile/create/rating}"
                 th:object="${rating}" method="post" role="form">
         <h1><font color=#fff>Einzahlung</font></h1>
       <div class="form-group">

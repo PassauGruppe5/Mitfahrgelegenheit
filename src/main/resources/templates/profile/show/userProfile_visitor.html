@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>TEST</title>
+</head>
+<body>
+<div th:object="${user}">
+    <a th:href="@{/profile/create/rating(id=${user.id})}">Bewertung verfassen</a>
+</div>
+</body>
+</html>

@@ -1,14 +1,14 @@
 package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
-import com.PickmeUP.project.model.Transaction;
 import com.PickmeUP.project.model.Rating;
+import com.PickmeUP.project.model.Transaction;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.repository.AccountRepository;
 import com.PickmeUP.project.service.AccountService;
 import com.PickmeUP.project.service.RatingService;
-import com.PickmeUP.project.service.UserService;
 import com.PickmeUP.project.service.TransactionService;
+import com.PickmeUP.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -35,22 +36,7 @@ public class ProfileController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value={"/profile/overwiev"}, method = RequestMethod.GET)
-    public ModelAndView showProfileOverwiew() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        if(user == null){
-        modelAndView.setViewName("login");
-        }
-        else{
-            modelAndView.addObject("user", user);
-            modelAndView.setViewName("profile/overwiev");
-        }
-        return modelAndView;
-    }
-
-    @RequestMapping(value={"/profile/balance"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/profile/show/balance"}, method = RequestMethod.GET)
     public ModelAndView showBalance() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -62,12 +48,12 @@ public class ProfileController {
             Account account = accountService.findbyUser(user);
             modelAndView.addObject("user", user);
             modelAndView.addObject("account", account);
-            modelAndView.setViewName("profile/balance");
+            modelAndView.setViewName("profile/show/balance");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value={"/profile/payment-in"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/profile/create/payment-in"}, method = RequestMethod.GET)
     public ModelAndView ShowPaymentInForm(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -79,12 +65,12 @@ public class ProfileController {
             Account account = accountService.findbyUser(user);
             modelAndView.addObject("user", user);
             modelAndView.addObject("account", account);
-            modelAndView.setViewName("profile/payment-in");
+            modelAndView.setViewName("profile/create/payment-in");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/profile/payment-in", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/create/payment-in", method = RequestMethod.POST)
     public ModelAndView addBalance(@Valid Account account ){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -92,7 +78,7 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView();
         Transaction transaction = new Transaction();
         if (account.getBalance()<= 0) {
-            modelAndView.setViewName("/profile/payment-in");
+            modelAndView.setViewName("/profile/create/payment-in");
             modelAndView.addObject("errorMessage", "Der Betrag muss mindestens 0.01 betragen.");
         }
         else{
@@ -105,12 +91,12 @@ public class ProfileController {
             modelAndView.addObject("user",user);
             modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich eingebucht.");
-            modelAndView.setViewName("/profile/payment-in");
+            modelAndView.setViewName("/profile/create/payment-in");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value={"/profile/payment-out"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/profile/create/payment-out"}, method = RequestMethod.GET)
     public ModelAndView ShowPaymentOutForm(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -122,12 +108,12 @@ public class ProfileController {
             Account account = accountService.findbyUser(user);
             modelAndView.addObject("user", user);
             modelAndView.addObject("account", account);
-            modelAndView.setViewName("profile/payment-out");
+            modelAndView.setViewName("profile/create/payment-out");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/profile/payment-out", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/create/payment-out", method = RequestMethod.POST)
     public ModelAndView substractBalance(@Valid Account account ){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -135,7 +121,7 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView();
         Transaction transaction = new Transaction();
         if (accountToUpdate.getBalance()-account.getBalance()< 0) {
-            modelAndView.setViewName("/profile/payment-out");
+            modelAndView.setViewName("/profile/create/payment-out");
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
         }
         else{
@@ -148,25 +134,25 @@ public class ProfileController {
             modelAndView.addObject("user",user);
             modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich abgebucht.");
-            modelAndView.setViewName("/profile/payment-out");
+            modelAndView.setViewName("/profile/create/payment-out");
         }
         return modelAndView;
     }
 
-    @RequestMapping(value="profile/show", method = RequestMethod.GET)
-    public ModelAndView showUserProfile(@RequestParam("id") int id){
+    @RequestMapping(value="profile/create/rating", method = RequestMethod.GET)
+    public ModelAndView showRatingForm(@RequestParam("id") int id){
     ModelAndView modelAndView = new ModelAndView();
     User userToShow = userService.findUserById(id);
     Rating rating = new Rating();
     modelAndView.addObject("userToShow", userToShow);
     modelAndView.addObject("rating", rating);
-    modelAndView.setViewName("profile/show");
+    modelAndView.setViewName("profile/create/rating");
 
     return modelAndView;
 
     }
 
-    @RequestMapping(value="profile/show", method = RequestMethod.POST)
+    @RequestMapping(value="profile/create/rating", method = RequestMethod.POST)
     public ModelAndView handleRatingForm(@Valid Rating rating,@RequestParam String usr){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -179,8 +165,38 @@ public class ProfileController {
         modelAndView.addObject("userToShow", userToShow);
         modelAndView.addObject("userToView", userToView);
         modelAndView.addObject("rating", rating);
-        modelAndView.setViewName("/Home_Angemeldet");
+        modelAndView.setViewName("redirect:/");
 
         return modelAndView;
     }
+
+    @RequestMapping(value="profile/show/rating",method = RequestMethod.GET)
+    public ModelAndView showRatings(@RequestParam("id") int id){
+        ModelAndView modelAndView = new ModelAndView();
+        User userToShow = userService.findUserById(id);
+        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
+        modelAndView.addObject("user",userToShow);
+        modelAndView.addObject("ratingList",ratingList);
+        modelAndView.setViewName("/profile/show/rating");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="profile/show/userProfile", method = RequestMethod.GET)
+    public ModelAndView showOwnUserProfile(@RequestParam("id") int id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        User toView = userService.findUserById(id);
+        if(loggedIn == toView){
+            modelAndView.addObject("user",loggedIn);
+            modelAndView.setViewName("/profile/show/userProfile_user");
+        }
+        else{
+            modelAndView.addObject("user", toView);
+            modelAndView.setViewName("/profile/show/userProfile_visitor");
+        }
+        return modelAndView;
+    }
+
+
 }

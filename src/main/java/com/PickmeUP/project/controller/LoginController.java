@@ -26,10 +26,11 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        if (user != null) {
-            modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
+        if(user != null){
+            modelAndView.addObject("user", user);
             modelAndView.setViewName("Home_Angemeldet");
-        } else {
+        }
+        else {
             modelAndView.setViewName("Home_Unangemeldet");
         }
 
@@ -74,6 +75,7 @@ public class LoginController {
             modelAndView.addObject("successMessage", "User wurde erfolgreich registriert");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
+
         }
         return modelAndView;
     }

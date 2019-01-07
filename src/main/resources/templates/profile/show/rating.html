@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div classs="container">
+    <div th:if="${not #lists.isEmpty(ratingList)}">
+        <p th:text="'Bewertungen von '+${user.name}+' '+${user.lastName}"></p>
+        <table>
+            <tr>
+                <th>Nachricht</th>
+                <th>User</th>
+            </tr>
+            <tr th:each="rating: ${ratingList}">
+            <td th:text="${rating.message}"></td>
+            <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/userProfile(id=${rating.publisher.id})}"></a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
