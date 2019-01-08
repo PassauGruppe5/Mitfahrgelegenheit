@@ -181,15 +181,19 @@ public class ProfileController {
         return modelAndView;
     }
 
-    @RequestMapping(value="profile/show/userProfile", method = RequestMethod.GET)
+    @RequestMapping(value="profile/show/profile", method = RequestMethod.GET)
     public ModelAndView showOwnUserProfile(@RequestParam("id") int id){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         User toView = userService.findUserById(id);
+        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
+        Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
             modelAndView.addObject("user",loggedIn);
-            modelAndView.setViewName("/profile/show/userProfile_user");
+            modelAndView.addObject("account",account);
+            modelAndView.addObject("ratingList",ratingList);
+            modelAndView.setViewName("/profile/show/User_Profil-3");
         }
         else{
             modelAndView.addObject("user", toView);
@@ -197,6 +201,4 @@ public class ProfileController {
         }
         return modelAndView;
     }
-
-
 }

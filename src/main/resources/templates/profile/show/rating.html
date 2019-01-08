@@ -16,7 +16,7 @@
             </tr>
             <tr th:each="rating: ${ratingList}">
             <td th:text="${rating.message}"></td>
-            <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/userProfile(id=${rating.publisher.id})}"></a></td>
+            <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/profile(id=${rating.publisher.id})}"></a></td>
             </tr>
         </table>
     </div>
