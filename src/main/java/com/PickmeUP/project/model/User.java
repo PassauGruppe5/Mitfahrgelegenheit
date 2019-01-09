@@ -46,6 +46,8 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "*Bitte geben Sie Ihren Geburtstag an")
     private Date birth;
+    @Column(name = "comment")
+    private String comment;
     @Column(name = "creation")
     @CreationTimestamp
     private Timestamp creation;
@@ -86,4 +88,7 @@ public class User {
     public void setBonus(Bonus bonus){this.bonus = bonus;}
 
     public int getId(){return this.id;}
+
+    public String getComment(){return this.comment;}
+    public void setComment(String comment){this.comment=comment;}
     }

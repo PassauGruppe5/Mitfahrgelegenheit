@@ -36,23 +36,6 @@ public class ProfileController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value={"/profile/show/balance"}, method = RequestMethod.GET)
-    public ModelAndView showBalance() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        if(user == null){
-            modelAndView.setViewName("login");
-        }
-        else{
-            Account account = accountService.findbyUser(user);
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("account", account);
-            modelAndView.setViewName("profile/show/balance");
-        }
-        return modelAndView;
-    }
-
     @RequestMapping(value={"/profile/create/payment-in"}, method = RequestMethod.GET)
     public ModelAndView ShowPaymentInForm(){
         ModelAndView modelAndView = new ModelAndView();
@@ -193,7 +176,7 @@ public class ProfileController {
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
-            modelAndView.setViewName("/profile/show/User_Profil-3");
+            modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
             modelAndView.addObject("user", toView);
@@ -201,4 +184,5 @@ public class ProfileController {
         }
         return modelAndView;
     }
+
 }

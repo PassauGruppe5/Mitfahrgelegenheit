@@ -74,7 +74,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="#" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"></a>
+      <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -84,12 +84,12 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
           <ul class="dropdown-menu navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>   Angebotene Fahrten</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>   Gebuchte Fahrten</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}+'#offered'}"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>   Angebotene Fahrten</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}+'#booked'}"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>   Gebuchte Fahrten</a></li>
             <li role="separator" class="divider"></li>
-            <li><a th:href="@{/profile/show/profile(id=${user.id})}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Profil</a></li>
-            <li><a href='#'><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}+'#profil'}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Profil</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}+'#balance'}"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}+'#rating'}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
           </ul>
@@ -120,10 +120,10 @@
     	<div class="col-sm-9">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profil">Profil</a></li>
-                <li><a data-toggle="tab" href="#angebotene_fahrten">Angebotene Fahrten</a></li>
-                <li><a data-toggle="tab" href="#gebuchte_fahrten">Gebuchte Fahrten</a></li>
-                <li><a data-toggle="tab" href="#verfügbares_guthaben">Verfügbares Guthaben</a></li>
-                <li><a data-toggle="tab" href="#bewertung">Bewertung</a></li>
+                <li><a data-toggle="tab" href="#offered">Angebotene Fahrten</a></li>
+                <li><a data-toggle="tab" href="#booked">Gebuchte Fahrten</a></li>
+                <li><a data-toggle="tab" href="#balance">Verfügbares Guthaben</a></li>
+                <li><a data-toggle="tab" href="#rating">Bewertung</a></li>
               </ul>
 
               
@@ -173,17 +173,17 @@
                 </form>
                 </div>
               
-              <div id="angebotene_fahrten" class="tab-pane fade">
+              <div id="offered" class="tab-pane fade">
                 <h3>Menu 1</h3>
                 <p>Some content in menu 1.</p>
               </div>
               
-              <div id="gebuchte_fahrten" class="tab-pane fade">
+              <div id="booked" class="tab-pane fade">
                 <h3>Menu 1</h3>
                 <p>Some content in menu 2.</p>
               </div>
               
-              <div id="verfügbares_guthaben" class="tab-pane fade">
+              <div id="balance" class="tab-pane fade">
                 <hr>
                 <form class="form-inline">
                 <div class="form-group">
@@ -196,7 +196,7 @@
                 </form> 
             </div>
               
-              <div id="bewertung" class="tab-pane fade">
+              <div id="rating" class="tab-pane fade">
                 <div th:if="${not #lists.isEmpty(ratingList)}">
 
                                       <table>

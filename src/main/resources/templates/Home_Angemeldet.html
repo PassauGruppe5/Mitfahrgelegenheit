@@ -122,12 +122,12 @@ xmlns:th="http://www.thymeleaf.org">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
           <ul class="dropdown-menu navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>   Angebotene Fahrten</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>   Gebuchte Fahrten</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#offered'"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>   Angebotene Fahrten</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#booked'"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>   Gebuchte Fahrten</a></li>
             <li role="separator" class="divider"></li>
-            <li><a th:href="@{/profile/show/profile(id=${user.id})}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Profil</a></li>
-            <li><a th:href="@{/profile/show/profile(id=${user.id})}"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
-            <li><a th:href="@{/profile/show/profile(id=${user.id})}"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#profil'"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Profil</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#balance'"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#rating'"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/logout"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
           </ul>
