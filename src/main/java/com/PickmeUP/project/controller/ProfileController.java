@@ -36,23 +36,6 @@ public class ProfileController {
     @Autowired
     private TransactionService transactionService;
 
-    @RequestMapping(value={"/profile/show/balance"}, method = RequestMethod.GET)
-    public ModelAndView showBalance() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        if(user == null){
-            modelAndView.setViewName("login");
-        }
-        else{
-            Account account = accountService.findbyUser(user);
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("account", account);
-            modelAndView.setViewName("profile/show/balance");
-        }
-        return modelAndView;
-    }
-
     @RequestMapping(value={"/profile/create/payment-in"}, method = RequestMethod.GET)
     public ModelAndView ShowPaymentInForm(){
         ModelAndView modelAndView = new ModelAndView();
@@ -181,15 +164,19 @@ public class ProfileController {
         return modelAndView;
     }
 
-    @RequestMapping(value="profile/show/userProfile", method = RequestMethod.GET)
+    @RequestMapping(value="profile/show/profile", method = RequestMethod.GET)
     public ModelAndView showOwnUserProfile(@RequestParam("id") int id){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         User toView = userService.findUserById(id);
+        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
+        Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
             modelAndView.addObject("user",loggedIn);
-            modelAndView.setViewName("/profile/show/userProfile_user");
+            modelAndView.addObject("account",account);
+            modelAndView.addObject("ratingList",ratingList);
+            modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
             modelAndView.addObject("user", toView);
@@ -197,6 +184,5 @@ public class ProfileController {
         }
         return modelAndView;
     }
-
 
 }
