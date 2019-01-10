@@ -153,17 +153,6 @@ public class ProfileController {
         return modelAndView;
     }
 
-    @RequestMapping(value="profile/show/rating",method = RequestMethod.GET)
-    public ModelAndView showRatings(@RequestParam("id") int id){
-        ModelAndView modelAndView = new ModelAndView();
-        User userToShow = userService.findUserById(id);
-        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
-        modelAndView.addObject("user",userToShow);
-        modelAndView.addObject("ratingList",ratingList);
-        modelAndView.setViewName("/profile/show/rating");
-        return modelAndView;
-    }
-
     @RequestMapping(value="profile/show/profile", method = RequestMethod.GET)
     public ModelAndView showOwnUserProfile(@RequestParam("id") int id){
         ModelAndView modelAndView = new ModelAndView();
@@ -179,7 +168,8 @@ public class ProfileController {
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
-            modelAndView.addObject("user", toView);
+            modelAndView.addObject("userV", toView);
+            modelAndView.addObject("user", loggedIn);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }
         return modelAndView;

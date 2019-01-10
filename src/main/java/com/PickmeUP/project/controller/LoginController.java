@@ -66,6 +66,7 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
+
             userService.saveUser(user);
             try {
                 GmailService.sendWelcomeMail(user);
