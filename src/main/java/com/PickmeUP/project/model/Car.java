@@ -4,7 +4,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "CAR")
@@ -27,8 +26,8 @@ public class Car {
     @CreationTimestamp
     private Timestamp creation;
 
-    @OneToMany (mappedBy = "car")
-    private List<Trip> trips;
+//    @OneToMany (mappedBy = "car")
+//    private List<Trip> trips;
 
     public void setId(int id) {
         this.id = id;

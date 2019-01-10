@@ -1,126 +1,82 @@
 package com.PickmeUP.project.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "TRIP")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, columnDefinition = "INT(10)")
+    @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "start_time", nullable = false, columnDefinition = "DATETIME")
-    private Date start_time;
+    @Column(name = "distance") //In Metern
+    private int distance;
 
-    @Column(name = "arrival_time", nullable = false, columnDefinition = "DATETIME")
-    private Date arrival_time;
+    @Column(name = "duration") //In Sekunden
+    private int duration;
 
-    @Column(name = "seats", nullable = false, columnDefinition = "INT")
-    private int seats;
+    @Column(name = "start_location_lat")
+    private double start_location_lat;
 
-    @Column(name = "bags", nullable = false, columnDefinition = "INT")
-    private int bags;
+    @Column(name = "start_location_lng")
+    private double start_location_lng;
 
-    @Column(name = "km_price", nullable = false, columnDefinition = "DECIMAL(15,2)")
-    private int km_price;
+    @Column(name = "end_location_lat")
+    private double end_location_lat;
 
-    @Column(name = "bag_price", nullable = false, columnDefinition = "DECIMAL(15,2)")
-    private int bag_price;
+    @Column(name = "end_location_lng")
+    private double end_location_lng;
 
-    @Column(name = "active", nullable = false, columnDefinition = "CHAR(1)")
-    private String active = "Y";
+    @Column(name = "leg")
+    private String leg;
 
-    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
-    @CreationTimestamp
-    private Timestamp creation;
+    public int getId() {return this.id; }
+    public void setId(int id) {this.id = id;}
 
-    @OneToMany(mappedBy = "trip")
-    private List<Stop> stops;
+    public int getDuration(){return this.duration;}
+    public void setDuration(int duration){this.duration = duration;}
 
-    @ManyToOne
-    private Car car;
+    public int getDistance(){return this.distance;}
+    public void setDistance(int distance){this.distance = distance;}
 
-    @ManyToOne
-    private Repeats repeats;
-
-    @ManyToOne
-    private User driver;
-
-    public int getId() {
-        return this.id;
+    public double getEnd_location_lat() {
+        return end_location_lat;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public double getEnd_location_lng() {
+        return end_location_lng;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public double getStart_location_lat() {
+        return start_location_lat;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public double getStart_location_lng() {
+        return start_location_lng;
     }
 
-    public Date getArrival_time() {
-        return arrival_time;
+    public void setEnd_location_lat(double end_location_lat) {
+        this.end_location_lat = end_location_lat;
     }
 
-    public void setArrival_time(Date arrival_time) {
-        this.arrival_time = arrival_time;
+    public void setEnd_location_lng(double end_location_lng) {
+        this.end_location_lng = end_location_lng;
     }
 
-    public int getSeats() {
-        return seats;
+    public void setStart_location_lat(double start_location_lat) {
+        this.start_location_lat = start_location_lat;
     }
 
-    public void setSeats(int seats) {
-        this.seats = seats;
+    public void setStart_location_lng(double start_location_lng) {
+        this.start_location_lng = start_location_lng;
     }
 
-    public int getBags() {
-        return bags;
+    public String getLeg() {
+        return leg;
     }
 
-    public void setBags(int bags) {
-        this.bags = bags;
-    }
-
-    public int getKm_price() {
-        return km_price;
-    }
-
-    public void setKm_price(int km_price) {
-        this.km_price = km_price;
-    }
-
-    public int getBag_price() {
-        return bag_price;
-    }
-
-    public void setBag_price(int bag_price) {
-        this.bag_price = bag_price;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public Timestamp getCreation() {
-        return this.creation;
-    }
-
-    public void setCreation(Timestamp creation) {
-        this.creation = creation;
+    public void setLeg(String leg) {
+        this.leg = leg;
     }
 }
