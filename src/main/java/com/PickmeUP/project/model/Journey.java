@@ -1,6 +1,9 @@
 package com.PickmeUP.project.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -30,8 +33,15 @@ public class Journey {
     @Column(name = "priceKm",nullable = false)
     private int priceKm;
 
-    @Column(name = "route")
+    @Column(name = "route", columnDefinition="LONGTEXT")
     private String route;
+
+    @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    private Timestamp creation;
+
+    @ManyToOne
+    private User driver;
 
     public Journey(){
 
@@ -57,11 +67,20 @@ public class Journey {
     public int getPriceKm(){return this.priceKm;}
     public void setPriceKm(int priceKm){this.priceKm = priceKm;}
 
-    public String route() {
+    public String getRoute() {
         return route;
     }
-
     public void setroute(String route) {
         this.route = route;
+    }
+
+    public User getDriver (){return this.driver;}
+    public void setDriver (User driver){this.driver = driver;}
+
+    public void setCreation(Timestamp creation) {
+        this.creation = creation;
+    }
+    public Timestamp getCreation() {
+        return this.creation;
     }
 }

@@ -110,12 +110,11 @@
                 console.log(journey)
 
                 $.ajax({
-                    url: "/Journey/create",
+                    url: "/map",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(journey),
                     success: function(data, status){
-                       alert("Data: " + data + "\nStatus: " + status);
                     }.bind(this),
                     error: function(xhr, error) {
                       console.log(error);

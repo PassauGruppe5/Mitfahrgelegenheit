@@ -62,6 +62,8 @@ public class ProfileController {
         Transaction transaction = new Transaction();
         if (account.getBalance()<= 0) {
             modelAndView.setViewName("/profile/create/payment-in");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("account",account);
             modelAndView.addObject("errorMessage", "Der Betrag muss mindestens 0.01 betragen.");
         }
         else{
@@ -70,8 +72,7 @@ public class ProfileController {
             transaction.setMessage("Einzahlung an eigenes Konto.");
             transaction.setAmount(account.getBalance());
             transaction.setReceiverAndTransmitter(user);
-            transactionService.saveTransaction(transaction);
-            modelAndView.addObject("user",user);
+            transactionService.saveTransaction(transaction);modelAndView.addObject("user",user);
             modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich eingebucht.");
             modelAndView.setViewName("/profile/create/payment-in");
@@ -104,8 +105,10 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView();
         Transaction transaction = new Transaction();
         if (accountToUpdate.getBalance()-account.getBalance()< 0) {
-            modelAndView.setViewName("/profile/create/payment-out");
+            modelAndView.addObject("user",user);
+            modelAndView.addObject("account",accountToUpdate);
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
+            modelAndView.setViewName("/profile/create/payment-out");
         }
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()-account.getBalance());
