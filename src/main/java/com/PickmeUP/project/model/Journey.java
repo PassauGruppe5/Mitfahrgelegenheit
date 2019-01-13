@@ -33,6 +33,12 @@ public class Journey {
     @Column(name = "priceKm",nullable = false)
     private int priceKm;
 
+    @Column(name = "origin", nullable = false)
+    private String origin;
+
+    @Column(name = "destination", nullable = false)
+    private String destination;
+
     @Column(name = "route", columnDefinition="LONGTEXT")
     private String route;
 
@@ -42,6 +48,9 @@ public class Journey {
 
     @ManyToOne
     private User driver;
+
+    @ManyToOne
+    private Repeat repeat;
 
     public Journey(){
 
@@ -74,8 +83,17 @@ public class Journey {
         this.route = route;
     }
 
+    public String getOrigin(){return this.origin;}
+    public void setOrigin(String origin){this.origin = origin;}
+
+    public String getDestination(){return this.destination;}
+    public void setDestination(String destination){this.destination = destination;}
+
     public User getDriver (){return this.driver;}
     public void setDriver (User driver){this.driver = driver;}
+
+    public Repeat getRepeat (){return this.repeat;}
+    public void setRepeat (Repeat repeat){this.repeat = repeat;}
 
     public void setCreation(Timestamp creation) {
         this.creation = creation;

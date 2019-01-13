@@ -25,8 +25,10 @@ public class MapController {
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
         ModelAndView modelAndView = new ModelAndView();
-
-        modelAndView.setViewName("/map");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("user", loggedIn);
+        modelAndView.setViewName("/profile/create/Fahrt_anbieten");
         return modelAndView;
     }
 

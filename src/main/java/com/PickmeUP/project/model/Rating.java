@@ -16,8 +16,8 @@ public class Rating {
     @Column(name = "message", columnDefinition = "TEXT")
     private String message;
 
-    @Column(name = "grade", columnDefinition = "INT(1)")
-    private int grade;
+    @Column(name = "grade", columnDefinition = "DECIMAL(1,1)")
+    private Double grade;
 
     @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -43,10 +43,10 @@ public class Rating {
         this.message = message;
     }
 
-    public int getGrade() {
+    public Double getGrade() {
         return grade;
     }
-    public void setGrade(int grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 
