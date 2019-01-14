@@ -365,7 +365,7 @@
                         }, function(response, status) {
                           if (status === 'OK') {
                             journey.route = JSON.stringify(response)
-                            journey.legs = response.routes[0].legs;
+                            journey.legs = JSON.stringify(response.routes[0].legs);
                             directionsDisplay.setDirections(response);
                           } else {
                             window.alert('Directions request failed due to ' + status);
@@ -401,10 +401,9 @@
                 journey.arrival = $("#arrival").val();
                 journey.origin = $("#origin").val();
                 journey.destination = $("#destination").val();
+                journey.matchRepeat =$("#repeat").val();
 
                 console.log(journey)
-                console.log(repeat)
-
                 $.ajax({
                     url: "/map",
                     type: "POST",
@@ -507,12 +506,12 @@
       
     <div class="container3">
     <h3>Weitere Angaben:</h3>
-      <input id="seats" placeholder="Pätze" type="number" min="1" required/>
-      <input id="bags" placeholder="Gepäck" type="number" min="0" required/>
-      <input id="priceKm" placeholder="Preis/Km" type="number" min="0" required/>
-      <input id="priceBag" placeholder="Preis/Km (Gepäck)" type="number" min="0" required/>
-      <button id="saveButton" onclick="saveJourney()">Speichern</button>
-    </div>
+                <input id="seats" placeholder="Pätze" type="number" min="1" required/>
+                <input id="bags" placeholder="Gepäck" type="number" min="0" required/>
+                <input id="priceKm" placeholder="Preis/Km" type="number" min="0" required/>
+                <input id="priceBag" placeholder="Preis/Km (Gepäck)" type="number" min="0" required/>
+                <button id="saveButton" onclick="saveJourney()">Speichern</button>
+              </div>
       
     <div>
         

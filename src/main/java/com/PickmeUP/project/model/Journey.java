@@ -42,6 +42,9 @@ public class Journey {
     @Column(name = "route", columnDefinition="LONGTEXT")
     private String route;
 
+    @Column(name = "legs", columnDefinition="LONGTEXT")
+    private String legs;
+
     @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
     @CreationTimestamp
     private Timestamp creation;
@@ -81,6 +84,13 @@ public class Journey {
     }
     public void setroute(String route) {
         this.route = route;
+    }
+
+    public String getLegs() {
+        return route;
+    }
+    public void setLegs(String legs) {
+        this.legs = legs;
     }
 
     public String getOrigin(){return this.origin;}
