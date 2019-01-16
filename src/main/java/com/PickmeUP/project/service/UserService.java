@@ -56,5 +56,7 @@ public class UserService {
 
     }
 
+    public void updateUser(User user) {userRepository.save(user);}
+
     public User findUserById(int id){return userRepository.findById(id);}
 }

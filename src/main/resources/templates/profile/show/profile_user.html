@@ -167,8 +167,8 @@
                               <output type="text" class="form-control" th:text="${user.phone}" name="Telefonnummer" id="t_nummer" title="Telefonnummer"></output>
                           </div>
                       </div>
-                <form id="kommentarbox" action="" method="post">
-                <label> Persönliche Angaben: <br><textarea cols="45" rows="5" name="message"></textarea></label>
+                <form id="kommentarbox" action="" th:method="post" th:action="@{/profile/alter/comment}" >
+                <label> Persönliche Angaben: <br><textarea id="comment" th:field= "*{user.comment}" cols="45" rows="5" name="message"></textarea></label>
                 <input id="btn_speichern" class="btn btn-success" type="submit" value="Speichern">
                 </form>
                 </div>
@@ -197,20 +197,15 @@
             </div>
               
               <div id="rating" class="tab-pane fade">
-                <div th:if="${not #lists.isEmpty(ratingList)}">
-
-                                      <table>
-                                          <tr>
-                                              <th>Nachricht</th>
-                                              <th>User</th>
-                                          </tr>
-                                          <tr th:each="rating: ${ratingList}">
-                                          <td th:text="${rating.message}"></td>
-                                          <td th:text="${rating.grade}"></td>
-                                          <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/profile(id=${rating.publisher.id})}"></a></td>
-                                          </tr>
-                                      </table>
-                                  </div>
+                <div th:unless="${#lists.isEmpty(ratingList)}">
+                  <table>
+                      <tr th:each="rating: ${ratingList}">
+                      <td th:text="${rating.message}"></td>
+                      <td th:text="${rating.grade}"></td>
+                      <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/profile(id=${rating.publisher.id})}"></a></td>
+                      </tr>
+                  </table>
+                </div>
 
               </div>
           </div>
@@ -222,6 +217,7 @@
             var activeTab = $('[href=' + location.hash + ']');
             activeTab && activeTab.tab('show');
             });
+
       </script>
     </body>
 </html>

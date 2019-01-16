@@ -125,18 +125,6 @@ public class ProfileController {
         return modelAndView;
     }
 
-    @RequestMapping(value="profile/create/rating", method = RequestMethod.GET)
-    public ModelAndView showRatingForm(@RequestParam("id") int id){
-    ModelAndView modelAndView = new ModelAndView();
-    User userToShow = userService.findUserById(id);
-    Rating rating = new Rating();
-    modelAndView.addObject("userToShow", userToShow);
-    modelAndView.addObject("rating", rating);
-    modelAndView.setViewName("profile/create/rating");
-
-    return modelAndView;
-
-    }
 
     @RequestMapping(value="profile/create/rating", method = RequestMethod.POST)
     public ModelAndView handleRatingForm(@Valid Rating rating,@RequestParam String usr){
@@ -156,12 +144,28 @@ public class ProfileController {
         return modelAndView;
     }
 
+    @RequestMapping(value="/profile/alter/comment", method = RequestMethod.POST)
+    public ModelAndView hadleCommentInput(User user){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User userToUpdate = userService.findUserByEmail(auth.getName());
+        userToUpdate.setComment(user.getComment());
+        userService.updateUser(userToUpdate);
+        modelAndView.addObject("id",userToUpdate.getId());
+        modelAndView.addObject("userToUpdate",userToUpdate);
+        modelAndView.setViewName("redirect:/profile/show/profile");
+
+        return modelAndView;
+
+    }
+
     @RequestMapping(value="profile/show/profile", method = RequestMethod.GET)
     public ModelAndView showOwnUserProfile(@RequestParam("id") int id){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         User toView = userService.findUserById(id);
+        Rating rating = new Rating();
         List<Rating> ratingList = ratingService.getRatingsOfUser(id);
         Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
@@ -173,6 +177,8 @@ public class ProfileController {
         else{
             modelAndView.addObject("userV", toView);
             modelAndView.addObject("user", loggedIn);
+            modelAndView.addObject("rating",rating);
+            modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }
         return modelAndView;
