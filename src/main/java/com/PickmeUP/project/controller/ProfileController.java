@@ -139,7 +139,7 @@ public class ProfileController {
         modelAndView.addObject("userToShow", userToShow);
         modelAndView.addObject("userToView", userToView);
         modelAndView.addObject("rating", rating);
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/profile/show/profile?id="+userToShow.getId());
 
         return modelAndView;
     }
@@ -166,15 +166,16 @@ public class ProfileController {
         User loggedIn = userService.findUserByEmail(auth.getName());
         User toView = userService.findUserById(id);
         Rating rating = new Rating();
-        List<Rating> ratingList = ratingService.getRatingsOfUser(id);
         Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
+            List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
+            List<Rating> ratingList = ratingService.getRatingsOfUser(toView.getId());
             modelAndView.addObject("userV", toView);
             modelAndView.addObject("user", loggedIn);
             modelAndView.addObject("rating",rating);

@@ -197,12 +197,12 @@
             </div>
               
               <div id="rating" class="tab-pane fade">
-                <div th:unless="${#lists.isEmpty(ratingList)}">
+                <div th:if="${not #lists.isEmpty(ratingList)}">
                   <table>
-                      <tr th:each="rating: ${ratingList}">
-                      <td th:text="${rating.message}"></td>
-                      <td th:text="${rating.grade}"></td>
-                      <td> <a th:text="${rating.publisher.name}+' '+${rating.publisher.lastName}" th:href="@{/profile/show/profile(id=${rating.publisher.id})}"></a></td>
+                      <tr th:each="ratingToPost: ${ratingList}">
+                      <td th:text="${ratingToPost.message}"></td>
+                      <td th:text="${ratingToPost.grade}"></td>
+                      <td> <a th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}" th:href="@{/profile/show/profile(id=${ratingToPost.publisher.id})}"></a></td>
                       </tr>
                   </table>
                 </div>
