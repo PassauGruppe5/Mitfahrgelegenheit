@@ -18,6 +18,18 @@ public class Leg {
     @Column(name = "end_address")
     private String end_address;
 
+    @Column(name = "start_lat")
+    private Double start_lat;
+
+    @Column(name = "end_lat")
+    private Double end_lat;
+
+    @Column(name = "start_lng")
+    private Double start_lng;
+
+    @Column(name = "end_lng")
+    private Double end_lng;
+
     @Column(name = "seats")
     private int seats;
 
@@ -29,6 +41,9 @@ public class Leg {
 
     @Column(name = "duration")
     private int duration;
+
+    @Column(name = "position")
+    private int position;
 
     @ManyToOne
     private Journey journey;
@@ -49,6 +64,14 @@ public class Leg {
 
     public void setBags(int bags){this.bags = bags;}
     public int getBags(){return this.bags;}
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public void setDistance(int distance){this.distance = distance;}
     public int getDistance(){return this.distance;}

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="de"
-       xmlns:th="http://www.thymeleaf.org">
+<html lang="de">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
       <title>Auszahlung</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,23 +13,49 @@
 
       <style>
 
-          body{
+          .container1{
 
-        background: url(https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
-        background-size: auto;
+              position:relative;
+              margin-left: 150px;
+              margin-right: 150px;
+
+          }
+
+           .container2{
+
+            position: fixed;
+            width: auto;
+            height: auto;
+
+          }
+
+          #hintergrund{
+
+             width: 100%;
+             height: 100%;
+             position: fixed;
 
           }
 
         .form-conatiner{
 
         border:1px solid white;
-        padding: 50px 60px;
-        margin-top:20vh;
+        padding: 30px 60px;
+        margin-top:35vh;
         -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         margin-left: 450px;
         width: 600px;
+        height: auto;
+        position: absolute;
+
+
+          }
+
+          .navbar{
+
+              margin-top: 10px;
           }
 
           #logo{
@@ -38,44 +64,60 @@
              height:50px;
              margin-top: 5px;
 
-
           }
-          .navbar{
 
-              margin-left: 150px;
-              margin-right: 150px;
-          }
 
           .form-group{
 
-              width: 300px;
-              float:left;
+              width: 250px;
 
           }
-          .btn{
 
-              margin-left: 20px;
+          .btn-block{
+
+              width: 40%;
               border-radius: 20px;
           }
 
-           span {
+          #btn_credit{
 
-              color: white;
+            margin-top: 20px;
+
           }
 
-          a {
-              color: white;
+          #btn_betrageinz{
+
+              float: right;
+              margin-right: 125px;
+
           }
 
-          .glyphicon{
+          .container3{
 
-              color:black;
+              width: 80%;
+          }
 
-          </style>
+          .input-group{
+
+              position: absolute;
+              width: 200px;
+          }
+
+          #btn_betrageinz{
+
+              float: right;
+              margin-right: 125px;
+
+          }
+
+      </style>
 
       </head>
   <body>
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
+
+      <div class="container1">
+
+          <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
   <div class="container-fluid">
     <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
     <div class="navbar-header">
@@ -109,22 +151,45 @@
     </div>
   </div>
   </nav>
-
-    <form th:object="${account}" th:action="@{/profile/create/payment-out}" method="post" class="form-conatiner" role="form">
- <h1><font color=#fff>Auszahlung</font></h1>
-  <form class="form-inline">
-  <div class="form-group">
-    <label class="sr-only" for="beispielFeldSumme">Summe (in Euro)</label>
-    <div class="input-group">
-      <div class="input-group-addon">€</div>
-      <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" ><font color=#fff>betrag</font></label>
-      <input type="text" th:field="*{balance}" class="form-control" id="balance" placeholder="Summe wie 17.89">
-    </div>
-                 <span th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></span>
-                 <span th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
   </div>
-  <button type="submit" onclick="checkInput()" class="btn btn-default">Betrag ausbezahlen</button>
+
+  <div class="container2">
+        <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+       </div>
+
+ <form th:object="${account}" th:action="@{/profile/create/payment-out}" method="post" class="form-conatiner" role="form">
+ <h1><font color=#fff>Auszahlung</font></h1>
+              <div>
+                                 <h4 th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></h4>
+                                 <h4 th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></h4>
+              </div>
+ <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
+ <div id="paypal" class="collapse">
+  <div class="container3">
+  <div class="form-group">
+    <label for="E-Mail" style="color: white">Email-Adresse</label>
+    <input type="email" class="form-control" id="email" placeholder="Email-Adresse">
+  </div>
+  <div class="form-group">
+    <label for="Passwort" style="color: white">Passwort</label>
+    <input type="password" class="form-control" id="pword" placeholder="Passwort">
+  </div>
+  </div>
+  <hr>
+  </div>
+
+  <form class="form-inline">
+      <div style="margin-top: 15px;" class="form-group">
+      <label class="sr-only" for="beispielFeldSumme">Summe (in Euro)</label>
+      <div class="input-group">
+        <div class="input-group-addon">€</div>
+        <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" ><font color=#fff>betrag</font></label>
+        <input type="text" th:field="*{balance}" class="form-control" id="balance" placeholder="Summe wie 17.89">
+      </div>
+    </div>
+    <button id="btn_betrageinz" type="submit" class="btn btn-default">Betrag einzahlen</button>
 </form>
 </form>
-</body>
-</html>
+
+  </body>
+  </html>

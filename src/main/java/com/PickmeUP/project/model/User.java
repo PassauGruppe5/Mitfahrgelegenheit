@@ -47,9 +47,11 @@ public class User {
     @Column(name = "creation")
     @CreationTimestamp
     private Timestamp creation;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
     @ManyToOne
     @JoinTable(name = "user_bonus", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "bonus_id"))
     private Bonus bonus;

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class MapController {
 
@@ -50,18 +53,23 @@ public class MapController {
         journeyToSave.setDriver(loggedIn);
         journeyService.saveJourney(journeyToSave);
 
+
         String rawJson = journey.getRoute();
         JSONObject root = new JSONObject(rawJson);
         JSONArray routesArray = root.getJSONArray("routes");
         JSONObject summary = routesArray.getJSONObject(0);
         JSONArray legs = summary.getJSONArray("legs");
+        List<Leg> legsToSave = new ArrayList<>();
 
             for(int i=0; i < legs.length(); i++ ){
 
                 JSONObject jsonLegNormal = legs.getJSONObject(i);
                 JSONObject duration = jsonLegNormal.getJSONObject("duration");
                 JSONObject distance = jsonLegNormal.getJSONObject("distance");
+                JSONObject end_location = jsonLegNormal.getJSONObject("end_location");
+                JSONObject start_location = jsonLegNormal.getJSONObject("start_location");
                 Leg leg = new Leg();
+                leg.setPosition(i+1);
                 leg.setStart_address(jsonLegNormal.getString("start_address"));
                 leg.setEnd_address(jsonLegNormal.getString("end_address"));
                 leg.setDistance(distance.getInt("value"));
@@ -70,35 +78,13 @@ public class MapController {
                 leg.setBags(journey.getBags());
                 leg.setSeats(journey.getSeats());
                 legService.saveLeg(leg);
+                legsToSave.add(leg);
 
-                int cummulatedDuration = duration.getInt("value");
-                int cummulatedDistance = distance.getInt("value");
-
-                    for(int j = i+1 ; j < legs.length(); j++){
-
-                        JSONObject jsonLegConnected = legs.getJSONObject(j);
-                        JSONObject durationConnected = jsonLegConnected.getJSONObject("duration");
-                        JSONObject distanceConnected = jsonLegConnected.getJSONObject("distance");
-
-                        cummulatedDistance = cummulatedDistance + distanceConnected.getInt("value");
-                        cummulatedDuration = cummulatedDuration+durationConnected.getInt("value");
-
-                        Leg legConnected = new Leg();
-                        legConnected.setStart_address(jsonLegNormal.getString("start_address"));
-                        legConnected.setEnd_address(jsonLegConnected.getString("end_address"));
-
-                        legConnected.setDistance(cummulatedDistance);
-                        legConnected.setDuration(cummulatedDuration);
-                        legConnected.setJourney(journey);
-                        legConnected.setSeats(journey.getSeats());
-                        legConnected.setBags(journey.getBags());
-
-                        legService.saveLeg(legConnected);
-                    }
             }
-
+        journeyToSave.setLegsInJourney(legsToSave);
+        journeyService.saveJourney(journeyToSave);
         modelAndView.addObject("user", loggedIn);
-        modelAndView.setViewName("Home_Angemeldet");
+        modelAndView.setViewName("/map");
         return modelAndView;
     }
 }

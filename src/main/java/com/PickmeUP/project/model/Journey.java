@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Journey")
@@ -42,8 +43,8 @@ public class Journey {
     @Column(name = "route", columnDefinition="LONGTEXT")
     private String route;
 
-    @Column(name = "legs", columnDefinition="LONGTEXT")
-    private String legs;
+    @OneToMany
+    private List<Leg> legsInJourney;
 
     @Column(name = "creation", nullable = false, columnDefinition = "TIMESTAMP")
     @CreationTimestamp
@@ -86,11 +87,11 @@ public class Journey {
         this.route = route;
     }
 
-    public String getLegs() {
-        return route;
+    public List<Leg> getLegsInJourney() {
+        return this.legsInJourney;
     }
-    public void setLegs(String legs) {
-        this.legs = legs;
+    public void setLegsInJourney(List<Leg> legsInJourney) {
+        this.legsInJourney = legsInJourney;
     }
 
     public String getOrigin(){return this.origin;}
