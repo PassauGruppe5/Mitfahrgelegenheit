@@ -13,23 +13,49 @@
 
       <style>
 
-          body{
+                    .container1{
 
-        background: url(https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
-        background-size: auto;
+              position:relative;
+              margin-left: 150px;
+              margin-right: 150px;
+
+          }
+
+           .container2{
+
+            position: fixed;
+            width: auto;
+            height: auto;
+
+          }
+
+          #hintergrund{
+
+             width: 100%;
+             height: 100%;
+             position: fixed;
 
           }
 
         .form-conatiner{
 
         border:1px solid white;
-        padding: 50px 60px;
+        padding: 30px 60px;
         margin-top:20vh;
         -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
         margin-left: 450px;
         width: 600px;
+        height: auto;
+        position: absolute;
+
+
+          }
+
+          .navbar{
+
+              margin-top: 10px;
           }
 
           #logo{
@@ -39,36 +65,42 @@
              margin-top: 5px;
 
           }
-          .navbar{
 
-              margin-left: 150px;
-              margin-right: 150px;
-          }
-
-          span {
-
-              color: white;
-          }
-
-          a {
-              color: white;
-          }
-
-          .glyphicon{
-
-              color:black;
-          }
 
           .form-group{
 
-              width: 300px;
-              float:left;
+              width: 250px;
 
           }
-          .btn{
 
-              margin-left: 20px;
+          .btn-block{
+
+              width: 40%;
               border-radius: 20px;
+          }
+
+          #btn_credit{
+
+            margin-top: 20px;
+
+          }
+
+          #btn_betrageinz{
+
+              float: right;
+              margin-right: 125px;
+
+          }
+
+          .container3{
+
+              width: 80%;
+          }
+
+          .input-group{
+
+              position: absolute;
+              width: 200px;
           }
 
           </style>
@@ -110,8 +142,81 @@
   </div>
   </nav>
 
+    <div class="container2">
+          <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+         </div>
+
  <form th:object="${account}" th:action="@{/profile/create/payment-in}" class="form-conatiner" method="post" role="form">
  <h1><font color=#fff>Einzahlung</font></h1>
+
+ <div>
+              <h4 th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></h4>
+              <h4 th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></h4>
+</div>
+
+  <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
+  <div id="paypal" class="collapse">
+   <div class="container3">
+   <div class="form-group">
+     <label for="E-Mail" style="color: white">Email-Adresse</label>
+     <input type="email" class="form-control" id="email" placeholder="Email-Adresse">
+   </div>
+   <div class="form-group">
+     <label for="Passwort" style="color: white">Passwort</label>
+     <input type="password" class="form-control" id="pword" placeholder="Passwort">
+   </div>
+   </div>
+   <hr>
+   </div>
+
+    <button id="btn_credit" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#kreditkarte">Per Kreditkarte</button>
+
+    <div class="container4">
+
+    <div id="kreditkarte" class="collapse">
+
+    <div class="row">
+
+    <div class="col-md-3">
+    <div style="width: 150px;" class="form-group">
+       <label for="Vorname" style="color: white">Vorname</label>
+       <input type="text" class="form-control" id="v_name" placeholder="Vorname">
+     </div>
+     </div>
+
+    <div class="col-md-3">
+    <div style="margin-left: 25px; width: 150px;" class="form-group">
+       <label for="Nachname" style="color: white">Nachname</label>
+       <input type="text" class="form-control" id="n_name" placeholder="Nachname">
+        </div>
+        </div>
+
+    <div class="col-md-3">
+    <div style="width: 100px; margin-left: 50px;" class="form-group">
+       <label for="Gültigkeitsdatum" style="color: white">Gültigkeitsdatum</label>
+       <input type="text" class="form-control" id="email" placeholder="05-23" min="5" max="5" maxlength="5">
+     </div>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="col-md-3">
+    <div class="form-group">
+       <label for="Kreditkartennummer" style="color: white">Kreditkartennummer</label>
+       <input type="text" class="form-control" id="I_ban" placeholder="1111-2222-3333-4444" maxlength="19">
+     </div>
+     </div>
+
+    <div class="col-md-3">
+    <div style="margin-left: 150px; width: 100px;" class="form-group">
+       <label for="CVC-Code" style="color: white">CVC-Code</label>
+       <input type="text" class="form-control" id="email" placeholder="CVC" min="3" max="3" maxlegnth="3">
+     </div>
+     </div>
+     </div>
+     <hr>
+     </div>
+
   <form  class="form-inline">
   <div class="form-group">
     <label class="sr-only" for="beispielFeldSumme">Summe (in Euro)</label>
@@ -120,11 +225,10 @@
       <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" ><font color=#fff>betrag</font></label>
       <input type="text" class="form-control" th:field="*{balance}" id="beispielFeldSumme" placeholder="Summe wie 14.79">
     </div>
-             <span th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></span>
-             <span th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
   </div>
-  <button type="submit" class="btn btn-default">Betrag einzahlen</button>
+   <button id="btn_betrageinz" type="submit" class="btn btn-default">Betrag einzahlen</button>
 </form>
+<div>
 </form>
 
 </body>
