@@ -51,6 +51,9 @@
           .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
           .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
+           tr.border_bottom td {
+            border-bottom:1pt solid black;
+            }
 
           #logo{
 
@@ -227,13 +230,12 @@
                 <div id="ratingList">
                   <div th:if="${not #lists.isEmpty(ratingList)}">
                     <table>
-                        <tr th:each="ratingToPost: ${ratingList}">
+                        <tr th:each="ratingToPost: ${ratingList}" class="border_bottom">
                         <td th:text="${ratingToPost.message}"></td>
                         <td th:text="${ratingToPost.grade}"></td>
                         <td> <a th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}" th:href="@{/profile/show/profile(id=${ratingToPost.publisher.id})}"></a></td>
                         </tr>
                     </table>
-                    <hr>
                   </div>
 
                 </div>

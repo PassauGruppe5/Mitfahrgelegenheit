@@ -1,14 +1,8 @@
 package com.PickmeUP.project.controller;
 
-import com.PickmeUP.project.model.Account;
-import com.PickmeUP.project.model.Rating;
-import com.PickmeUP.project.model.Transaction;
-import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.model.*;
 import com.PickmeUP.project.repository.AccountRepository;
-import com.PickmeUP.project.service.AccountService;
-import com.PickmeUP.project.service.RatingService;
-import com.PickmeUP.project.service.TransactionService;
-import com.PickmeUP.project.service.UserService;
+import com.PickmeUP.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +26,8 @@ public class ProfileController {
     private AccountRepository accountRepository;
     @Autowired
     private RatingService ratingService;
+    @Autowired
+    private JourneyService journeyService;
 
     @Autowired
     private TransactionService transactionService;
@@ -169,9 +165,11 @@ public class ProfileController {
         Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
+            List<Journey> journeyList = journeyService.findByDriver(loggedIn);
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
+            modelAndView.addObject("journeyList",journeyList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
