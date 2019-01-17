@@ -1,8 +1,10 @@
 package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Journey;
+import com.PickmeUP.project.model.Leg;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.repository.JourneyRepository;
+import com.PickmeUP.project.service.LegService;
 import com.PickmeUP.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 public class HomeController {
@@ -23,6 +28,9 @@ public class HomeController {
 
     @Autowired
     private JourneyRepository journeyRepository;
+
+    @Autowired
+    private LegService legService;
 
     @RequestMapping(value={"/"}, method = RequestMethod.GET)
     public ModelAndView index(){
@@ -41,12 +49,42 @@ public class HomeController {
     }
 
     @RequestMapping(value="/", method = RequestMethod.POST)
-    public ModelAndView handleSearch(@RequestParam String von,@RequestParam String nach,@RequestParam String datum){
+    public ModelAndView handleSearch(@RequestParam String von,@RequestParam String nach,@RequestParam String datum) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         ArrayList<Journey> journeys = journeyRepository.findJourneysByPossibleRoute(von,nach);
+        ArrayList<Journey> results = new ArrayList<>();
+
+        for (Journey journey: journeys) {
+            ArrayList<Leg> legs = legService.findByJourney(journey);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date searchDate = formatter.parse(datum);
+            Date journeyDate = formatter.parse(journey.getArrival().toString().substring(0,10));
+
+            Boolean in_trip = false;
+            Boolean genug_platz = false;
+
+            for (Leg leg : legs) {
+                if(leg.getStart_address().contains(von)){
+                    in_trip = true;
+                }
+                if(in_trip){
+                    genug_platz = leg.checkSpace();
+                }
+                if(leg.getEnd_address().contains(nach) && in_trip){
+                    break;
+                }
+            }
+
+            if((genug_platz && searchDate.after(journeyDate))||(genug_platz && searchDate.equals(journeyDate))){
+                results.add(journey);
+            }
+
+        }
 
 
-
+        modelAndView.addObject("results",results);
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }

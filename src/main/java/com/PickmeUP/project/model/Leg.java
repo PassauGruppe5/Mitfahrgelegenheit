@@ -85,4 +85,14 @@ public class Leg {
 
     public void setPassengers(List<User> passengers){this.passengers = passengers;}
     public List <User> getPassengers(){return this.passengers;}
+
+    public Boolean checkSpace(){
+        if((this.getPassengers().size() - this.journey.getSeats() + 1) >= 0 ){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
 }
