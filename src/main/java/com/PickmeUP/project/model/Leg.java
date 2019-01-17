@@ -46,6 +46,7 @@ public class Leg {
     private int position;
 
     @ManyToOne
+    @JoinColumn(name = "journey")
     private Journey journey;
 
     @ManyToMany
