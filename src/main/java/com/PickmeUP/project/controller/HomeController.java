@@ -75,7 +75,7 @@ public class HomeController {
             }
 
             if(genug_platz){
-               if(journey.checkDate(searchDate)){
+               if(journey.checkDate(searchDate) && journey.getActive() == 1){
                     results.add(journey);
                }
             }

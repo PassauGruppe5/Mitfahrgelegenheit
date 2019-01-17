@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class MapController {
+public class JourneyController {
 
     @Autowired
     private UserService userService;
@@ -33,17 +33,17 @@ public class MapController {
     @Autowired
     private LegService legService;
 
-    @RequestMapping(value = "/map", method = RequestMethod.GET)
+    @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("user", loggedIn);
-        modelAndView.setViewName("/profile/create/Fahrt_anbieten");
+        modelAndView.setViewName("/journey/create/Fahrt_anbieten");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/map", method = RequestMethod.POST)
+    @RequestMapping(value = "/journey/create", method = RequestMethod.POST)
     public ModelAndView handleJourney(@RequestBody Journey journey) throws JSONException {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -84,7 +84,7 @@ public class MapController {
         journeyToSave.setLegsInJourney(legsToSave);
         journeyService.saveJourney(journeyToSave);
         modelAndView.addObject("user", loggedIn);
-        modelAndView.setViewName("/map");
+        modelAndView.setViewName("/journey/create/Fahrt_anieten");
         return modelAndView;
     }
 }

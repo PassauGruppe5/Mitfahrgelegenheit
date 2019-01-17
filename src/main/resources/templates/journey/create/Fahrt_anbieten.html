@@ -405,7 +405,7 @@
 
                 console.log(journey)
                 $.ajax({
-                    url: "/map",
+                    url: "/journey/create",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(journey),
@@ -440,8 +440,8 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
+        <li><a href="/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
+        <li><a href="/journey/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
           <ul class="dropdown-menu navbar-right">
@@ -510,7 +510,7 @@
                 <input id="bags" placeholder="Gepäck" type="number" min="0" required/>
                 <input id="priceKm" placeholder="Preis/Km" type="number" min="0" required/>
                 <input id="priceBag" placeholder="Preis/Km (Gepäck)" type="number" min="0" required/>
-                <button id="saveButton" onclick="saveJourney(); window.location.href='/' ">Speichern</button>
+                <button id="saveButton" onclick="saveJourney(); window.location.href='../../../../..' ">Speichern</button>
               </div>
       
     <div>

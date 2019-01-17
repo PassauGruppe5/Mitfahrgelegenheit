@@ -165,7 +165,7 @@ public class ProfileController {
         Account account = accountService.findbyUser(loggedIn);
         if(loggedIn == toView){
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
-            List<Journey> journeyList = journeyService.findByDriver(loggedIn);
+            List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);

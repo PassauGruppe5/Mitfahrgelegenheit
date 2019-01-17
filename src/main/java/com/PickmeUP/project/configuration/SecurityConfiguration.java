@@ -46,7 +46,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/map").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/profile/**").permitAll()
@@ -54,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/journey/**").hasAuthority("USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")

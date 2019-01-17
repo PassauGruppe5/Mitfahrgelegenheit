@@ -15,11 +15,13 @@ public class JourneyService {
     @Autowired
     private JourneyRepository journeyRepository;
 
-    public void saveJourney(Journey journey){journeyRepository.save(journey);}
-
-    public List<Journey> findByDriver(User driver) {return journeyRepository.findByDriver(driver);}
-
-    public void updateJourney(Journey journey){
+    public void saveJourney(Journey journey){
+        journey.setActive(1);
         journeyRepository.save(journey);
+    }
+
+    public List<Journey> findByDriverAndActive(User driver, int active) {return journeyRepository.findByDriverAndActive(driver,active);}
+
+    public void updateJourney(Journey journey){journeyRepository.save(journey);
     }
 }
