@@ -15,4 +15,5 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
 
     @Query("SELECT j FROM Journey j WHERE j.id IN (SELECT s.journey FROM Leg s JOIN Leg e ON e.journey = s.journey WHERE s.start_address LIKE %:von% AND e.end_address LIKE %:nach% )")
     ArrayList<Journey> findJourneysByPossibleRoute(String von, String nach);
+
 }

@@ -53,14 +53,11 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView();
         ArrayList<Journey> journeys = journeyRepository.findJourneysByPossibleRoute(von,nach);
         ArrayList<Journey> results = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date searchDate = formatter.parse(datum);
 
         for (Journey journey: journeys) {
             ArrayList<Leg> legs = legService.findByJourney(journey);
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-            Date searchDate = formatter.parse(datum);
-            Date journeyDate = formatter.parse(journey.getArrival().toString().substring(0,10));
 
             Boolean in_trip = false;
             Boolean genug_platz = false;
@@ -70,17 +67,18 @@ public class HomeController {
                     in_trip = true;
                 }
                 if(in_trip){
-                    genug_platz = leg.checkSpace();
+                    genug_platz = true;
                 }
                 if(leg.getEnd_address().contains(nach) && in_trip){
                     break;
                 }
             }
 
-            if((genug_platz && searchDate.after(journeyDate))||(genug_platz && searchDate.equals(journeyDate))){
-                results.add(journey);
+            if(genug_platz){
+               if(journey.checkDate(searchDate)){
+                    results.add(journey);
+               }
             }
-
         }
 
 

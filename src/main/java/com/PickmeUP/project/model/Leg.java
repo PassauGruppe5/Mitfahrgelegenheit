@@ -87,7 +87,7 @@ public class Leg {
     public List <User> getPassengers(){return this.passengers;}
 
     public Boolean checkSpace(){
-        if((this.getPassengers().size() - this.journey.getSeats() + 1) >= 0 ){
+        if((this.journey.getSeats() + 1 - this.getPassengers().size()) >= 0 ){
             return true;
         }
         else{
