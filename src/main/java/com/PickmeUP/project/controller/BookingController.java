@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 
 @Controller
-public class Booking {
+public class BookingController {
 
     @Autowired
     private UserService userService;

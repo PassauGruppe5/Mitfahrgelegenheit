@@ -53,6 +53,9 @@ public class Journey {
     @Column(name = "active")
     private int active;
 
+    @Column(name = "canceled")
+    private int canceled;
+
     @ManyToOne
     @JoinColumn(name = "driver")
     private User driver;
@@ -98,6 +101,9 @@ public class Journey {
 
     public int getActive() {return active;}
     public void setActive(int active){this.active = active;}
+
+    public int getCanceled() {return canceled;}
+    public void setCanceled(int canceled){this.canceled = canceled;}
 
     public Repeat getRepeat() {return this.repeat;}
     public void setRepeat(Repeat repeat) {this.repeat = repeat;}
