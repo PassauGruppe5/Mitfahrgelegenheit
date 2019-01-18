@@ -87,4 +87,15 @@ public class JourneyController {
         modelAndView.setViewName("/journey/create/Fahrt_anieten");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/journey/list/show", method = RequestMethod.GET)
+    public ModelAndView handleSearchResult(@RequestBody Journey journey) throws JSONException {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.setViewName("/journey/list/show/Angeboten_menue");
+        return modelAndView;
+    }
 }

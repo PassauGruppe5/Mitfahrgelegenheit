@@ -15,6 +15,8 @@ public class JourneyService {
     @Autowired
     private JourneyRepository journeyRepository;
 
+    public Journey findById(int id){return journeyRepository.findById(id);}
+
     public void saveJourney(Journey journey){
         journey.setActive(1);
         journeyRepository.save(journey);

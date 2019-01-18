@@ -52,9 +52,16 @@ public class HomeController {
     public ModelAndView handleSearch(@RequestParam String von,@RequestParam String nach,@RequestParam String datum) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         ArrayList<Journey> journeys = journeyRepository.findJourneysByPossibleRoute(von,nach);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
         ArrayList<Journey> results = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date searchDate = formatter.parse(datum);
+
+        if(loggedIn == null){
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
 
         for (Journey journey: journeys) {
             ArrayList<Leg> legs = legService.findByJourney(journey);
@@ -76,6 +83,8 @@ public class HomeController {
 
             if(genug_platz){
                if(journey.checkDate(searchDate) && journey.getActive() == 1){
+                    journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
+                    journey.setDestination(journey.getDestination().replaceFirst(", Deutschland",""));
                     results.add(journey);
                }
             }
@@ -83,7 +92,8 @@ public class HomeController {
 
 
         modelAndView.addObject("results",results);
-        modelAndView.setViewName("redirect:/");
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.setViewName("/journey/list/show/Angeboten_menue");
         return modelAndView;
     }
 }
