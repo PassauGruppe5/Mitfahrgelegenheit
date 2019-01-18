@@ -84,7 +84,7 @@ public class JourneyController {
         journeyToSave.setLegsInJourney(legsToSave);
         journeyService.saveJourney(journeyToSave);
         modelAndView.addObject("user", loggedIn);
-        modelAndView.setViewName("/journey/create/Fahrt_anieten");
+        modelAndView.setViewName("/Home_Angemeldet");
         return modelAndView;
     }
 
