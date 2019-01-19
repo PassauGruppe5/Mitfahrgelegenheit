@@ -36,6 +36,9 @@ public class Leg {
     @Column(name = "bags")
     private int bags;
 
+    @Column(name = "selected")
+    private int selected;
+
     @Column(name = "distance" )
     private int distance;
 
@@ -66,10 +69,16 @@ public class Leg {
     public void setBags(int bags){this.bags = bags;}
     public int getBags(){return this.bags;}
 
+    public int getSelected() {
+        return selected;
+    }
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
+
     public int getPosition() {
         return position;
     }
-
     public void setPosition(int position) {
         this.position = position;
     }

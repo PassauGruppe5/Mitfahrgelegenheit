@@ -10,6 +10,34 @@ xmlns:th="http://www.thymeleaf.org">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script th:inline="javascript" th:with="legs = (${legs})">
+
+        var legs = [];
+
+        function fillLegs(){
+
+                        /*[# th:each="n : ${legs}"]*/
+
+                        legs.push("[(${n})]");
+
+                        /*[/]*/
+        }
+
+        function handoverCheckedLegs(){
+            var selectedLegs = [];
+
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+            for (var i = 0; i < checkboxes.length; i++) {
+              selectedLegs.push(legs[checkboxes[i].value]);
+            }
+            console.log(legs);
+            console.log(selectedLegs);
+
+        }
+
+      window.onload = fillLegs;
+      </script>
 
       <style>
 
@@ -150,6 +178,7 @@ xmlns:th="http://www.thymeleaf.org">
                         <div class="col-xs-6">
                         <label for="Zwischenstop1"><h4 th:text="${iStat.count}+'. Zwischenstop'"></h4></label>
                         <output type="text" th:text="${leg.start_address}" class="form-control" id="1zwischen"></output>
+                        <input type="checkbox" th:value="${iStat.index}">
                         </div>
                         </div>
 
@@ -162,7 +191,7 @@ xmlns:th="http://www.thymeleaf.org">
                         </form>
                         </div>
 
-                        <input id="btn_speichern" class="btn btn-success" type="submit" value="Fahrt buchen">
+                        <input id="btn_speichern" class="btn btn-success"  onclick="handoverCheckedLegs()" type="submit" value="Fahrt buchen">
 
 
               <div id="fahrerinformationen" class="tab-pane fade">

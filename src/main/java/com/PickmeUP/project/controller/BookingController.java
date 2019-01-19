@@ -48,4 +48,11 @@ public class BookingController {
         modelAndView.setViewName("/booking/create/Buchung_anlegen");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/booking/create", method = RequestMethod.POST)
+    public ModelAndView createBooking(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        return modelAndView;
+    }
 }
