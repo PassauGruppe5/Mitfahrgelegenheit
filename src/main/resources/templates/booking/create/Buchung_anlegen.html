@@ -26,6 +26,7 @@ xmlns:th="http://www.thymeleaf.org">
 
             priceKm = [[${journey.priceKm}]];
             priceBag = [[${journey.priceBag}]];
+            userId = [[${user.id}]]
 
         /*]]>*/
 
@@ -50,14 +51,10 @@ xmlns:th="http://www.thymeleaf.org">
 
         function handoverCheckedLegs(){
             var selectedLegs = [];
-
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
             for (var i = 0; i < checkboxes.length; i++) {
               selectedLegs.push(legs[checkboxes[i].value]);
             }
-            console.log(legs);
-            console.log(selectedLegs);
 
                 $.ajax({
                     url: "/booking/create",
@@ -65,6 +62,9 @@ xmlns:th="http://www.thymeleaf.org">
                     contentType: "application/json",
                     data: JSON.stringify(selectedLegs),
                     success: function(data, status){
+                        if(data){
+                            window.location.href="/profile/show/profile?id="+userId+"#booked";
+                        }
                     }.bind(this),
                     error: function(xhr, error) {
                       console.log(error);
@@ -76,9 +76,7 @@ xmlns:th="http://www.thymeleaf.org">
         function updatePrice(){
 
             var selectedLegs = [];
-
             var price = parseFloat(0.00);
-
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
             for (var i = 0; i < checkboxes.length; i++) {
@@ -87,16 +85,11 @@ xmlns:th="http://www.thymeleaf.org">
 
             for( var i = 0; i < selectedLegs.length;i++){
                 var priceM = parseFloat(selectedLegs[i].distance / 1000);
-                console.log(parseFloat(selectedLegs[i].distance / 1000));
-                console.log(priceKm);
                 price = price + (priceKm * priceM)
-                console.log(price);
             }
-            price = price.toFixed(2);
-            console.log(price);
 
             if(price > 0){
-            document.getElementById('priceTotal').innerHTML = price +' €';
+            document.getElementById('priceTotal').innerHTML = price.toFixed(2) +' €';
             }
 
             else{
@@ -214,7 +207,7 @@ xmlns:th="http://www.thymeleaf.org">
                 <hr>
                 <h3 id="priceTotal"></h3>
                 <hr>
-                  <form class="form" action="##" th:method="post" th:action="@{/booking/create}" id="routenplanung">
+                  <form class="form" action="##" method="post" id="routenplanung">
 
                       <div class="form-group">
                       <div class="col-xs-6">

@@ -1,11 +1,8 @@
 package com.PickmeUP.project.controller;
 
-import com.PickmeUP.project.model.Journey;
-import com.PickmeUP.project.model.Leg;
-import com.PickmeUP.project.model.User;
-import com.PickmeUP.project.service.JourneyService;
-import com.PickmeUP.project.service.LegService;
-import com.PickmeUP.project.service.UserService;
+import com.PickmeUP.project.model.*;
+import com.PickmeUP.project.service.*;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BookingController {
@@ -29,6 +27,12 @@ public class BookingController {
 
     @Autowired
     private LegService legService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @RequestMapping(value = "/booking/create", method = RequestMethod.GET)
     public ModelAndView showBookingPage(@RequestParam int id) {
@@ -55,17 +59,31 @@ public class BookingController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journey = legService.findById(selectedLegs.get(0).getId()).getJourney();
+        Account userAccount = accountService.findbyUser(loggedIn);
+        Account driverAccount = accountService.findbyUser(journey.getDriver());
+        Transaction transaction = new Transaction();
 
+        double price = 0.00;
+        double priceKm = journey.getPriceKm();
         Boolean genug_platz = true;
-
         ArrayList<Leg> legsOnDb = new ArrayList<>();
 
         for(Leg leg : selectedLegs){
             legsOnDb.add(legService.findById(leg.getId()));
+            price = Precision.round(price + priceKm * leg.getDistance()/1000,2);
+            List<User> testingtest = leg.getPassengers();
             if(legService.findById(leg.getId()).checkSpace() == false){
                 genug_platz = false;
 
             }
+        }
+
+        if(price > userAccount.getBalance()){
+            modelAndView.addObject("errorMessage","Sie haben leider nicht genug Guthaben auf ihrem Konto.");
+            modelAndView.addObject("user",loggedIn);
+            modelAndView.setViewName("/Home_Angemeldet");
+            return modelAndView;
         }
 
         if(genug_platz == true){
@@ -73,11 +91,26 @@ public class BookingController {
                 leg.getPassengers().add(loggedIn);
                 legService.saveLeg(leg);
             }
+
+            transaction.setReceiver(journey.getDriver());
+            transaction.setAmount(price);
+            transaction.setTransmitter(loggedIn);
+            transaction.setMessage("Bezahlung für die Teilnahme an der Fahrt von "+journey.getOrigin().replaceFirst(", Deutschland","")+" nach "+journey.getDestination().replaceFirst(", Deutschland","")+", Sender: "+loggedIn.getName()+" "+loggedIn.getLastName()+", Empfänger: "+journey.getDriver().getName()+" "+journey.getDriver().getLastName());
+            transactionService.saveTransaction(transaction);
+
+            userAccount.setBalance(userAccount.getBalance()-price);
+            accountService.updateAccount(userAccount);
+
+            driverAccount.setBalance(driverAccount.getBalance()+price);
+            accountService.updateAccount(driverAccount);
+
             modelAndView.addObject("succesMessage","Erfolgreich zur Fahrt hinzugebucht.");
         }
         else{
-            modelAndView.addObject("errorMessage","Da war wohl jemand schnelle. Alle Plätze sind bereits vergeben.");
+            modelAndView.addObject("errorMessage","Da war wohl jemand schneller. Alle Plätze sind bereits vergeben.");
         }
+
+
 
         modelAndView.addObject("user",loggedIn);
         modelAndView.setViewName("redirect:/");

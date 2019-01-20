@@ -161,6 +161,15 @@ xmlns:th="http://www.thymeleaf.org">
               var repeat = {};
               var car = {};
 
+              function fillParams(){
+
+                          /*<![CDATA[*/
+
+                              userId = [[${user.id}]]
+
+                          /*]]>*/
+              }
+
               function initAutocomplete() {
 
                   var directionsService = new google.maps.DirectionsService;
@@ -474,6 +483,9 @@ xmlns:th="http://www.thymeleaf.org">
                     contentType: "application/json",
                     data: JSON.stringify(journey),
                     success: function(data, status){
+                    if(data){
+                        window.location.href="/profile/show/profile?id="+userId+"#offered";
+                        }
                     }.bind(this),
                     error: function(xhr, error) {
                       console.log(error);
@@ -481,7 +493,7 @@ xmlns:th="http://www.thymeleaf.org">
                 });
               };
 
-
+            window.onload.fillParams;
             </script>
       
       </head>

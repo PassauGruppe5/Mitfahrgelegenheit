@@ -178,8 +178,8 @@
                   <div th:if="${not #lists.isEmpty(journeyList)}">
                     <table>
                         <tr th:each="journeyToPost: ${journeyList}" class="border_bottom">
-                        <td th:text="${journeyToPost.arrival}"></td>
-                        <td th:text="${journeyToPost.departure}"></td>
+                        <td th:text="${journeyToPost.arrivalDate}"></td>
+                        <td th:text="${journeyToPost.departureDate}"></td>
                         <td th:text="${journeyToPost.destination}"></td>
                         <td th:text="${journeyToPost.origin}"></td>
                         <td> <a th:text="${journeyToPost.driver.name}+' '+${journeyToPost.driver.lastName}" th:href="@{/journey/show(id=${journeyToPost.id})}"></a></td>
