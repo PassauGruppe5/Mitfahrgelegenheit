@@ -214,6 +214,8 @@ xmlns:th="http://www.thymeleaf.org">
                         </div>
 
                         <input id="btn_speichern" class="btn btn-success"  onclick="handoverCheckedLegs()" type="submit" value="Fahrt buchen">
+                        <span th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
+                        <span th:utext="${errorMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
 
 
               <div id="fahrerinformationen" class="tab-pane fade">

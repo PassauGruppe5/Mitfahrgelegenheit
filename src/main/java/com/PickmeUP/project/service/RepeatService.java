@@ -16,4 +16,6 @@ public class RepeatService {
 
     public Repeat findRepeatById(int id){return repeatRepository.findById(id);}
 
+    public Repeat findById(int id){return repeatRepository.findById(id);}
+
 }

@@ -76,11 +76,11 @@ public class BookingController {
             modelAndView.addObject("succesMessage","Erfolgreich zur Fahrt hinzugebucht.");
         }
         else{
-            modelAndView.addObject("succesMessage","Da war wohl jemand schnelle. Alle Plätze sind bereits.");
+            modelAndView.addObject("errorMessage","Da war wohl jemand schnelle. Alle Plätze sind bereits vergeben.");
         }
 
         modelAndView.addObject("user",loggedIn);
-        modelAndView.setViewName("/Home_Angemeldet");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 }

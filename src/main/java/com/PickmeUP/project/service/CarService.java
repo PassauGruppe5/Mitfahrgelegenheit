@@ -11,5 +11,6 @@ public class CarService {
 
     @Autowired
     private CarRepository carRepository;
-    private Car car = new Car();
+
+    public Car save(Car car){return carRepository.save(car);}
 }
