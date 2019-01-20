@@ -35,7 +35,7 @@ public class RegistrationController {
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
-                            "Es existiert bereits einen User mit der angegebenen Email.");
+                            "Es existiert bereits ein User mit der angegebenen Email.");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
