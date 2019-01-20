@@ -14,23 +14,38 @@ xmlns:th="http://www.thymeleaf.org">
 
         var legs = [];
 
+        var priceKm;
+
+        var priceBag;
+
         function fillLegs(){
 
-                        /*[# th:each="n : ${legs}"]*/
+            document.getElementById('priceTotal').innerHTML = "0.00 €";
 
-                        var leg = {};
+        /*<![CDATA[*/
 
-                        leg.id = "[(${n.id})]";
-                        leg.end_address = "[(${n.start_address})]";
-                        leg.end_address = "[(${n.end_address})]";
-                        leg.seats = "[(${n.seats})]";
-                        leg.bags = "[(${n.bags})]";
-                        leg.distance = "[(${n.distance})]";
-                        leg.duration = "[(${n.duration})]";
-                        legs.push(leg);
-                        console.log(leg);
+            priceKm = [[${journey.priceKm}]];
+            priceBag = [[${journey.priceBag}]];
 
-                        /*[/]*/
+        /*]]>*/
+
+
+        /*[# th:each="n : ${legs}"]*/
+
+        var leg = {};
+
+        leg.id = "[(${n.id})]";
+        leg.end_address = "[(${n.start_address})]";
+        leg.end_address = "[(${n.end_address})]";
+        leg.seats = "[(${n.seats})]";
+        leg.bags = "[(${n.bags})]";
+        leg.distance = "[(${n.distance})]";
+        leg.duration = "[(${n.duration})]";
+        legs.push(leg);
+        console.log(leg);
+
+        /*[/]*/
+
         }
 
         function handoverCheckedLegs(){
@@ -56,6 +71,37 @@ xmlns:th="http://www.thymeleaf.org">
                     }
                 });
 
+        }
+
+        function updatePrice(){
+
+            var selectedLegs = [];
+
+            var price = parseFloat(0.00);
+
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+            for (var i = 0; i < checkboxes.length; i++) {
+              selectedLegs.push(legs[checkboxes[i].value]);
+            }
+
+            for( var i = 0; i < selectedLegs.length;i++){
+                var priceM = parseFloat(selectedLegs[i].distance / 1000);
+                console.log(parseFloat(selectedLegs[i].distance / 1000));
+                console.log(priceKm);
+                price = price + (priceKm * priceM)
+                console.log(price);
+            }
+            price = price.toFixed(2);
+            console.log(price);
+
+            if(price > 0){
+            document.getElementById('priceTotal').innerHTML = price +' €';
+            }
+
+            else{
+                document.getElementById('priceTotal').innerHTML = "0.00 €";
+            }
         }
 
       window.onload = fillLegs;
@@ -166,6 +212,8 @@ xmlns:th="http://www.thymeleaf.org">
           <div class="tab-content">
             <div class="tab-pane fade in active" id="routenplanung">
                 <hr>
+                <h3 id="priceTotal"></h3>
+                <hr>
                   <form class="form" action="##" th:method="post" th:action="@{/booking/create}" id="routenplanung">
 
                       <div class="form-group">
@@ -185,14 +233,14 @@ xmlns:th="http://www.thymeleaf.org">
                       <div class="form-group">
                       <div class="col-xs-6">
                       <label for="Abfahrtszeit" ><h4>Abfahrtszeit</h4></label>
-                      <output type="time" class="form-control" id="abfahrts" th:text="${journey.departure}"></output>
+                      <output type="time" class="form-control" id="abfahrts" th:text="${journey.departureTime}+' Uhr'"></output>
                       </div>
                       </div>
 
                         <div class="form-group">
                         <div class="col-xs-6">
                         <label for="Ankunftszeit"><h4>Ankunftszeit</h4></label>
-                        <output type="time" class="form-control" id="ankunfts" th:text="${journey.arrival}"></output>
+                        <output type="time" class="form-control" id="ankunfts" th:text="${journey.arrivalTime}+' Uhr'"></output>
                         </div>
                         </div>
 
@@ -200,14 +248,14 @@ xmlns:th="http://www.thymeleaf.org">
                         <div class="col-xs-6">
                         <label for="Zwischenstop1"><h4 th:text="${iStat.count}+'. Zwischenstop'"></h4></label>
                         <output type="text" th:text="${leg.start_address}+'--->'+${leg.end_address}" class="form-control" id="1zwischen"></output>
-                        <input type="checkbox" th:value="${iStat.index}">
+                        <input type="checkbox" onchange="updatePrice()" th:value="${iStat.index}">
                         </div>
                         </div>
 
                         <div class="form-group">
                         <div class="col-xs-6">
                         <label for="Datum"><h4>Datum</h4></label>
-                        <output type="datetime-local" class="form-control" th:text="${journey.departure}" id="endp"></output>
+                        <output type="datetime-local" class="form-control" th:text="${journey.departureDate}" id="endp"></output>
                         </div>
                         </div>
                         </form>
@@ -271,21 +319,21 @@ xmlns:th="http://www.thymeleaf.org">
                     <div class="form-group">
                     <div class="col-md-3">
                     <label style="margin-top: 15px;"for="Automarke"><h4>Automarke</h4></label>
-                    <output type="text" class="form-control" id="marke"></output>
+                    <output type="text" class="form-control" th:text="${journey.car.type}" id="marke"></output>
                     </div>
                     </div>
 
                     <div class="form-group">
                     <div class="col-md-3">
                     <label for="Kennzeichen"><h4>Kennzeichen</h4></label>
-                    <output type="text" class="form-control" id="kennz"></output>
+                    <output type="text" th:text="${journey.car.licence}" class="form-control" id="kennz"></output>
                     </div>
                     </div>
 
                     <div class="form-group">
                     <div class="col-md-3">
                     <label for="Farbe"><h4>Farbe</h4></label>
-                    <output type="text" class="form-control" id="farbe"></output>
+                    <output type="text"  th:text="${journey.car.colour}" class="form-control" id="farbe"></output>
                     </div>
                     </div>
                     </div>

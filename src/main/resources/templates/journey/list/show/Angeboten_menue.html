@@ -119,12 +119,13 @@ xmlns:th="http://www.thymeleaf.org">
       <table frame="void" class="table table-hover">
   <thead>
     <tr>
-      <th scope="col"></th>
+      <th scope="col">-</th>
       <th scope="col">Startpunkt</th>
       <th scope="col">Endziel</th>
+      <th scope="col">Abfahrtsdatum</th>
       <th scope="col">Abfahrtszeit</th>
+      <th scope="col">Ankunftsdatum</th>
       <th scope="col">Ankunftszeit</th>
-      <th scope="col">Datum</th>
       <th scope="col">Preis/Km</th>
       <th scope="col">Details</th>
     </tr>
@@ -134,10 +135,11 @@ xmlns:th="http://www.thymeleaf.org">
       <th scope="row">-</th>
       <td th:text="${journeyToPost.origin}"></td>
       <td th:text="${journeyToPost.destination}"></td>
-      <td th:text="${journeyToPost.departure}"></td>
-      <td th:text="${journeyToPost.arrival}"></td>
-      <td th:text="${journeyToPost.arrival}"></td>
-      <td th:text="${journeyToPost.arrival}"></td>
+      <td th:text="${journeyToPost.departureDate}"></td>
+      <td th:text="${journeyToPost.departureTime}+' Uhr'"></td>
+      <td th:text="${journeyToPost.arrivalDate}"></td>
+      <td th:text="${journeyToPost.priceKm}+' €'"></td>
+      <td th:text="${journeyToPost.arrivalTime}+' Uhr'"></td>
       <td><a id="btn_details" class="btn-success" th:href="@{'/booking/create?id='+${journeyToPost.id}}" role="button">Details</a></td>
     </tr>
   </tbody>
