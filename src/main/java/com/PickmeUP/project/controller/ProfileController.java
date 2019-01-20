@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,6 +32,9 @@ public class ProfileController {
 
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private LegService legService;
 
     @RequestMapping(value={"/profile/create/payment-in"}, method = RequestMethod.GET)
     public ModelAndView ShowPaymentInForm(){
@@ -180,6 +184,7 @@ public class ProfileController {
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }
+        ArrayList<Journey> testJourney = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
         return modelAndView;
     }
 
