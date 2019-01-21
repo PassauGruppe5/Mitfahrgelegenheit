@@ -4,6 +4,7 @@ import com.PickmeUP.project.model.*;
 import com.PickmeUP.project.service.*;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -121,6 +122,11 @@ public class BookingController {
                 legService.saveLeg(leg);
             }
 
+            try {
+                GmailService.sendBookingMail(loggedIn);
+            } catch (MailException e) {
+                e.printStackTrace();
+            }
             transaction.setReceiver(journey.getDriver());
             transaction.setAmount(price);
             transaction.setTransmitter(loggedIn);
