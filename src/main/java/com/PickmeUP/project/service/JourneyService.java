@@ -40,4 +40,11 @@ public class JourneyService {
         return journeyRepository.findJourneysByIdIn(journeysOfPassenger);
 
         }
+
+        public Journey saveAsClone(Journey startJourney){
+        Journey clone = new Journey();
+        clone.clone(startJourney);
+        journeyRepository.save(clone);
+        return clone;
+    }
 }
