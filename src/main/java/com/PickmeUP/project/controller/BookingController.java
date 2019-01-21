@@ -94,20 +94,20 @@ public class BookingController {
         Transaction transaction = new Transaction();
 
         double price = 0.00;
-        double priceKm = journey.getPriceKm();
         Boolean genug_platz = true;
+
         ArrayList<Leg> legsOnDb = new ArrayList<>();
 
         for(Leg leg : selectedLegs){
             legsOnDb.add(legService.findById(leg.getId()));
-            price = Precision.round(price + priceKm * leg.getDistance()/1000,2);
+            price = Precision.round(price + journey.getPriceKm() * leg.getDistance()/1000,2);
             List<User> testingtest = leg.getPassengers();
             if(legService.findById(leg.getId()).checkSpace() == false){
                 genug_platz = false;
 
             }
         }
-
+        price = price + selectedLegs.get(0).getBags() *  journey.getPriceBag();
         if(price > userAccount.getBalance()){
             modelAndView.addObject("errorMessage","Sie haben leider nicht genug Guthaben auf ihrem Konto.");
             modelAndView.addObject("user",loggedIn);

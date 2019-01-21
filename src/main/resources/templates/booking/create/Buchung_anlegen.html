@@ -33,23 +33,6 @@ xmlns:th="http://www.thymeleaf.org">
 
         document.getElementById('priceKmPrint').innerHTML = priceKm+" €";
 
-
-        /*[# th:each="n : ${legs}"]*/
-
-        var leg = {};
-
-        leg.id = "[(${n.id})]";
-        leg.end_address = "[(${n.start_address})]";
-        leg.end_address = "[(${n.end_address})]";
-        leg.seats = "[(${n.seats})]";
-        leg.bags = "[(${n.bags})]";
-        leg.distance = "[(${n.distance})]";
-        leg.duration = "[(${n.duration})]";
-        legs.push(leg);
-        console.log(leg);
-
-        /*[/]*/
-
         }
 
         function handoverCheckedLegs(){
@@ -77,13 +60,29 @@ xmlns:th="http://www.thymeleaf.org">
         }
 
         function updatePrice(){
+            legs.splice(0,legs.length)
+            var bagsCount = document.getElementById("baggage").value;
+
+                    /*[# th:each="n : ${legs}"]*/
+
+                    var leg = {};
+
+                    leg.id = "[(${n.id})]";
+                    leg.end_address = "[(${n.start_address})]";
+                    leg.end_address = "[(${n.end_address})]";
+                    leg.seats = "[(${n.seats})]";
+                    leg.bags = bagsCount;
+                    leg.distance = "[(${n.distance})]";
+                    leg.duration = "[(${n.duration})]";
+                    legs.push(leg);
+                    console.log(leg);
+
+                    /*[/]*/
 
             var selectedLegs = [];
-            var bags = document.getElementById("baggage").value;
             var price = parseFloat(0.00);
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-            console.log(bags);
             console.log(priceBag);
             for (var i = 0; i < checkboxes.length; i++) {
               selectedLegs.push(legs[checkboxes[i].value]);
@@ -93,7 +92,7 @@ xmlns:th="http://www.thymeleaf.org">
                 var km = parseFloat(selectedLegs[i].distance / 1000);
                 price = price + (priceKm * km)
             }
-            price = price + priceBag * bags;
+            price = price + priceBag * bagsCount;
             console.log(price);
 
             if(price > 0){
