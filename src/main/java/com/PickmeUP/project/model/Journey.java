@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -146,4 +147,13 @@ public class Journey {
         }
 
     }
+
+    public boolean checkTime(LocalTime searchTime){
+        if(LocalTime.parse(this.getDepartureTime()).isBefore(searchTime)){
+            return true;}
+        if(LocalTime.parse(this.getDepartureTime()).equals(searchTime)){
+            return true;}
+        else
+            return false;
+        }
 }

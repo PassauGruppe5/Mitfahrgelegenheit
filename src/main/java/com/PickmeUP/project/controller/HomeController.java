@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,13 +50,14 @@ public class HomeController {
     }
 
     @RequestMapping(value="/", method = RequestMethod.POST)
-    public ModelAndView handleSearch(@RequestParam String von,@RequestParam String nach,@RequestParam String datum) throws ParseException {
+    public ModelAndView handleSearch(@RequestParam String von,@RequestParam String nach,@RequestParam String datum,@RequestParam String zeit ) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         ArrayList<Journey> journeys = journeyRepository.findJourneysByPossibleRoute(von,nach);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         ArrayList<Journey> results = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        LocalTime searchTime = LocalTime.parse(zeit);
         Date searchDate = formatter.parse(datum);
 
         if(loggedIn == null){
@@ -87,7 +89,7 @@ public class HomeController {
             }
 
             if(genug_platz){
-               if(journey.checkDate(searchDate, formatter) && journey.getActive() == 1){
+               if(journey.checkDate(searchDate, formatter) && journey.checkTime(searchTime) && journey.getActive() == 1){
 
                     journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
                     journey.setArrivalTime(journey.getArrivalTime().substring(1,5));

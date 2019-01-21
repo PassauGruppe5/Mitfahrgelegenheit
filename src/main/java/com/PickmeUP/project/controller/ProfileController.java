@@ -170,6 +170,10 @@ public class ProfileController {
         if(loggedIn == toView){
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
+            for(Journey journey : journeyList) {
+                journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
+                journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
+            }
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);

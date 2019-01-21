@@ -1,69 +1,123 @@
 <!DOCTYPE html>
 <html lang="de"
-      xmlns:th="http://www.thymeleaf.org">
+ xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Profil1</title>
+      <title>PickmeUp - Profil</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script src="/javascripts/jquery.localscroll.js?1281125099" type="text/javascript"></script>
-      <script src="/javascripts/jquery.scrollTo.js?1281125099" type="text/javascript"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      
+
       <style>
-          
+
           #logo{
-              
+
              width:130px;
              height:50px;
              margin-top: 5px;
-             
-             
-          }
-          .navbar{
 
+          }
+
+          .container1{
+
+              position: relative;
               margin-left: 150px;
               margin-right: 150px;
+
           }
-          
+
+          .navbar{
+
+             margin-top: 10px;
+          }
+
           #profilname{
-              
+
               margin-left: -20px;
               font-style: normal;
               font-size: 40px;
           }
-          
+
           #kommentarbox{
-              
+
               margin-left: 15px;
               margin-top: 300px;
               position: absolute;
           }
-          
+
           #btn_speichern{
-              
+
               position: absolute;
               border-radius: 20px;
           }
+
           #derzeitiges_guthaben{
-              
+
               width: 100px;
           }
-          
+
           .btn-block{
-              
+
               width: 100px;
               margin-top: 20px;
               border-radius: 20px;
           }
 
+           #kommentarbox{
+
+              position: absolute;
+          }
+
+          #output{
+
+              position: absolute;
+              margin-left: 348px;
+              margin-top: -5px;
+
+          }
+
+          h4{
+
+              margin-left: 15px;
+          }
+
+          #_stornieren{
+
+              margin-top: 15px;
+              border-radius: 20px;
+          }
+
+          #_details{
+
+              margin-left: 15px;
+              margin-top: 15px;
+              border-radius: 20px;
+          }
+
+          .buttonkasten{
+
+              position: absolute;
+              margin-top: 350px;
+              margin-left: 15px;
+              width: 100%;
+          }
+
+          #linie{
+
+              color: blue;
+          }
+
+
+
       </style>
-      
+
       </head>
   <body>
+
+      <div class="container1">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
   <div class="container-fluid">
     <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
@@ -98,24 +152,23 @@
     </div>
   </div>
   </nav>
+</div>
 
 <hr>
 <div class="container bootstrap snippet">
     <div class="row">
   		<div class="col-sm-10"><div id="profilname" th:text="${user.name}+' '+${user.lastName}"></div></div>
-    	
+
     </div>
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
-              
+
 
       <div class="text-center">
         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-        <h6>Anderes Foto einfügen...</h6>
-        <input type="file" class="text-center center-block file-upload">
       </div><br>
-          
-          
+
+
         </div><!--/col-3-->
     	<div class="col-sm-9">
             <ul class="nav nav-tabs">
@@ -126,53 +179,63 @@
                 <li><a data-toggle="tab" href="#rating">Bewertung</a></li>
               </ul>
 
-              
           <div class="tab-content">
             <div class="tab-pane fade in active" id="profil">
                 <hr>
+                  <form class="form" id="profil">
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="Vorname"><h4>Vorname</h4></label>
                               <output type="text" class="form-control" th:text="${user.name}" name="Vorname" id="v_name" title="Vorname"></output>
                           </div>
                       </div>
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                             <label for="last_name"><h4>Nachname</h4></label>
                               <output type="text" class="form-control" th:text="${user.lastName}" name="Nachname" id="n_name" title="Nachname"></output>
                           </div>
                       </div>
-                      
+
                        <div class="form-group">
                           <div class="col-xs-6">
                               <label for="Geburtstag"><h4>Geburtstag</h4></label>
                               <output type="text" class="form-control" th:text="${user.phone}" name="Geburtstag" id="g_burt" title="Geburtsdatum eingeben"></output>
                           </div>
                       </div>
-                      
+
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="email"><h4>Email</h4></label>
-                              <output type="email" th:text="${user.email}" class="form-control" name="email" id="e_mail" title="E-Mail Adresse"></output>
+                              <output type="email" class="form-control" th:text="${user.email}" name="email" id="e_mail" title="E-Mail Adresse"></output>
                           </div>
                       </div>
-          
+
                       <div class="form-group">
-                          
+
                           <div class="col-xs-6">
                               <label for="Telefonnummer"><h4>Telefonnummer</h4></label>
                               <output type="text" class="form-control" th:text="${user.phone}" name="Telefonnummer" id="t_nummer" title="Telefonnummer"></output>
                           </div>
                       </div>
-                <form id="kommentarbox" action="" th:method="post" th:action="@{/profile/alter/comment}" >
-                <label> Persönliche Angaben: <br><textarea id="comment" th:field= "*{user.comment}" cols="45" rows="5" name="message"></textarea></label>
+
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                          <label for="status"><h4>Bonusprogramm</h4></label>
+                          <output type="number" class="form-control" th:text="${user.bonus.description}" id="b_prozent" name="Bonus" title="Bonus"></output>
+                        </div>
+                      </div>
+
+              	</form>
+
+                  <form id="kommentarbox" action="" th:method="post" th:action="@{/profile/alter/comment}" >
+                <label> Persönliche Angaben: <br><textarea id="comment" th:field= "*{user.comment}"cols="45" rows="5" name="message"></textarea></label>
                 <input id="btn_speichern" class="btn btn-success" type="submit" value="Speichern">
                 </form>
                 </div>
-              
+
               <div id="offered" class="tab-pane fade">
                 <div id="journeyList">
                   <div th:if="${not #lists.isEmpty(journeyList)}">
@@ -189,48 +252,94 @@
 
                 </div>
               </div>
-              
+
+
+
               <div id="booked" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Some content in menu 2.</p>
-                <p th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;"></p>
+              <hr>
+                <h4><a style="margin-top: 10px; text-decoration: none;" href="">Name des Fahrers</a></h4>
+                <div class="form-group">
+                      <div class="col-xs-6">
+                      <label for="Startpunkt"><h4>Startpunkt</h4></label>
+                      <output type="text" class="form-control" id="startp"></output>
+                      </div>
+                      </div>
+
+                      <div class="form-group">
+                      <div class="col-xs-6">
+                      <label for="Endziel"><h4>Endziel</h4></label>
+                      <output type="text" class="form-control" id="endz"></output>
+                      </div>
+                      </div>
+
+                      <div class="form-group">
+                      <div class="col-xs-6">
+                      <label for="Abfahrtszeit"><h4>Abfahrtszeit</h4></label>
+                      <output type="time" class="form-control" id="abfahrts"></output>
+                      </div>
+                      </div>
+
+                        <div class="form-group">
+                        <div class="col-xs-6">
+                        <label for="Ankunftszeit"><h4>Ankunftszeit</h4></label>
+                        <output type="time" class="form-control" id="ankunfts"></output>
+                        </div>
+                        </div>
+
+                        <div class="form-group">
+                        <div class="col-xs-6">
+                        <label for="Datum"><h4>Datum der Abfahrt</h4></label>
+                        <output type="datetime-local" class="form-control" id="endp"></output>
+                        </div>
+                        </div>
+
+                        <div class="form-group">
+                        <div class="col-xs-6">
+                        <label for="Datum"><h4>Datum der Ankunft</h4></label>
+                        <output type="datetime-local" class="form-control" id="endp"></output>
+                        </div>
+                        </div>
+
+                  <a id="_details" class="btn btn-success" href="#" role="button">Details</a>
+                  <input id="_stornieren" class="btn btn-success" type="submit" value="Fahrt stornieren">
+
+                <hr>
               </div>
-              
+
               <div id="balance" class="tab-pane fade">
                 <hr>
                 <form class="form-inline">
                 <div class="form-group">
                 <label for="derzeitiges_guthaben">Ihr derzeitiges Guthaben beträgt: </label>
-                <output type="text"  th:text="${account.balance}" class="form-control" id="derzeitiges_guthaben">
+                <output type="text" th:text="${account.balance}" class="form-control" id="derzeitiges_guthaben">
                 </output>
                 </div>
                 <a class="btn btn-success btn-block" th:href="@{/profile/create/payment-in}" role="button">Einzahlen</a>
                 <a class="btn btn-success btn-block" th:href="@{/profile/create/payment-out}" role="button">Auszahlen</a>
-                </form> 
+                </form>
             </div>
-              
-              <div id="rating" class="tab-pane fade">
-                <div th:if="${not #lists.isEmpty(ratingList)}">
-                  <table>
-                      <tr th:each="ratingToPost: ${ratingList}">
-                      <td th:text="${ratingToPost.message}"></td>
-                      <td th:text="${ratingToPost.grade}"></td>
-                      <td> <a th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}" th:href="@{/profile/show/profile(id=${ratingToPost.publisher.id})}"></a></td>
-                      </tr>
-                  </table>
-                </div>
 
+              <div id="rating" class="tab-pane fade">
+              <hr>
+              <div th:if="${not #lists.isEmpty(ratingList)}">
+              <form action="" method="post">
+              <output id="output" th:text="${ratingToPost.grade}" for="Zahl">Zahl</output>
+              <label th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}" > Name des Bewerters: <br><textarea cols="45" rows="5" th:text="${ratingToPost.message}" name="message"></textarea></label>
+              </form>
+              <hr>
               </div>
+            </div>
+
           </div>
         </div>
       </div>
       </div>
-      <script>
-            $(function () {
-            var activeTab = $('[href=' + location.hash + ']');
-            activeTab && activeTab.tab('show');
-            });
+    <script>
+          $(function () {
+          var activeTab = $('[href=' + location.hash + ']');
+          activeTab && activeTab.tab('show');
+          });
 
-      </script>
+    </script>
     </body>
 </html>
