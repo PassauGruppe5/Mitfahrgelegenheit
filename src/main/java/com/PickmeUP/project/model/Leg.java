@@ -18,26 +18,11 @@ public class Leg {
     @Column(name = "end_address")
     private String end_address;
 
-    @Column(name = "start_lat")
-    private Double start_lat;
-
-    @Column(name = "end_lat")
-    private Double end_lat;
-
-    @Column(name = "start_lng")
-    private Double start_lng;
-
-    @Column(name = "end_lng")
-    private Double end_lng;
-
     @Column(name = "seats")
     private int seats;
 
     @Column(name = "bags")
     private int bags;
-
-    @Column(name = "selected")
-    private int selected;
 
     @Column(name = "distance" )
     private int distance;
@@ -53,6 +38,7 @@ public class Leg {
     private Journey journey;
 
     @ManyToMany
+    @JoinColumn(name = "passengers")
     private List<User> passengers;
 
     public int getId(){return this.id;}
@@ -68,13 +54,6 @@ public class Leg {
 
     public void setBags(int bags){this.bags = bags;}
     public int getBags(){return this.bags;}
-
-    public int getSelected() {
-        return selected;
-    }
-    public void setSelected(int selected) {
-        this.selected = selected;
-    }
 
     public int getPosition() {
         return position;
@@ -96,7 +75,7 @@ public class Leg {
     public List <User> getPassengers(){return this.passengers;}
 
     public Boolean checkSpace(){
-        if((this.journey.getSeats() + 1 - this.getPassengers().size()) >= 0 ){
+        if((this.seats - this.getPassengers().size()) > 0 ){
             return true;
         }
         else{

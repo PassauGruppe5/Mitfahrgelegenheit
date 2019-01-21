@@ -10,7 +10,7 @@ xmlns:th="http://www.thymeleaf.org">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script th:inline="javascript" th:with="legs = (${legs})">
+      <script th:inline="javascript">
 
         var legs = [];
 
@@ -18,7 +18,17 @@ xmlns:th="http://www.thymeleaf.org">
 
                         /*[# th:each="n : ${legs}"]*/
 
-                        legs.push("[(${n})]");
+                        var leg = {};
+
+                        leg.id = "[(${n.id})]";
+                        leg.end_address = "[(${n.start_address})]";
+                        leg.end_address = "[(${n.end_address})]";
+                        leg.seats = "[(${n.seats})]";
+                        leg.bags = "[(${n.bags})]";
+                        leg.distance = "[(${n.distance})]";
+                        leg.duration = "[(${n.duration})]";
+                        legs.push(leg);
+                        console.log(leg);
 
                         /*[/]*/
         }
@@ -33,6 +43,18 @@ xmlns:th="http://www.thymeleaf.org">
             }
             console.log(legs);
             console.log(selectedLegs);
+
+                $.ajax({
+                    url: "/booking/create",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(selectedLegs),
+                    success: function(data, status){
+                    }.bind(this),
+                    error: function(xhr, error) {
+                      console.log(error);
+                    }
+                });
 
         }
 
@@ -177,7 +199,7 @@ xmlns:th="http://www.thymeleaf.org">
                         <div th:each="leg , iStat : ${legs}" class="form-group">
                         <div class="col-xs-6">
                         <label for="Zwischenstop1"><h4 th:text="${iStat.count}+'. Zwischenstop'"></h4></label>
-                        <output type="text" th:text="${leg.start_address}" class="form-control" id="1zwischen"></output>
+                        <output type="text" th:text="${leg.start_address}+'--->'+${leg.end_address}" class="form-control" id="1zwischen"></output>
                         <input type="checkbox" th:value="${iStat.index}">
                         </div>
                         </div>
@@ -192,6 +214,8 @@ xmlns:th="http://www.thymeleaf.org">
                         </div>
 
                         <input id="btn_speichern" class="btn btn-success"  onclick="handoverCheckedLegs()" type="submit" value="Fahrt buchen">
+                        <span th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
+                        <span th:utext="${errorMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
 
 
               <div id="fahrerinformationen" class="tab-pane fade">

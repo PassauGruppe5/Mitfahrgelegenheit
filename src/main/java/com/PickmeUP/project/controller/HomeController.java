@@ -74,6 +74,11 @@ public class HomeController {
                     in_trip = true;
                 }
                 if(in_trip){
+                    if(leg.checkSpace() == false){
+                        genug_platz = false;
+                        modelAndView.addObject("errorMessage","Es wurden keine Fahrten zu den Eingaben gefunend.");
+                        break;
+                    }
                     genug_platz = true;
                 }
                 if(leg.getEnd_address().contains(nach) && in_trip){

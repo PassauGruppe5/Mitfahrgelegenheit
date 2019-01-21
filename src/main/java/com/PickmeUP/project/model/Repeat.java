@@ -18,7 +18,11 @@ public class Repeat {
     @Column(name = "description")
     private String description;
 
+    public Repeat(){}
+
     public void setDescription(String description) {this.description = description; }
     public String getDescription() { return description; }
+
+    public int getId(){return this.id;}
 
 }

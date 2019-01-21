@@ -16,11 +16,17 @@ public class Journey {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "arrival", nullable = false)
-    private Date arrival;
+    @Column(name = "arrivalDate", nullable = false)
+    private Date arrivalDate;
 
-    @Column(name = "departure", nullable = false)
-    private Date departure;
+    @Column(name = "departureDate", nullable = false)
+    private Date departureDate;
+
+    @Column(name = "arrivalTime", nullable = false)
+    private String arrivalTime;
+
+    @Column(name = "departureTime", nullable = false)
+    private String dapartureTime;
 
     @Column(name = "bags", nullable = false)
     private int bags;
@@ -61,16 +67,20 @@ public class Journey {
     private User driver;
 
     @ManyToOne
+    @JoinColumn(name = "car")
+    private Car car;
+
+    @ManyToOne
     private Repeat repeat;
 
-    public Journey() {}
+    public Journey(){}
     public int getId() {return this.id;}
 
-    public Date getArrival() {return this.arrival;}
-    public void setArrival(Date arrival) { this.arrival = arrival;}
+    public Date getArrivalDate() {return this.arrivalDate;}
+    public void setArrivalDate(Date arrivalDate) { this.arrivalDate = arrivalDate;}
 
-    public Date getDeparture() {return this.departure;}
-    public void setDeparture(Date departure) {this.departure = departure;}
+    public Date getDepartureDate() {return this.departureDate;}
+    public void setDepartureDate(Date departuredate) {this.departureDate = departuredate;}
 
     public int getBags() { return this.bags;}
     public void setBags(int bags) {this.bags = bags;}
@@ -108,15 +118,24 @@ public class Journey {
     public Repeat getRepeat() {return this.repeat;}
     public void setRepeat(Repeat repeat) {this.repeat = repeat;}
 
+    public String getArrivalTime(){return this.arrivalTime;}
+    public void setArrivalTime(String arrivalTime){this.arrivalTime=arrivalTime;}
+
+    public String getDepartureTime(){return this.dapartureTime;}
+    public void setDepartureTime(String dapartureTime){this.dapartureTime=dapartureTime;}
+
+    public Car getCar(){return this.car;}
+    public void setCar(Car car){this.car=car;}
+
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation() {return this.creation;}
 
     public boolean checkDate(Date search) {
-        if (search.before(this.getDeparture())) {
+        if (search.before(this.getDepartureDate())) {
             return true;
         }
 
-        if (search.equals(this.getDeparture())){
+        if (search.equals(this.getDepartureDate())){
             return true;
         }
         else {

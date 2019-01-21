@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,9 +51,36 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/create", method = RequestMethod.POST)
-    public ModelAndView createBooking(){
+    public ModelAndView createBooking(@RequestBody ArrayList<Leg> selectedLegs){
         ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
 
+        Boolean genug_platz = true;
+
+        ArrayList<Leg> legsOnDb = new ArrayList<>();
+
+        for(Leg leg : selectedLegs){
+            legsOnDb.add(legService.findById(leg.getId()));
+            if(legService.findById(leg.getId()).checkSpace() == false){
+                genug_platz = false;
+
+            }
+        }
+
+        if(genug_platz == true){
+            for(Leg leg : legsOnDb){
+                leg.getPassengers().add(loggedIn);
+                legService.saveLeg(leg);
+            }
+            modelAndView.addObject("succesMessage","Erfolgreich zur Fahrt hinzugebucht.");
+        }
+        else{
+            modelAndView.addObject("errorMessage","Da war wohl jemand schnelle. Alle Plätze sind bereits vergeben.");
+        }
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 }

@@ -29,6 +29,8 @@ public class Car {
 //    @OneToMany (mappedBy = "car")
 //    private List<Trip> trips;
 
+    public Car(){}
+
     public void setId(int id) {
         this.id = id;
     }

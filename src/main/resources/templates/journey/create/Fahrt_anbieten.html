@@ -26,12 +26,13 @@ xmlns:th="http://www.thymeleaf.org">
               position: absolute;
               margin-left: 10px;
               width: 40%;
+              margin-top: -25px;
           }
           
           .container3{
               
               position: absolute;
-              margin-top: 600px;
+              margin-top: 450px;
               margin-left: 10px;
               width: 40%;
           }
@@ -39,10 +40,18 @@ xmlns:th="http://www.thymeleaf.org">
           .container4{
               
               position: absolute;
-              margin-left: 10px;
+              margin-left: 400px;
               width: 40%;
-              margin-top: 350px;
+              margin-top: -25px;
+              width: 30%;
           }
+
+        .container5{
+
+            position: absolute;
+            margin-left: 18px;
+            margin-top: 340px;
+        }
           
            #logo{
               
@@ -62,9 +71,10 @@ xmlns:th="http://www.thymeleaf.org">
               
               height: 100%;
               float: right;
-              margin-right: 300px;
+              margin-right: 100px;
               border: solid black;
               margin-top: 20px;
+              position: fixed;
               
           }
     
@@ -77,23 +87,66 @@ xmlns:th="http://www.thymeleaf.org">
           .form-control{
               
               width: 100%;
+              border-radius:10px;
               
           }
           
-          h3{
-              
-          }
-          
-          #departure{
+          #departuredat{
               
               border-radius: 10px;
-              width: 140px;
+              width: 130px;
+              margin-left:8px;
           }
+
+            #departuretime{
+
+                border-radius: 10px;
+                width: 100px;
+                margin-left:8px;
+            }
           
-          #arrival{
+          #arrivaldat{
               
               border-radius: 10px;
-              width: 140px;
+              width: 130px;
+              margin-left: 8px;
+          }
+
+          #arrivaltime{
+
+              border-radius:10px;
+              width: 100px;
+              margin-left: 8px;
+          }
+
+          #repeat{
+
+              border-radius: 10px;
+              height: 25px;
+              margin-left: 8px;
+          }
+
+          .col-md-3{
+
+              margin-left: 8px;
+          }
+
+          .btn{
+
+              margin-bottom: 10px;
+              border-radius: 10px;
+              margin-left: 8px;
+          }
+
+          label{
+
+              margin-left: 8px;
+          }
+
+          .dropdown{
+
+              float:right;
+
           }
       
       </style>
@@ -105,6 +158,9 @@ xmlns:th="http://www.thymeleaf.org">
               var places = {};
               var autocompletes = {};
               var journey = {};
+              var repeat = {};
+              var car = {};
+
               function initAutocomplete() {
 
                   var directionsService = new google.maps.DirectionsService;
@@ -393,17 +449,25 @@ xmlns:th="http://www.thymeleaf.org">
               }
 
               function saveJourney(){
+                  car.colour = $("#color").val();
+                  car.licence = $("#licence").val();
+                  car.type = $("#type").val();
+                  repeat.id = $("#repeat").val();
                 journey.seats = $("#seats").val();
                 journey.bags = $("#bags").val();
                 journey.priceKm = $("#priceKm").val();
                 journey.priceBag = $("#priceBag").val();
-                journey.departure = $("#departure").val();
-                journey.arrival = $("#arrival").val();
+                journey.departureDate = $("#departuredat").val();
+                journey.arrivalDate = $("#arrivaldat").val();
+                journey.departureTime = $("#departuretime").val();
+                journey.arrivalTime = $("#arrivaltime").val();
                 journey.origin = $("#origin").val();
                 journey.destination = $("#destination").val();
-                journey.matchRepeat =$("#repeat").val();
+                journey.repeat = repeat;
+                journey.car = car;
 
-                console.log(journey)
+                console.log(journey);
+
                 $.ajax({
                     url: "/journey/create",
                     type: "POST",
@@ -462,38 +526,70 @@ xmlns:th="http://www.thymeleaf.org">
 </div>
       <hr>
     <div class="container2">
-    <h3>Routenplanung:</h3>
+    <h3 style="margin-left: -8px;">Routenplanung:</h3>
         <div class="form-group">
         <label for="Startpunkt">Startpunkt</label>
-        <input type="text" class="input form-control" id="origin" required placeholder="Startpunkt">
+        <input style="width: 300px;" type="text" class="input form-control" id="origin" required placeholder="Startpunkt">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 1</label>
-        <input type="text" class="input form-control" id="stop1" placeholder="Zwischenstop 1">
+        <input style="width: 300px;" type="text" class="input form-control" id="stop1" placeholder="Zwischenstop 1">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 2</label>
-        <input type="text" class="input form-control" id="stop2" placeholder="Zwischenstop 2">
+        <input style="width: 300px;" type="text" class="input form-control" id="stop2" placeholder="Zwischenstop 2">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Endziel</label>
-        <input type="text" class="input form-control" id="destination" required placeholder="Endziel">
+        <input style="width: 300px;" type="text" class="input form-control" id="destination" required placeholder="Endziel">
         </div>
     </div>
       
-    <div id="map" style="margin-left: 10px; height: 600px; width: 600px"></div>
+    <div id="map" style="margin-left: 10px; height: 450px; width: 450px"></div>
       
     <div class="container4">
     <h3>Zeitplanung:</h3>
-        <div class="form-group">
-        <label for="depdat">Datum der Abfahrt</label>
-        <input type="datetime-local" id="departure" class="form-inline"/>
+
+        <div class="row">
+
+        <div class="col-md-12">
+        <div class ="form-group">
+        <label for="depdatdat">Datum der Abfahrt</label>
+        <input style="margin-top: 25px;" type="date" id="departuredat" class="form-inline"/>
         </div>
-        <div class="form-group">
-        <label for="arrdat">Datum der Ankunft</label>
-        <input type="datetime-local" id="arrival" class="form-inline"/>
         </div>
-        <div class="dropdown">
+
+        <div class="col-md-12">
+        <div class="form-group">
+        <label for="depdattime">Zeitpunkt der Ankunft</label>
+        <input style="margin-top: 33px;" type="time" id="departuretime" class="form-inline"/>
+        </div>
+        </div>
+
+        <div class="row">
+
+        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="form-group">
+        <label for="arrdatdat">Datum der Ankunft</label>
+        <input style="margin-top: 33px;" type="date" id="arrivaldat" class="form-inline"/>
+        </div>
+        </div>
+
+        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="form-group">
+        <label for="arrdatti e">Zeitpunkt der Ankunft</label>
+        <input style="margin-top: 33px;" type="time" id="arrivaltime" class="form-inline"/>
+        </div>
+        </div>
+
+        </div>
+
+        </div>
+
+    </div>
+
+      <div class="container5">
+      <div class="dropdown">
         <h3>Wiederholung der Fahrt:</h3>
         <select id="repeat" name="repeat">
             <option value="1">Einmalig</option>
@@ -502,26 +598,67 @@ xmlns:th="http://www.thymeleaf.org">
             <option value="4">Monatlich</option>
         </select>
         </div>
-    </div>
+        </div>
       
     <div class="container3">
-    <h3>Weitere Angaben:</h3>
-                <input id="seats" placeholder="Pätze" type="number" min="1" required/>
-                <input id="bags" placeholder="Gepäck" type="number" min="0" required/>
-                <input id="priceKm" placeholder="Preis/Km" type="number" min="0" required/>
-                <input id="priceBag" placeholder="Preis/Km (Gepäck)" type="number" min="0" required/>
-                <button id="saveButton" onclick="saveJourney(); window.location.href='../../../../..' ">Speichern</button>
-              </div>
-      
-    <div>
-        
-        
-    </div>
+        <h3>Weitere Angaben:</h3>
+            <div class="row">
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Automarke">Automarke</label>
+            <input style="width: 160px;" type="text" class="form-control" id="type" placeholder="Automarke"></div>
+            </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFtkAWeROn5POqzqjevKRYIo4cB0ZbZWw&libraries=places&callback=initAutocomplete"
-    async defer></script>
-        
-   
-           
-  </body>
-  </html>
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Kennzeichen">Kennzeichen</label>
+            <input style="width: 160px;" type="text" class="form-control" id="licence" placeholder="z.B. PA-R-1997 "></div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Farbe">Farbe</label>
+            <input style="width: 160px;" type="text" class="form-control" id="color" placeholder="Farbe"></div>
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Plätze">Plätze</label>
+            <input style="width: 160px;" type="number" class="form-control" id="seats" placeholder="Plätze" min="1" max="6"></div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Gepäck">Gepäck</label>
+            <input style="width: 160px;" type="number" class="form-control" id="bags" placeholder="Gepäck" min="0" max="10"></div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+            <label for="Preis/Km">Preis/Km in Cent</label>
+            <input style="width: 160px;" type="text" class="form-control" id="priceKm" placeholder="Preis/Km in Cent" min="0"></div>
+            </div>
+            </div>
+
+            <div class="row">
+             <div class="col-md-3">
+            <div class="form-group">
+            <label for="Preis/Gepäck">Preis/Gepäck</label>
+            <input style="width: 180px;" type="text" class="form-control" id="priceBags" placeholder="Preis/Gepäck in Euro" min="0"></div>
+            </div>
+            </div>
+          <button class="btn btn-success" id="saveButton" onclick="saveJourney()">Fahrt anbieten</button>
+
+          </div>
+          <div>
+          </div>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFtkAWeROn5POqzqjevKRYIo4cB0ZbZWw&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+
+
+      </body>
+      </html>

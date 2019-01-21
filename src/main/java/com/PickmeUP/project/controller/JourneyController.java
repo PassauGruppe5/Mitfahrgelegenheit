@@ -1,8 +1,10 @@
 package com.PickmeUP.project.controller;
 
+import com.PickmeUP.project.model.Car;
 import com.PickmeUP.project.model.Journey;
 import com.PickmeUP.project.model.Leg;
 import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.service.*;
 import com.PickmeUP.project.service.GmailService;
 import com.PickmeUP.project.service.JourneyService;
 import com.PickmeUP.project.service.LegService;
@@ -35,6 +37,12 @@ public class JourneyController {
     @Autowired
     private LegService legService;
 
+    @Autowired
+    private RepeatService repeatService;
+
+    @Autowired
+    private CarService carService;
+
     @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
         ModelAndView modelAndView = new ModelAndView();
@@ -51,8 +59,15 @@ public class JourneyController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+        Car carToSave = new Car();
+        carToSave.setColour(journey.getCar().getColour());
+        carToSave.setType(journey.getCar().getType());
+        carToSave.setLicence(journey.getCar().getLicence());
+        carService.save(carToSave);
         Journey journeyToSave = journey;
         journeyToSave.setDriver(loggedIn);
+        journeyToSave.setRepeat(repeatService.findRepeatById(journey.getRepeat().getId()));
+        journeyToSave.setCar(carToSave);
         journeyService.saveJourney(journeyToSave);
 
 
@@ -91,7 +106,7 @@ public class JourneyController {
             e.printStackTrace();
         }
         modelAndView.addObject("user", loggedIn);
-        modelAndView.setViewName("/Home_Angemeldet");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
@@ -100,6 +115,7 @@ public class JourneyController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
         modelAndView.addObject("user",loggedIn);
         modelAndView.setViewName("/journey/list/show/Angeboten_menue");
         return modelAndView;
