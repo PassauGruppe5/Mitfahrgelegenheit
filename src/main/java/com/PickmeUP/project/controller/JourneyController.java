@@ -5,10 +5,15 @@ import com.PickmeUP.project.model.Journey;
 import com.PickmeUP.project.model.Leg;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.service.*;
+import com.PickmeUP.project.service.GmailService;
+import com.PickmeUP.project.service.JourneyService;
+import com.PickmeUP.project.service.LegService;
+import com.PickmeUP.project.service.UserService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -96,6 +101,11 @@ public class JourneyController {
             }
         journeyToSave.setLegsInJourney(legsToSave);
         journeyService.saveJourney(journeyToSave);
+        try {
+            GmailService.sendCreatedMail(loggedIn);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
         modelAndView.addObject("user", loggedIn);
         modelAndView.setViewName("redirect:/");
         return modelAndView;
