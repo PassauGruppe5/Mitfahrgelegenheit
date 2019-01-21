@@ -20,32 +20,18 @@ xmlns:th="http://www.thymeleaf.org">
 
         function fillLegs(){
 
-            document.getElementById('priceTotal').innerHTML = "0.00 €";
+        document.getElementById('priceTotal').innerHTML = "0.00 €";
 
         /*<![CDATA[*/
 
             priceKm = [[${journey.priceKm}]];
             priceBag = [[${journey.priceBag}]];
+            console.log(priceBag);
             userId = [[${user.id}]]
 
         /*]]>*/
 
-
-        /*[# th:each="n : ${legs}"]*/
-
-        var leg = {};
-
-        leg.id = "[(${n.id})]";
-        leg.end_address = "[(${n.start_address})]";
-        leg.end_address = "[(${n.end_address})]";
-        leg.seats = "[(${n.seats})]";
-        leg.bags = "[(${n.bags})]";
-        leg.distance = "[(${n.distance})]";
-        leg.duration = "[(${n.duration})]";
-        legs.push(leg);
-        console.log(leg);
-
-        /*[/]*/
+        document.getElementById('priceKmPrint').innerHTML = priceKm+" €";
 
         }
 
@@ -74,19 +60,40 @@ xmlns:th="http://www.thymeleaf.org">
         }
 
         function updatePrice(){
+            legs.splice(0,legs.length)
+            var bagsCount = document.getElementById("baggage").value;
+
+                    /*[# th:each="n : ${legs}"]*/
+
+                    var leg = {};
+
+                    leg.id = "[(${n.id})]";
+                    leg.end_address = "[(${n.start_address})]";
+                    leg.end_address = "[(${n.end_address})]";
+                    leg.seats = "[(${n.seats})]";
+                    leg.bags = bagsCount;
+                    leg.distance = "[(${n.distance})]";
+                    leg.duration = "[(${n.duration})]";
+                    legs.push(leg);
+                    console.log(leg);
+
+                    /*[/]*/
 
             var selectedLegs = [];
             var price = parseFloat(0.00);
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
+            console.log(priceBag);
             for (var i = 0; i < checkboxes.length; i++) {
               selectedLegs.push(legs[checkboxes[i].value]);
             }
 
             for( var i = 0; i < selectedLegs.length;i++){
-                var priceM = parseFloat(selectedLegs[i].distance / 1000);
-                price = price + (priceKm * priceM)
+                var km = parseFloat(selectedLegs[i].distance / 1000);
+                price = price + (priceKm * km)
             }
+            price = price + priceBag * bagsCount;
+            console.log(price);
 
             if(price > 0){
             document.getElementById('priceTotal').innerHTML = price.toFixed(2) +' €';
@@ -126,29 +133,34 @@ xmlns:th="http://www.thymeleaf.org">
 
           #kommentarbox{
 
-              margin-left: 15px;
-              margin-top: 260px;
-              position: absolute;
+            position: absolute;
+            margin-left: 16px;
+            margin-top: 270px;
+
           }
 
-          #hintergrund{
-
-             width: 100%;
-             height: 100%;
-             position: fixed;
-          }
 
           .navbar{
 
               margin-top: 10px;
           }
 
-          #btn_speichern{
+          #btn_buchen{
 
               position: absolute;
               border-radius: 20px;
-              margin-left: 15px;
-              margin-top: 340px;
+              margin-top: 400px;
+              margin-left: 16px;
+
+          }
+
+          #checkbox{
+
+              position: absolute;
+              margin-left: 420px;
+              margin-top: -27px;
+              width: 20px;
+              height: 20px;
           }
       </style>
 
@@ -167,7 +179,7 @@ xmlns:th="http://www.thymeleaf.org">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-     <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
+      <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -197,6 +209,7 @@ xmlns:th="http://www.thymeleaf.org">
       <div class="col-sm-9">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#routenplanung">Routenplanung</a></li>
+                <li><a data-toggle="tab" href="#reisekosten">Reisekosten</a></li>
                 <li><a data-toggle="tab" href="#fahrerinformationen">Fahrerinformationen</a></li>
                 <li><a data-toggle="tab" href="#fahrzeugdaten">Fahrzeugdaten</a></li>
               </ul>
@@ -205,59 +218,90 @@ xmlns:th="http://www.thymeleaf.org">
           <div class="tab-content">
             <div class="tab-pane fade in active" id="routenplanung">
                 <hr>
-                <h3 id="priceTotal"></h3>
-                <hr>
                   <form class="form" action="##" method="post" id="routenplanung">
 
                       <div class="form-group">
-                      <div class="col-xs-6">
+                      <div class="col-md-8">
                       <label for="Startpunkt"><h4>Startpunkt</h4></label>
-                      <output type="text" class="form-control" id="startp" th:text="${journey.origin}"></output>
+                      <output style="width: 400px;" type="text" th:text="${journey.origin}" class="form-control" id="startp"></output>
                       </div>
                       </div>
 
                       <div class="form-group">
-                      <div class="col-xs-6">
+                      <div class="col-md-8">
                       <label for="Endziel"><h4>Endziel</h4></label>
-                      <output type="text" class="form-control" id="endz" th:text="${journey.destination}"></output>
+                      <output style="width: 400px;" type="text" th:text="${journey.destination}" class="form-control" id="endz"></output>
                       </div>
                       </div>
 
+                    <div class="form-group">
+                    <div class="col-md-6">
+                    <label for="Datum"><h4>Datum der Abfahrt</h4></label>
+                    <output style="width: 150px;" type="datetime-local" th:text="${journey.departureDate}" class="form-control" id="endp"></output>
+                    </div>
+                    </div>
+
                       <div class="form-group">
-                      <div class="col-xs-6">
-                      <label for="Abfahrtszeit" ><h4>Abfahrtszeit</h4></label>
-                      <output type="time" class="form-control" id="abfahrts" th:text="${journey.departureTime}+' Uhr'"></output>
+                      <div class="col-md-6">
+                      <label style="margin-left: -300px;" for="Abfahrtszeit"><h4>Abfahrtszeit</h4></label>
+                      <output style="width: 150px; margin-left: -300px;" type="time" class="form-control" th:text="${journey.departureTime}+' Uhr'" id="abfahrts"></output>
                       </div>
                       </div>
+
+
+                    <div class="form-group">
+                    <div class="col-md-6">
+                    <label for="Datum"><h4>Datum der Ankunft</h4></label>
+                    <output style="width: 150px;" type="datetime-local" th:text="${journey.arrivalDate}" class="form-control" id="endp"></output>
+                    </div>
+                    </div>
 
                         <div class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Ankunftszeit"><h4>Ankunftszeit</h4></label>
-                        <output type="time" class="form-control" id="ankunfts" th:text="${journey.arrivalTime}+' Uhr'"></output>
+                        <div class="col-md-6">
+                        <label style="margin-left: -300px;" for="Ankunftszeit"><h4>Ankunftszeit</h4></label>
+                        <output style="width: 150px; margin-left: -300px;" type="time" class="form-control" th:text="${journey.arrivalTime}+' Uhr'" id="ankunfts"></output>
                         </div>
                         </div>
 
                         <div th:each="leg , iStat : ${legs}" class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Zwischenstop1"><h4 th:text="${iStat.count}+'. Zwischenstop'"></h4></label>
-                        <output type="text" th:text="${leg.start_address}+'--->'+${leg.end_address}" class="form-control" id="1zwischen"></output>
+                        <div class="col-md-8">
+                        <label for="Teilstrecke"><h4 th:text="${iStat.count}+'. Teilstrecke'"></h4></label>
+                        <output style="width: 400px;" th:text="'Von: '+${leg.start_address}+', Nach: '+${leg.end_address}" type="text" class="form-control" id="teil_strecke"></output>
                         <input type="checkbox" onchange="updatePrice()" th:value="${iStat.index}">
                         </div>
                         </div>
 
-                        <div class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Datum"><h4>Datum</h4></label>
-                        <output type="datetime-local" class="form-control" th:text="${journey.departureDate}" id="endp"></output>
-                        </div>
-                        </div>
+
                         </form>
+                        <input id="btn_buchen" class="btn btn-success" onclick="handoverCheckedLegs()" type="submit" value="Fahrt buchen">
                         </div>
 
-                        <input id="btn_speichern" class="btn btn-success"  onclick="handoverCheckedLegs()" type="submit" value="Fahrt buchen">
-                        <span th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
-                        <span th:utext="${errorMessage}" style="font-size: 20; color: #FFFFFF;" ></span>
+                    <div id="reisekosten" class="tab-pane fade">
 
+                    <hr>
+
+                    <div class="col-md-8">
+                    <div class="form-group">
+                    <label for="Gepäck"><h4>Gepäckzahl eingeben</h4></label>
+                    <input style="width: 200px; text-align: center;" type="number" class="form-control" id="baggage" oninput="updatePrice()" placeholder="Gepäckzahl eingeben" min="0" max="10"></div>
+                    </div>
+
+                    <div class="col-md-8">
+                    <div class="form-group">
+                    <label for="Preis/Km"><h4>Preis/Km</h4></label>
+                    <ouput style="width: 200px; text-align: center;" type="text" class="form-control" id="priceKmPrint" placeholder="Pries/Km" min="0"></ouput>
+                    </div>
+                    </div>
+
+                    <div class="col-md-8">
+                    <div class="form-group">
+                    <label for="Gesamtkosten"><h4>Gesamtkosten der Fahrt</h4></label>
+                    <ouput style="width: 200px; text-align: center;" type="text" class="form-control" id="priceTotal"></ouput>
+                    </div>
+                    </div>
+
+
+                    </div>
 
               <div id="fahrerinformationen" class="tab-pane fade">
                 <hr>
@@ -265,21 +309,21 @@ xmlns:th="http://www.thymeleaf.org">
                <div class="form-group">
                         <div class="col-xs-6">
                           <label for="Vorname"><h4>Vorname</h4></label>
-                            <output type="text" th:text="${driver.name}" class="form-control" name="Vorname" id="v_name" title="Vorname"></output>
+                            <output type="text" class="form-control"  th:text="${driver.name}" name="Vorname" id="name" title="Vorname"></output>
                           </div>
                       </div>
 
               <div class="form-group">
                           <div class="col-xs-6">
                             <label for="last_name"><h4>Nachname</h4></label>
-                              <output type="text" th:text="${driver.lastName}" class="form-control" name="Nachname" id="n_name" title="Nachname"></output>
+                              <output type="text" class="form-control" th:text="${driver.lastName}" name="Nachname" id="lastName" title="Nachname"></output>
                           </div>
                       </div>
 
                        <div class="form-group">
                           <div class="col-xs-6">
                               <label for="Geburtstag"><h4>Geburtstag</h4></label>
-                              <output type="text" th:text="${driver.birth}"class="form-control" name="Geburtstag" id="g_burt" title="Geburtsdatum eingeben"></output>
+                              <output type="text" class="form-control" name="Geburtstag" th:text="${driver.birth}" id="birth" title="Geburtsdatum eingeben"></output>
                           </div>
                       </div>
 
@@ -287,7 +331,7 @@ xmlns:th="http://www.thymeleaf.org">
 
                           <div class="col-xs-6">
                               <label for="email"><h4>Email</h4></label>
-                              <output type="email" th:text="${driver.email}" class="form-control" name="email" id="e_mail" title="E-Mail Adresse"></output>
+                              <output type="email" class="form-control" th:text="${driver.email}" name="email" id="email" title="E-Mail Adresse"></output>
                           </div>
                       </div>
 
@@ -295,12 +339,12 @@ xmlns:th="http://www.thymeleaf.org">
 
                           <div class="col-xs-6">
                               <label for="Telefonnummer"><h4>Telefonnummer</h4></label>
-                              <output type="text" th:text="${driver.phone}" class="form-control" name="Telefonnummer" id="t_nummer" title="Telefonnummer"></output>
+                              <output type="text" class="form-control" th:text="${driver.phone}" name="Telefonnummer" id="phone" title="Telefonnummer"></output>
                           </div>
                       </div>
 
                 <form id="kommentarbox" action="" method="post">
-                <label> Persönliche Angaben: <br><textarea cols="45" rows="5" name="message"></textarea></label>
+                <label> Persönliche Angaben: <br><textarea readonly cols="45" rows="5" name="message"></textarea></label>
                 </form>
                 </div>
 
@@ -312,21 +356,21 @@ xmlns:th="http://www.thymeleaf.org">
                     <div class="form-group">
                     <div class="col-md-3">
                     <label style="margin-top: 15px;"for="Automarke"><h4>Automarke</h4></label>
-                    <output type="text" class="form-control" th:text="${journey.car.type}" id="marke"></output>
+                    <output type="text" class="form-control" th:text="${journey.car.type}" id="type"></output>
                     </div>
                     </div>
 
                     <div class="form-group">
                     <div class="col-md-3">
                     <label for="Kennzeichen"><h4>Kennzeichen</h4></label>
-                    <output type="text" th:text="${journey.car.licence}" class="form-control" id="kennz"></output>
+                    <output type="text" th:text="${journey.car.licence}" class="form-control" id="licence"></output>
                     </div>
                     </div>
 
                     <div class="form-group">
                     <div class="col-md-3">
                     <label for="Farbe"><h4>Farbe</h4></label>
-                    <output type="text"  th:text="${journey.car.colour}" class="form-control" id="farbe"></output>
+                    <output type="text" th:text="${journey.car.colour}" class="form-control" id="farbe"></output>
                     </div>
                     </div>
                     </div>

@@ -167,13 +167,19 @@ public class ProfileController {
         User toView = userService.findUserById(id);
         Rating rating = new Rating();
         Account account = accountService.findbyUser(loggedIn);
+        ArrayList<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
         if(loggedIn == toView){
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
+            for(Journey journey : journeyList) {
+                journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
+                journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
+            }
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.addObject("journeyList",journeyList);
+            modelAndView.addObject("bookedList",bookedList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{
@@ -184,7 +190,6 @@ public class ProfileController {
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }
-        ArrayList<Journey> testJourney = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
         return modelAndView;
     }
 

@@ -43,9 +43,38 @@ public class BookingController {
         User loggedIn = userService.findUserByEmail(auth.getName());
         Journey journey = journeyService.findById(id);
         User driver = journey.getDriver();
-            journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
-            journey.setDestination(journey.getDestination().replaceFirst(", Deutschland",""));
+        journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
+        journey.setDestination(journey.getDestination().replaceFirst(", Deutschland",""));
         ArrayList<Leg> legs = legService.findByJourney(journey);
+
+            for(Leg leg : legs){
+                String[] partsOfStartAdress =leg.getStart_address().split(",");
+                String[] partsOfEndAdress =leg.getEnd_address().split(",");
+
+                switch (partsOfStartAdress.length ) {
+                    case 3:
+                        leg.setStart_address(partsOfStartAdress[1]);
+                        break;
+                    case 4:
+                        leg.setStart_address(partsOfStartAdress[2]);
+                        break;
+                    case 5:
+                        leg.setStart_address(partsOfStartAdress[3]);
+                        break;
+                }
+
+                switch (partsOfEndAdress.length ) {
+                    case 3:
+                        leg.setEnd_address(partsOfEndAdress[1]);
+                        break;
+                    case 4:
+                        leg.setEnd_address(partsOfEndAdress[2]);
+                        break;
+                    case 5:
+                        leg.setEnd_address(partsOfEndAdress[3]);
+                        break;
+                }
+            }
 
         modelAndView.addObject("legs",legs);
         modelAndView.addObject("driver",driver);
@@ -66,20 +95,20 @@ public class BookingController {
         Transaction transaction = new Transaction();
 
         double price = 0.00;
-        double priceKm = journey.getPriceKm();
         Boolean genug_platz = true;
+
         ArrayList<Leg> legsOnDb = new ArrayList<>();
 
         for(Leg leg : selectedLegs){
             legsOnDb.add(legService.findById(leg.getId()));
-            price = Precision.round(price + priceKm * leg.getDistance()/1000,2);
+            price = Precision.round(price + journey.getPriceKm() * leg.getDistance()/1000,2);
             List<User> testingtest = leg.getPassengers();
             if(legService.findById(leg.getId()).checkSpace() == false){
                 genug_platz = false;
 
             }
         }
-
+        price = price + selectedLegs.get(0).getBags() *  journey.getPriceBag();
         if(price > userAccount.getBalance()){
             modelAndView.addObject("errorMessage","Sie haben leider nicht genug Guthaben auf ihrem Konto.");
             modelAndView.addObject("user",loggedIn);

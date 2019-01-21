@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class Journey {
 
     public Journey(){}
     public int getId() {return this.id;}
+    public void setId(int id){this.id = id;}
 
     public String getArrivalDate() {return this.arrivalDate;}
     public void setArrivalDate(String arrivalDate) { this.arrivalDate = arrivalDate;}
@@ -134,9 +136,9 @@ public class Journey {
 
     public boolean checkDate(Date search, SimpleDateFormat formatter) throws ParseException {
 
-        if (search.before(formatter.parse(this.getDepartureDate()))) {
-            return true;
-        }
+//        if (search.before(formatter.parse(this.getDepartureDate()))) {
+//            return true;
+//        }
 
         if (search.equals(formatter.parse(this.getDepartureDate()))){
             return true;
@@ -146,4 +148,34 @@ public class Journey {
         }
 
     }
+
+    public boolean checkTime(LocalTime searchTime){
+        if(LocalTime.parse(this.getDepartureTime()).isAfter(searchTime)){
+            return true;}
+        if(LocalTime.parse(this.getDepartureTime()).equals(searchTime)){
+            return true;}
+        else
+            return false;
+        }
+
+     public void clone(Journey toBeCloned){
+        this.active = toBeCloned.getActive();
+        this.arrivalDate = toBeCloned.getArrivalDate();
+        this.departureDate = toBeCloned.getDepartureDate();
+        this.arrivalTime = toBeCloned.getArrivalTime();
+        this.bags = toBeCloned.getBags();
+        this.canceled = toBeCloned.getCanceled();
+        this.dapartureTime = toBeCloned.getDepartureTime();
+        this.arrivalDate = toBeCloned.getArrivalDate();
+        this.destination = toBeCloned.getDestination();
+        this.origin = toBeCloned.getOrigin();
+        this.priceBag = toBeCloned.getPriceBag();
+        this.priceKm = toBeCloned.getPriceKm();
+        this.route = toBeCloned.getRoute();
+        this.repeat = toBeCloned.getRepeat();
+        this.car = toBeCloned.getCar();
+        this.driver = toBeCloned.getDriver();
+        this.seats = toBeCloned.getSeats();
+        this.legsInJourney = toBeCloned.getLegsInJourney();
+     }
 }
