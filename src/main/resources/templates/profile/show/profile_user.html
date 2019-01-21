@@ -322,9 +322,11 @@
               <div id="rating" class="tab-pane fade">
               <hr>
               <div th:if="${not #lists.isEmpty(ratingList)}">
-              <form action="" method="post">
-              <output id="output" th:text="${ratingToPost.grade}" for="Zahl">Zahl</output>
-              <label th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}" > Name des Bewerters: <br><textarea cols="45" rows="5" th:text="${ratingToPost.message}" name="message"></textarea></label>
+              <form th:each="ratingToPost: ${ratingList}">
+              <label id="output" th:text="${ratingToPost.grade}" for="Zahl"></label>
+              <label th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}"></label>
+              <br>
+              <textarea cols="45" rows="5" th:field="*{ratingToPost.message}" name="message"></textarea>
               </form>
               <hr>
               </div>

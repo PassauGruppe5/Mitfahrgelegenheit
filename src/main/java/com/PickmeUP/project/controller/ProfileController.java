@@ -178,6 +178,7 @@ public class ProfileController {
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.addObject("journeyList",journeyList);
+            modelAndView.addObject("bookedList",bookedList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{

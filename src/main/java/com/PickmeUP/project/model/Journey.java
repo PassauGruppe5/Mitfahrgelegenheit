@@ -135,9 +135,9 @@ public class Journey {
 
     public boolean checkDate(Date search, SimpleDateFormat formatter) throws ParseException {
 
-        if (search.before(formatter.parse(this.getDepartureDate()))) {
-            return true;
-        }
+//        if (search.before(formatter.parse(this.getDepartureDate()))) {
+//            return true;
+//        }
 
         if (search.equals(formatter.parse(this.getDepartureDate()))){
             return true;
@@ -149,7 +149,7 @@ public class Journey {
     }
 
     public boolean checkTime(LocalTime searchTime){
-        if(LocalTime.parse(this.getDepartureTime()).isBefore(searchTime)){
+        if(LocalTime.parse(this.getDepartureTime()).isAfter(searchTime)){
             return true;}
         if(LocalTime.parse(this.getDepartureTime()).equals(searchTime)){
             return true;}

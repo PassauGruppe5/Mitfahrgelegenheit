@@ -138,8 +138,8 @@ xmlns:th="http://www.thymeleaf.org">
       <td th:text="${journeyToPost.departureDate}"></td>
       <td th:text="${journeyToPost.departureTime}+' Uhr'"></td>
       <td th:text="${journeyToPost.arrivalDate}"></td>
-      <td th:text="${journeyToPost.arrivalTime}+' €'"></td>
-      <td th:text="${journeyToPost.priceKm}+' Uhr'"></td>
+      <td th:text="${journeyToPost.arrivalTime}+' Uhr'"></td>
+      <td th:text="${journeyToPost.priceKm}+' €'"></td>
       <td><a id="btn_details" class="btn-success" th:href="@{'/booking/create?id='+${journeyToPost.id}}" role="button">Details</a></td>
     </tr>
   </tbody>
