@@ -134,8 +134,8 @@ public class Journey {
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation() {return this.creation;}
 
-    public boolean checkDate(Date search, SimpleDateFormat formatter) throws ParseException {
-
+    public boolean checkDate(Date search) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //        if (search.before(formatter.parse(this.getDepartureDate()))) {
 //            return true;
 //        }
@@ -159,7 +159,6 @@ public class Journey {
         }
 
      public void clone(Journey toBeCloned){
-        this.active = toBeCloned.getActive();
         this.arrivalDate = toBeCloned.getArrivalDate();
         this.departureDate = toBeCloned.getDepartureDate();
         this.arrivalTime = toBeCloned.getArrivalTime();
@@ -177,5 +176,6 @@ public class Journey {
         this.driver = toBeCloned.getDriver();
         this.seats = toBeCloned.getSeats();
         this.legsInJourney = toBeCloned.getLegsInJourney();
+        this.active = 1;
      }
 }

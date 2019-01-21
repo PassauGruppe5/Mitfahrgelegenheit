@@ -89,11 +89,12 @@ public class HomeController {
             }
 
             if(genug_platz){
-               if(journey.checkDate(searchDate, formatter) && journey.checkTime(searchTime) && journey.getActive() == 1){
+
+               if(journey.checkDate(searchDate) && journey.checkTime(searchTime) && journey.getActive() == 1){
 
                     journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
-                    journey.setArrivalTime(journey.getArrivalTime().substring(1,5));
-                    journey.setDepartureTime(journey.getDepartureTime().substring(1,5));
+                    journey.setArrivalTime(journey.getArrivalTime().substring(0,5));
+                    journey.setDepartureTime(journey.getDepartureTime().substring(0,5));
                     journey.setDepartureDate(journey.getDepartureDate().substring(0,10));
                     journey.setArrivalDate(journey.getArrivalDate().substring(0,10));
                     journey.setDestination(journey.getDestination().replaceFirst(", Deutschland",""));

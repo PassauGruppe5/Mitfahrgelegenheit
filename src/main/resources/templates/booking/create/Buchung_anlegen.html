@@ -267,7 +267,7 @@ xmlns:th="http://www.thymeleaf.org">
                         <div class="col-md-8">
                         <label for="Teilstrecke"><h4 th:text="${iStat.count}+'. Teilstrecke'"></h4></label>
                         <output style="width: 400px;" th:text="'Von: '+${leg.start_address}+', Nach: '+${leg.end_address}" type="text" class="form-control" id="teil_strecke"></output>
-                        <input type="checkbox" onchange="updatePrice()" th:value="${iStat.index}">
+                        <input id="checkbox" type="checkbox" onchange="updatePrice()" th:value="${iStat.index}">
                         </div>
                         </div>
 

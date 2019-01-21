@@ -82,21 +82,23 @@ public class JourneyController {
         System.out.println("Week number:" + calendar.get(Calendar.WEEK_OF_YEAR));
 
         int difDays = 0;
-        int iterations = 1;
+        int iterations = 0;
         LocalDate startDate = LocalDate.parse(journeyToSave.getDepartureDate());
         LocalDate endDate = LocalDate.parse(journeyToSave.getArrivalDate());
 
         switch (journeyToSave.getRepeat().getId()){
-            case 2: difDays = 1; iterations = 14; break;
-            case 3: difDays = 7; iterations = 12; break;
-            case 4: difDays = 1; iterations = 12; break;
+            case 2: difDays = 1; iterations = 13; break;
+            case 3: difDays = 7; iterations = 11; break;
+            case 4: difDays = 1; iterations = 11; break;
         }
 
-        for(int j = iterations; j > 0 ;j--){
+        for(int j = iterations; j >=0  ;j--){
+
             if(journeyToSave.getRepeat().getId() == 4) {
                 journeyToSave.setDepartureDate(startDate.plus(difDays*j, ChronoUnit.MONTHS).toString());
                 journeyToSave.setArrivalDate(endDate.plus(difDays*j,ChronoUnit.MONTHS).toString());
             }
+
             else{
                 journeyToSave.setDepartureDate(startDate.plus(difDays*j, ChronoUnit.DAYS).toString());
                 journeyToSave.setArrivalDate(endDate.plus(difDays*j,ChronoUnit.DAYS).toString());
