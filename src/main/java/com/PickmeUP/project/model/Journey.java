@@ -4,6 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +19,10 @@ public class Journey {
     private int id;
 
     @Column(name = "arrivalDate", nullable = false)
-    private Date arrivalDate;
+    private String arrivalDate;
 
     @Column(name = "departureDate", nullable = false)
-    private Date departureDate;
+    private String departureDate;
 
     @Column(name = "arrivalTime", nullable = false)
     private String arrivalTime;
@@ -38,7 +40,7 @@ public class Journey {
     private int priceBag;
 
     @Column(name = "priceKm", nullable = false)
-    private int priceKm;
+    private double priceKm;
 
     @Column(name = "origin", nullable = false)
     private String origin;
@@ -76,11 +78,11 @@ public class Journey {
     public Journey(){}
     public int getId() {return this.id;}
 
-    public Date getArrivalDate() {return this.arrivalDate;}
-    public void setArrivalDate(Date arrivalDate) { this.arrivalDate = arrivalDate;}
+    public String getArrivalDate() {return this.arrivalDate;}
+    public void setArrivalDate(String arrivalDate) { this.arrivalDate = arrivalDate;}
 
-    public Date getDepartureDate() {return this.departureDate;}
-    public void setDepartureDate(Date departuredate) {this.departureDate = departuredate;}
+    public String getDepartureDate() {return this.departureDate;}
+    public void setDepartureDate(String departureDate) {this.departureDate = departureDate;}
 
     public int getBags() { return this.bags;}
     public void setBags(int bags) {this.bags = bags;}
@@ -91,8 +93,8 @@ public class Journey {
     public int getPriceBag() {return this.priceBag;}
     public void setPriceBag(int priceBag) {this.priceBag = priceBag;}
 
-    public int getPriceKm() {return this.priceKm;}
-    public void setPriceKm(int priceKm) {this.priceKm = priceKm;}
+    public double getPriceKm() {return this.priceKm;}
+    public void setPriceKm(double priceKm) {this.priceKm = priceKm;}
 
     public String getRoute() {return route;}
     public void setroute(String route) {this.route = route;}
@@ -130,12 +132,13 @@ public class Journey {
     public void setCreation(Timestamp creation) {this.creation = creation;}
     public Timestamp getCreation() {return this.creation;}
 
-    public boolean checkDate(Date search) {
-        if (search.before(this.getDepartureDate())) {
+    public boolean checkDate(Date search, SimpleDateFormat formatter) throws ParseException {
+
+        if (search.before(formatter.parse(this.getDepartureDate()))) {
             return true;
         }
 
-        if (search.equals(this.getDepartureDate())){
+        if (search.equals(formatter.parse(this.getDepartureDate()))){
             return true;
         }
         else {

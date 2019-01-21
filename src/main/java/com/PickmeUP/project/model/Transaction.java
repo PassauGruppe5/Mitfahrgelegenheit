@@ -61,7 +61,7 @@ public class Transaction {
     public void setReceiver(User receiver){this.receiver = receiver;}
 
     public User getTransmitter(){return this.transmitter;}
-    public void setRTransmitter(User transmitter){this.receiver = transmitter;}
+    public void setTransmitter(User transmitter){this.transmitter = transmitter;}
 
     public void setReceiverAndTransmitter(User both){this.receiver = both; this.transmitter=both;}
 

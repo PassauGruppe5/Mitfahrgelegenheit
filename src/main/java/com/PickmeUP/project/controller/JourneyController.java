@@ -66,6 +66,7 @@ public class JourneyController {
         carService.save(carToSave);
         Journey journeyToSave = journey;
         journeyToSave.setDriver(loggedIn);
+        journeyToSave.setPriceKm(journey.getPriceKm()/100);
         journeyToSave.setRepeat(repeatService.findRepeatById(journey.getRepeat().getId()));
         journeyToSave.setCar(carToSave);
         journeyService.saveJourney(journeyToSave);
