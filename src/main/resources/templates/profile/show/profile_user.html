@@ -64,6 +64,15 @@
       </script>
       <style>
 
+        #btn_details{
+
+            padding: 5px 15px;
+            font-size: 20px;
+            border-radius: 20px;
+            text-decoration: none;
+
+        }
+
           .wrapper{
 
               display: grid;
@@ -356,7 +365,23 @@
             </div>
 
               <div id="rating" class="tab-pane fade">
-            </div>
+                  <hr>
+                      <table frame="void" class="table">
+                          <tbody th:if="${not #lists.isEmpty(ratingList)}">
+                              <tr th:each="ratingToPost: ${ratingList}">
+                              <td>
+                              <form action="" method="post">
+                              <td th:text="${ratingToPost.grade}"></td>
+                              <td th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName} "></td>
+                              <td th:text="${ratingToPost.message}"></td>
+                              <td><a id="btn_details" class="btn-success" th:href="@{'/profile/show/profile?id='+${ratingToPost.publisher.id}}">Profil</a></td>
+                              </form>
+                              </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  <hr>
+              </div>
 
           </div>
         </div>
