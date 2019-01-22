@@ -154,14 +154,14 @@ xmlns:th="http://www.thymeleaf.org">
       <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>
-
+              var userId;
               var places = {};
               var autocompletes = {};
               var journey = {};
               var repeat = {};
               var car = {};
 
-              function fillParams(){
+              function fillParam(){
 
                           /*<![CDATA[*/
 
@@ -458,6 +458,13 @@ xmlns:th="http://www.thymeleaf.org">
               }
 
               function saveJourney(){
+
+                  /*<![CDATA[*/
+
+                  userId = [[${user.id}]]
+
+                  /*]]>*/
+
                   car.colour = $("#color").val();
                   car.licence = $("#licence").val();
                   car.type = $("#type").val();
@@ -493,7 +500,7 @@ xmlns:th="http://www.thymeleaf.org">
                 });
               };
 
-            window.onload.fillParams;
+            window.onload.fillParam;
             </script>
       
       </head>

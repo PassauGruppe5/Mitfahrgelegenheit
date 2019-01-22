@@ -46,5 +46,17 @@ public class JourneyService {
         clone.clone(startJourney);
         journeyRepository.save(clone);
         return clone;
-    }
+        }
+
+        public List<Journey> findAllJourney(){return journeyRepository.findAll();}
+
+        public ArrayList<Journey> findAllClonedJourneys(Journey journeyToGetClonesFrom){
+        ArrayList<Journey> arrayOfClones= new ArrayList<>();
+        for(Journey journey : this.findAllJourney()) {
+            if(journey.checkForClone(journeyToGetClonesFrom)){
+                arrayOfClones.add(journey);
+            }
+        }
+            return arrayOfClones;
+        }
 }

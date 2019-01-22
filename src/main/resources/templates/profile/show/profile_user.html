@@ -10,8 +10,66 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script>
 
+        var userId;
+
+        function fillParam(){
+          /*<![CDATA[*/
+
+          userId = [[${user.id}]]
+
+          /*]]>*/
+        }
+
+        function cancelBooked(idToSend){
+
+            $.ajax({
+                url: "/journey/cancelBooked",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(idToSend),
+                success: function(data, status){
+                if(data){
+                    }
+                }.bind(this),
+                error: function(xhr, error) {
+                  console.log(error);
+                }
+            });
+
+            self.location['reload']()
+        }
+
+        function cancelOffered(idToSend){
+
+            $.ajax({
+                url: "/journey/cancelOffered",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(idToSend),
+                success: function(data, status){
+                if(data){
+                    }
+                }.bind(this),
+                error: function(xhr, error) {
+                  console.log(error);
+                }
+            });
+
+            self.location['reload']()
+        }
+
+        window.onload = fillParam;
+      </script>
       <style>
+
+          .wrapper{
+
+              display: grid;
+              grid-auto-rows: minmax(auto, auto);
+
+          }
 
           #logo{
 
@@ -24,7 +82,7 @@
           .container1{
 
               position: relative;
-              margin-left: 150px;
+              margin-left: 120px;
               margin-right: 150px;
 
           }
@@ -51,7 +109,6 @@
           #btn_speichern{
 
               position: absolute;
-              border-radius: 20px;
           }
 
           #derzeitiges_guthaben{
@@ -63,7 +120,6 @@
 
               width: 100px;
               margin-top: 20px;
-              border-radius: 20px;
           }
 
            #kommentarbox{
@@ -84,33 +140,11 @@
               margin-left: 15px;
           }
 
-          #_stornieren{
-
-              margin-top: 15px;
-              border-radius: 20px;
-          }
-
-          #_details{
-
-              margin-left: 15px;
-              margin-top: 15px;
-              border-radius: 20px;
-          }
-
-          .buttonkasten{
-
-              position: absolute;
-              margin-top: 350px;
-              margin-left: 15px;
-              width: 100%;
-          }
 
           #linie{
 
               color: blue;
           }
-
-
 
       </style>
 
@@ -237,74 +271,76 @@
                 </div>
 
               <div id="offered" class="tab-pane fade">
-                <div id="journeyList">
-                  <div th:if="${not #lists.isEmpty(journeyList)}">
-                    <table>
-                        <tr th:each="journeyToPost: ${journeyList}" class="border_bottom">
-                        <td th:text="${journeyToPost.arrivalDate}"></td>
-                        <td th:text="${journeyToPost.departureDate}"></td>
-                        <td th:text="${journeyToPost.destination}"></td>
-                        <td th:text="${journeyToPost.origin}"></td>
-                        <td> <a th:text="${journeyToPost.driver.name}+' '+${journeyToPost.driver.lastName}" th:href="@{/journey/show(id=${journeyToPost.id})}"></a></td>
-                        </tr>
-                    </table>
-                  </div>
+                    <hr>
 
-                </div>
-              </div>
+                        <div class="container2">
+                        <table frame="void" class="table table-hover">
+                      <thead>
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Startpunkt</th>
+                            <th scope="col">Endziel</th>
+                            <th scope="col">Abfahrtsdatum</th>
+                            <th scope="col">Abfahrtszeit</th>
+                            <th scope="col">Ankunftsdatum</th>
+                            <th scope="col">Ankunftszeit</th>
+                            <th scope="col">Preis/Km</th>
+                          </tr>
+                        </thead>
+                        <tbody th:if="${not #lists.isEmpty(journeyList)}">
+                          <tr th:each="journeyToPost: ${journeyList}">
+                        <th scope="row">-</th>
+                        <td th:text="${journeyToPost.origin}"></td>
+                        <td th:text="${journeyToPost.destination}"></td>
+                        <td th:text="${journeyToPost.departureDate}"></td>
+                        <td th:text="${journeyToPost.departureTime}+' Uhr'"></td>
+                        <td th:text="${journeyToPost.arrivalDate}"></td>
+                        <td th:text="${journeyToPost.arrivalTime}+' Uhr'"></td>
+                        <td th:text="${journeyToPost.priceKm}+' €'"></td>
+                        <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
+                        <td><a style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" href="#" role="button">Bearbeiten</a></td>
+                        <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success"  th:onclick="|cancelOffered('${journeyToPost.id}')|" type="submit" value="Stornieren"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                    </div>
 
 
 
               <div id="booked" class="tab-pane fade">
-              <hr>
-                <h4><a style="margin-top: 10px; text-decoration: none;" href="">Name des Fahrers</a></h4>
-                <div class="form-group">
-                      <div class="col-xs-6">
-                      <label for="Startpunkt"><h4>Startpunkt</h4></label>
-                      <output type="text" class="form-control" id="startp"></output>
-                      </div>
-                      </div>
-
-                      <div class="form-group">
-                      <div class="col-xs-6">
-                      <label for="Endziel"><h4>Endziel</h4></label>
-                      <output type="text" class="form-control" id="endz"></output>
-                      </div>
-                      </div>
-
-                      <div class="form-group">
-                      <div class="col-xs-6">
-                      <label for="Abfahrtszeit"><h4>Abfahrtszeit</h4></label>
-                      <output type="time" class="form-control" id="abfahrts"></output>
-                      </div>
-                      </div>
-
-                        <div class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Ankunftszeit"><h4>Ankunftszeit</h4></label>
-                        <output type="time" class="form-control" id="ankunfts"></output>
-                        </div>
-                        </div>
-
-                        <div class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Datum"><h4>Datum der Abfahrt</h4></label>
-                        <output type="datetime-local" class="form-control" id="endp"></output>
-                        </div>
-                        </div>
-
-                        <div class="form-group">
-                        <div class="col-xs-6">
-                        <label for="Datum"><h4>Datum der Ankunft</h4></label>
-                        <output type="datetime-local" class="form-control" id="endp"></output>
-                        </div>
-                        </div>
-
-                  <a id="_details" class="btn btn-success" href="#" role="button">Details</a>
-                  <input id="_stornieren" class="btn btn-success" type="submit" value="Fahrt stornieren">
-
-                <hr>
-              </div>
+                            <hr>
+                              <div class="container2">
+                                <table frame="void" class="table table-hover">
+                              <thead>
+                                  <tr>
+                                    <th scope="col">-</th>
+                                    <th scope="col">Startpunkt</th>
+                                    <th scope="col">Endziel</th>
+                                    <th scope="col">Abfahrtsdatum</th>
+                                    <th scope="col">Abfahrtszeit</th>
+                                    <th scope="col">Ankunftsdatum</th>
+                                    <th scope="col">Ankunftszeit</th>
+                                    <th scope="col">Preis/Km</th>
+                                  </tr>
+                                </thead>
+                                <tbody th:if="${not #lists.isEmpty(bookedList)}">
+                                  <tr th:each="bookedToPost: ${bookedList}">
+                                <th scope="row">-</th>
+                                <td th:text="${bookedToPost.origin}"></td>
+                                <td th:text="${bookedToPost.destination}"></td>
+                                <td th:text="${bookedToPost.departureDate}"></td>
+                                <td th:text="${bookedToPost.departureTime}+' Uhr'"></td>
+                                <td th:text="${bookedToPost.arrivalDate}"></td>
+                                <td th:text="${bookedToPost.arrivalTime}+' Uhr'"></td>
+                                <td th:text="${bookedToPost.priceKm}+' €'"></td>
+                                <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
+                                <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" type="submit"  th:onclick="|cancelBooked('${bookedToPost.id}')|"  th:value="Stornieren"></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              </div>
+                            </div>
 
               <div id="balance" class="tab-pane fade">
                 <hr>
@@ -320,16 +356,6 @@
             </div>
 
               <div id="rating" class="tab-pane fade">
-              <hr>
-              <div th:if="${not #lists.isEmpty(ratingList)}">
-              <form th:each="ratingToPost: ${ratingList}">
-              <label id="output" th:text="${ratingToPost.grade}" for="Zahl"></label>
-              <label th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}"></label>
-              <br>
-              <textarea cols="45" rows="5" th:field="*{ratingToPost.message}" name="message"></textarea>
-              </form>
-              <hr>
-              </div>
             </div>
 
           </div>
@@ -337,8 +363,9 @@
       </div>
       </div>
     <script>
+
           $(function () {
-          var activeTab = $('[href=' + location.hash + ']');
+          var activeTab = $('[href="' + location.hash + '"]');
           activeTab && activeTab.tab('show');
           });
 

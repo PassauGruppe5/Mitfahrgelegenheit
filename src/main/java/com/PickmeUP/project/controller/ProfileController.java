@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -167,11 +166,23 @@ public class ProfileController {
         User toView = userService.findUserById(id);
         Rating rating = new Rating();
         Account account = accountService.findbyUser(loggedIn);
-        ArrayList<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
+        List<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
+
+        for (Journey journey: bookedList) {
+            if(journey.getActive() == 0){
+                bookedList.remove(journey);
+            }
+        }
+
         if(loggedIn == toView){
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
             for(Journey journey : journeyList) {
+                journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
+                journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
+            }
+
+            for(Journey journey : bookedList) {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
             }
@@ -187,6 +198,7 @@ public class ProfileController {
             modelAndView.addObject("userV", toView);
             modelAndView.addObject("user", loggedIn);
             modelAndView.addObject("rating",rating);
+            modelAndView.addObject("bookedList",bookedList);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }

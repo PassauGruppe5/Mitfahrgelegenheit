@@ -178,4 +178,14 @@ public class Journey {
         this.legsInJourney = toBeCloned.getLegsInJourney();
         this.active = 1;
      }
+
+     public boolean checkForClone(Journey toBeComparedTo){
+        if(this.driver == toBeComparedTo.getDriver() && this.getDepartureDate() == toBeComparedTo.getDepartureDate() && this.getDepartureTime() == toBeComparedTo.getDepartureTime()){
+             return true;
+         }
+
+        else{
+             return false;
+         }
+     }
 }

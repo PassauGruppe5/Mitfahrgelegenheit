@@ -154,4 +154,49 @@ public class JourneyController {
         modelAndView.setViewName("/journey/list/show/Angeboten_menue");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/journey/cancelOffered", method = RequestMethod.POST)
+    public ModelAndView handleCancelOffered(@RequestBody int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Journey journeyToCancelOffered = journeyService.findById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        List<Leg> legsOfJourney = legService.findByJourney(journeyToCancelOffered);
+
+        for(Leg leg : legsOfJourney){
+            List<User> passengersOfLeg = leg.getPassengers();
+            passengersOfLeg.clear();
+            leg.setPassengers(passengersOfLeg);
+            legService.saveLeg(leg);
+        }
+
+        journeyToCancelOffered.setActive(0);
+        journeyToCancelOffered.setCanceled(1);
+        journeyService.updateJourney(journeyToCancelOffered);
+
+        modelAndView.addObject("id", loggedIn.getId());
+        modelAndView.setViewName("redirect:/profile/show/profile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/cancelBooked", method = RequestMethod.POST)
+    public ModelAndView handleCancelBooked(@RequestBody int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Journey journeyToCancel = journeyService.findById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
+
+        for(Leg leg : legsToBeCanceled){
+            List<User> passengersOfLeg = leg.getPassengers();
+            if(passengersOfLeg.contains(loggedIn)){
+                passengersOfLeg.remove(loggedIn);
+                legService.saveLeg(leg);
+            }
+        }
+
+        modelAndView.addObject("id", loggedIn.getId());
+        modelAndView.setViewName("redirect:/profile/show/profile");
+        return modelAndView;
+    }
 }
