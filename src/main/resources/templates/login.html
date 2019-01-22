@@ -2,44 +2,119 @@
 <html lang="de"
       xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Pickme Up Login</title>
+      <title>PickmeUp - Login</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
       <style>
-      body{
 
-    background: url(https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
-    background-size: auto;
+      .container1{
+
+              position:relative;
+              margin-left: 150px;
+              margin-right: 150px;
+
+          }
+
+           #logo{
+
+             width:130px;
+             height:50px;
+             margin-top: 5px;
+          }
+
+          .container2{
+
+            margin-top: 0px;
+            position: fixed;
+            width: auto;
+            height: auto;
 
           }
 
     .form-conatiner{
 
     border:1px solid white;
-    padding: 50px 60px;
-    margin-top:20vh;
+    padding: 50px 100px;
+    margin-top:25vh;
+    margin-left: 40px;
     -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
     box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
+    position: absolute;
 
+          }
+
+          #hintergrund{
+
+             width: 100%;
+             height: 100%;
+             position: fixed;
+
+          }
+
+          .btn{
+
+              border-radius: 20px;
+              width: 200px;
+              height: 42px;
+              font-size: 15px;
+          }
+
+           #logo{
+             width:130px;
+             height:50px;
+             margin-top: 5px;
+          }
+
+          .navbar{
+
+             margin-top: 10px;
           }
 
 
       </style>
   </head>
   <body>
+
+      <div class="container1">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
+  <div class="container-fluid">
+    <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Navigation ein-/ausblenden</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"></a>
+    </div>
+
+    <!-- Alle Navigationslinks, Formulare und anderer Inhalt werden hier zusammengefasst und können dann ein- und ausgeblendet werden -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</div>
+
+      <div class="container2">
+        <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+       </div>
+
   <div class="container-fluid bg">
       <div class="row">
       <div class="col-md-4 col-sm-4 col-xs-12"></div>
       <div class="col-md-4 col-sm-4 col-xs-12">
 
- <form form th:action="@{/login}" method="POST" class="form-signin">
+ <form th:action="@{/login}" method="POST" class="form-conatiner">
  <h1><font color=#fff>Anmeldung</font></h1>
   <div class="form-group">
       <label for="E-Mail"><font color=#fff>Email-Adresse</font></label>
@@ -54,6 +129,7 @@
       <p style="font-size: 20; color: #FF1C19;">Email oder Passwort inkorrekt</p>
   </div>
   <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+  <a class="btn btn-default btn-lg btn-block" href="/registration" role="button">Noch kein Konto?</a>
 </form>
 
       </div>

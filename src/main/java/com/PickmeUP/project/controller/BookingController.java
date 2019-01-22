@@ -127,6 +127,7 @@ public class BookingController {
             } catch (MailException e) {
                 e.printStackTrace();
             }
+
             transaction.setReceiver(journey.getDriver());
             transaction.setAmount(price);
             transaction.setTransmitter(loggedIn);
