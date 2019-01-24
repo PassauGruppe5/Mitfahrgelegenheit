@@ -18,8 +18,11 @@ xmlns:th="http://www.thymeleaf.org">
 
         var priceBag;
 
+        var balance;
+
         function fillLegs(){
 
+        document.getElementById('priceKmPrint').innerHTML = 0;
         document.getElementById('priceTotal').innerHTML = "0.00 €";
 
         /*<![CDATA[*/
@@ -28,6 +31,7 @@ xmlns:th="http://www.thymeleaf.org">
             priceBag = [[${journey.priceBag}]];
             console.log(priceBag);
             userId = [[${user.id}]]
+            balance = [[${account.balance}]]
 
         /*]]>*/
 
@@ -37,10 +41,32 @@ xmlns:th="http://www.thymeleaf.org">
 
         function handoverCheckedLegs(){
             var selectedLegs = [];
-            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+            var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+            var bagsCount = document.getElementById("baggage").value;
+
             for (var i = 0; i < checkboxes.length; i++) {
-              selectedLegs.push(legs[checkboxes[i].value]);
-            }
+                if(legs[checkboxes[i].value].bags < document.getElementById('priceKmPrint').value){
+                    alert("Nicht genügend Gepäck!");
+                    return;
+                    }
+                else{
+                    selectedLegs.push(legs[checkboxes[i].value])
+                    }
+                 }
+                if(selectedLegs.length == 0){
+                    alert("Bitte Zwischenstrecke auswählen!");
+                    return;
+                }
+
+                var checkedBlanace = 0;
+
+                for(var j = 0; j <selectedLegs.length; j++){
+                    checkedBlanace = selectedLegs[j].distance * priceKm/1000;
+                    }
+                 if(balance < checkedBlanace + priceBag * bagsCount){
+                     alert("Nicht genug Guthaben.")
+                     return;
+                 }
 
                 $.ajax({
                     url: "/booking/create",

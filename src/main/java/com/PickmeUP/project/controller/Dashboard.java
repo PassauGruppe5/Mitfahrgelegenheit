@@ -28,11 +28,15 @@ public class Dashboard {
     public ModelAndView showDashboard(){
         ModelAndView modelAndView = new ModelAndView();
         double totalBalance = accountService.getTotalBalance();
-        ArrayList<Object[]> topDestinations = legService.getTopFiveDestinations();
+        ArrayList<Object[]> topfiveDestinations= legService.topOfALl();
+        ArrayList<Object> topfiveDestinationsClean = new ArrayList<Object>();
+        for(Object object: topfiveDestinations){
+
+        }
         ArrayList<Journey> activeJourneys = journeyService.findAllByActiveAndCanceled(1,0);
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(0,1);
 
-        modelAndView.addObject("topDestinations",topDestinations);
+        modelAndView.addObject("topDestinations",topfiveDestinations);
         modelAndView.addObject("doneJourneys",doneJourneys);
         modelAndView.addObject("activeJourneys",activeJourneys);
         modelAndView.addObject("total",totalBalance);

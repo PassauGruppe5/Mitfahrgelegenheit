@@ -46,11 +46,12 @@ public class BookingController {
         journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
         journey.setDestination(journey.getDestination().replaceFirst(", Deutschland",""));
         ArrayList<Leg> legs = legService.findByJourney(journey);
+        Account account = accountService.findbyUser(loggedIn);
 
             for(Leg leg : legs){
                 leg.correctAddresses(leg.getStart_address(), leg.getEnd_address() );
             }
-
+        modelAndView.addObject("account", account);
         modelAndView.addObject("legs",legs);
         modelAndView.addObject("driver",driver);
         modelAndView.addObject("journey",journey);
