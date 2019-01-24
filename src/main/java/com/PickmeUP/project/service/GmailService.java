@@ -256,7 +256,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"https://www.pic-upload.de\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -615,7 +615,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"https://www.pic-upload.de\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -974,7 +974,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"https://www.pic-upload.de\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -1333,7 +1333,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"https://www.pic-upload.de\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
