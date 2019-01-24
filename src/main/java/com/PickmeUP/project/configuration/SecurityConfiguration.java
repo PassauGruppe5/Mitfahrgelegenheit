@@ -56,7 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/journey/**").hasAnyAuthority("USER","ADMIN")
                 .antMatchers("/journey/list/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/admin/dashboard").hasAuthority("ADMIN")
+                .antMatchers("/admin/dashboard").hasAnyAuthority("ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")

@@ -168,13 +168,14 @@ public class ProfileController {
         Account account = accountService.findbyUser(loggedIn);
         List<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
 
-        for (Journey journey: bookedList) {
-            if(journey.getActive() == 0){
-                bookedList.remove(journey);
-            }
-        }
-
         if(loggedIn == toView){
+
+            for (int i = 0; i < bookedList.size(); i++) {
+                if(bookedList.get(i).getActive() == 0){
+                    bookedList.remove(i);
+                }
+            }
+
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
             for(Journey journey : journeyList) {
@@ -198,7 +199,6 @@ public class ProfileController {
             modelAndView.addObject("userV", toView);
             modelAndView.addObject("user", loggedIn);
             modelAndView.addObject("rating",rating);
-            modelAndView.addObject("bookedList",bookedList);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.setViewName("/profile/show/userProfile_visitor");
         }
