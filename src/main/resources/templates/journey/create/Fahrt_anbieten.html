@@ -574,14 +574,14 @@ xmlns:th="http://www.thymeleaf.org">
         <div class="col-md-12">
         <div class ="form-group">
         <label for="depdatdat">Datum der Abfahrt</label>
-        <input style="margin-top: 25px;" type="date" id="departuredat" class="form-inline"/>
+        <input style="margin-top: 25px;" type="date" id="departuredat" required class="form-inline"/>
         </div>
         </div>
 
         <div class="col-md-12">
         <div class="form-group">
         <label for="depdattime">Zeitpunkt der Abfahrt</label>
-        <input style="margin-top: 33px;" type="time" id="departuretime" class="form-inline"/>
+        <input style="margin-top: 33px;" type="time" id="departuretime" required class="form-inline"/>
         </div>
         </div>
 
@@ -590,14 +590,14 @@ xmlns:th="http://www.thymeleaf.org">
         <div style="margin-left: 15px;" class="col-md-12">
         <div class="form-group">
         <label for="arrdatdat">Datum der Ankunft</label>
-        <input style="margin-top: 33px;" type="date" id="arrivaldat" class="form-inline"/>
+        <input style="margin-top: 33px;" type="date" id="arrivaldat" required class="form-inline"/>
         </div>
         </div>
 
         <div style="margin-left: 15px;" class="col-md-12">
         <div class="form-group">
         <label for="arrdatti e">Zeitpunkt der Ankunft</label>
-        <input style="margin-top: 33px;" type="time" id="arrivaltime" class="form-inline"/>
+        <input style="margin-top: 33px;" type="time" id="arrivaltime" required class="form-inline"/>
         </div>
         </div>
 
@@ -625,19 +625,19 @@ xmlns:th="http://www.thymeleaf.org">
             <div class="col-md-3">
             <div class="form-group">
             <label for="Automarke">Automarke</label>
-            <input style="width: 160px;" type="text" class="form-control" id="type" placeholder="Automarke"></div>
+            <input style="width: 160px;" type="text" class="form-control" id="type" required placeholder="Automarke"></div>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
             <label for="Kennzeichen">Kennzeichen</label>
-            <input style="width: 160px;" type="text" class="form-control" id="licence" placeholder="z.B. PA-R-1997 "></div>
+            <input style="width: 160px;" type="text" class="form-control" id="licence" required placeholder="z.B. PA-R-1997 "></div>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
             <label for="Farbe">Farbe</label>
-            <input style="width: 160px;" type="text" class="form-control" id="color" placeholder="Farbe"></div>
+            <input style="width: 160px;" type="text" class="form-control" id="color" required placeholder="Farbe"></div>
             </div>
             </div>
 
@@ -645,19 +645,19 @@ xmlns:th="http://www.thymeleaf.org">
             <div class="col-md-3">
             <div class="form-group">
             <label for="Plätze">Plätze</label>
-            <input style="width: 160px;" type="number" class="form-control" id="seats" placeholder="Plätze" min="1" max="6"></div>
+            <input style="width: 160px;" type="number" class="form-control" id="seats" required placeholder="Plätze" min="1" max="6"></div>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
             <label for="Gepäck">Gepäck</label>
-            <input style="width: 160px;" type="number" class="form-control" id="bags" placeholder="Gepäck" min="0" max="10"></div>
+            <input style="width: 160px;" type="number" class="form-control" id="bags" required placeholder="Gepäck" min="0" max="10"></div>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
-            <label for="Preis/Km">Preis/Km in Cent</label>
-            <input style="width: 160px;" type="text" class="form-control" id="priceKm" placeholder="Preis/Km in Cent" min="0"></div>
+            <label for="Preis/Km">Preis/Km (z.B.0.05)</label>
+            <input style="width: 160px;" type="text" class="form-control" id="priceKm" required placeholder="0.05" min="0"></div>
             </div>
             </div>
 

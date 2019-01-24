@@ -29,7 +29,6 @@ xmlns:th="http://www.thymeleaf.org">
 
             priceKm = [[${journey.priceKm}]];
             priceBag = [[${journey.priceBag}]];
-            console.log(priceBag);
             userId = [[${user.id}]]
             balance = [[${account.balance}]]
 
@@ -45,24 +44,28 @@ xmlns:th="http://www.thymeleaf.org">
             var bagsCount = document.getElementById("baggage").value;
 
             for (var i = 0; i < checkboxes.length; i++) {
-                if(legs[checkboxes[i].value].bags < document.getElementById('priceKmPrint').value){
-                    alert("Nicht genügend Gepäck!");
-                    return;
-                    }
-                else{
                     selectedLegs.push(legs[checkboxes[i].value])
-                    }
                  }
+
                 if(selectedLegs.length == 0){
                     alert("Bitte Zwischenstrecke auswählen!");
                     return;
                 }
+
+                for(var z = 0; z <selectedLegs.length; z++){
+                    var tooManyBags= z+1;
+                     if(bagsCount > selectedLegs[z].bags){
+                     alert("Nicht genug freies Gepäck in Teilstrecke "+tooManyBags+"!");
+                     return;
+                    }
+                 }
 
                 var checkedBlanace = 0;
 
                 for(var j = 0; j <selectedLegs.length; j++){
                     checkedBlanace = selectedLegs[j].distance * priceKm/1000;
                     }
+
                  if(balance < checkedBlanace + priceBag * bagsCount){
                      alert("Nicht genug Guthaben.")
                      return;
@@ -97,11 +100,10 @@ xmlns:th="http://www.thymeleaf.org">
                     leg.end_address = "[(${n.start_address})]";
                     leg.end_address = "[(${n.end_address})]";
                     leg.seats = "[(${n.seats})]";
-                    leg.bags = bagsCount;
+                    leg.bags = "[(${n.seats})]";
                     leg.distance = "[(${n.distance})]";
                     leg.duration = "[(${n.duration})]";
                     legs.push(leg);
-                    console.log(leg);
 
                     /*[/]*/
 
@@ -109,7 +111,6 @@ xmlns:th="http://www.thymeleaf.org">
             var price = parseFloat(0.00);
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-            console.log(priceBag);
             for (var i = 0; i < checkboxes.length; i++) {
               selectedLegs.push(legs[checkboxes[i].value]);
             }
@@ -119,7 +120,6 @@ xmlns:th="http://www.thymeleaf.org">
                 price = price + (priceKm * km)
             }
             price = price + priceBag * bagsCount;
-            console.log(price);
 
             if(price > 0){
             document.getElementById('priceTotal').innerHTML = price.toFixed(2) +' €';
