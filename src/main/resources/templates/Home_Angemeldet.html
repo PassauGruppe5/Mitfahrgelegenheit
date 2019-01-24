@@ -49,6 +49,7 @@ xmlns:th="http://www.thymeleaf.org">
 
               margin-left:225px;
               margin-top: 300px;
+              position: fixed;
           }
 
           .glyphicon{
@@ -87,7 +88,7 @@ xmlns:th="http://www.thymeleaf.org">
           #satz2{
 
               margin-left: 590px;
-               margin-top: 400px;
+               margin-top: 600px;
                font-size: 25px;
                color: white;
                float: left;
@@ -98,12 +99,12 @@ xmlns:th="http://www.thymeleaf.org">
           .navbar{
 
               margin-top: 10px;
-      
+
       </style>
 
       </head>
   <body>
-  
+
       <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
   <div class="container-fluid">
     <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
@@ -141,11 +142,11 @@ xmlns:th="http://www.thymeleaf.org">
   </nav>
 
    <div class="container2">
-       
+
     <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-       
+
     <div><p id="name"><b>Pick Me Up</b></p></div>
-    
+
     <form class="form-inline" method="post" role="form" th:action="@{/}">
   <div class="form-group has-feedback">
     <label class="sr-only" for="Von">Von</label>
@@ -169,10 +170,10 @@ xmlns:th="http://www.thymeleaf.org">
     </div>
   <button id="bt1" type="submit" class="btn btn-primary">Fahrt suchen</button>
 </form>
-       
+
 <div><p id="satz"><b>Die einfach Art von A nach B zu gelangen - Jederzeit!</b></p></div>
-       
-<div><p id="satz2"><b>Mitfahrgelegenheit finden</b></p></div> 
+
+<div><p id="satz2"><b>Mitfahrgelegenheit finden</b></p></div>
 
   </div>
 
