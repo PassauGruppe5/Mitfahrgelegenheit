@@ -11,5 +11,6 @@ public class BonusService {
 
     @Autowired
     private BonusRepository bonusRepository;
-    private Bonus bonus = new Bonus();
+
+    public Bonus findBonusById(int id){return bonusRepository.findById(id);}
 }

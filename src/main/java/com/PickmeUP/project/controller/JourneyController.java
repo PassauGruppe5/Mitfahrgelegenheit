@@ -80,7 +80,6 @@ public class JourneyController {
         Calendar calendar = new GregorianCalendar();
         Date dateOfJourney = formatter.parse(journeyToSave.getDepartureDate());
         calendar.setTime(dateOfJourney);
-        System.out.println("Week number:" + calendar.get(Calendar.WEEK_OF_YEAR));
 
         int difDays = 0;
         int iterations = 0;

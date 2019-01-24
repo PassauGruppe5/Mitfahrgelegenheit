@@ -41,7 +41,7 @@ xmlns:th="http://www.thymeleaf.org">
         function handoverCheckedLegs(){
             var selectedLegs = [];
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-            var bagsCount = document.getElementById("baggage").value;
+            var bagsCount = document.getElementById("baggage").value;;
 
             for (var i = 0; i < checkboxes.length; i++) {
                     selectedLegs.push(legs[checkboxes[i].value])
@@ -100,7 +100,7 @@ xmlns:th="http://www.thymeleaf.org">
                     leg.end_address = "[(${n.start_address})]";
                     leg.end_address = "[(${n.end_address})]";
                     leg.seats = "[(${n.seats})]";
-                    leg.bags = "[(${n.seats})]";
+                    leg.bags = bagsCount;
                     leg.distance = "[(${n.distance})]";
                     leg.duration = "[(${n.duration})]";
                     legs.push(leg);
