@@ -1,9 +1,6 @@
 package com.PickmeUP.project.controller;
 
-import com.PickmeUP.project.model.Car;
-import com.PickmeUP.project.model.Journey;
-import com.PickmeUP.project.model.Leg;
-import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.model.*;
 import com.PickmeUP.project.service.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +38,9 @@ public class JourneyController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
@@ -186,10 +186,17 @@ public class JourneyController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
+        Account accountPassenger = accountService.findbyUser(loggedIn);
+        Account accountDriver = accountService.findbyUser(journeyToCancel.getDriver());
 
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
+                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance();
+                accountPassenger.setBalance(accountPassenger.getBalance()+balanceRefund);
+                accountService.saveAccount(accountPassenger);
+                accountDriver.setBalance(accountDriver.getBalance()-balanceRefund);
+                accountService.saveAccount(accountDriver);
                 passengersOfLeg.remove(loggedIn);
                 legService.saveLeg(leg);
             }
