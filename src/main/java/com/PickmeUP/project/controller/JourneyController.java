@@ -114,13 +114,10 @@ public class JourneyController {
                     JSONObject jsonLegNormal = legs.getJSONObject(i);
                     JSONObject duration = jsonLegNormal.getJSONObject("duration");
                     JSONObject distance = jsonLegNormal.getJSONObject("distance");
-                    JSONObject end_location = jsonLegNormal.getJSONObject("end_location");
-                    JSONObject start_location = jsonLegNormal.getJSONObject("start_location");
                     Leg leg = new Leg();
                     legService.saveLeg(leg);
                     leg.setPosition(i + 1);
-                    leg.setStart_address(jsonLegNormal.getString("start_address"));
-                    leg.setEnd_address(jsonLegNormal.getString("end_address"));
+                    leg.correctAddresses(jsonLegNormal.getString("start_address"), jsonLegNormal.getString("end_address"));
                     leg.setDistance(distance.getInt("value"));
                     leg.setDuration(duration.getInt("value"));
                     leg.setJourney(iteration);
@@ -192,11 +189,11 @@ public class JourneyController {
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
-                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance();
+                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance()/1000;
                 accountPassenger.setBalance(accountPassenger.getBalance()+balanceRefund);
-                accountService.saveAccount(accountPassenger);
+                accountService.updateAccount(accountPassenger);
                 accountDriver.setBalance(accountDriver.getBalance()-balanceRefund);
-                accountService.saveAccount(accountDriver);
+                accountService.updateAccount(accountDriver);
                 passengersOfLeg.remove(loggedIn);
                 legService.saveLeg(leg);
             }

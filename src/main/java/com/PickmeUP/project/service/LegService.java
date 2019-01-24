@@ -22,4 +22,7 @@ public class LegService {
     public ArrayList<Leg> findByJourney(Journey journey){return legRepository.findByJourney(journey);}
 
     public ArrayList<Leg> findLegsByPassengersContaining(User passenger){ return legRepository.findLegsByPassengersContaining(passenger);}
-}
+
+    public ArrayList<Object[]> getTopFiveDestinations(){ return legRepository.getTopFiveDestinations();}
+
+ }

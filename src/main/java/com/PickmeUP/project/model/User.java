@@ -66,6 +66,7 @@ public class User {
     public void setRoles(HashSet<Role> roles) {
         this.roles = roles;
     }
+    public Set<Role> getRoles(){return this.roles;}
 
     public String getEmail() {return this.email; }
     public void setEmail(String email){this.email = email;}

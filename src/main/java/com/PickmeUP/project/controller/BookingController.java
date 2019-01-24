@@ -48,32 +48,7 @@ public class BookingController {
         ArrayList<Leg> legs = legService.findByJourney(journey);
 
             for(Leg leg : legs){
-                String[] partsOfStartAdress =leg.getStart_address().split(",");
-                String[] partsOfEndAdress =leg.getEnd_address().split(",");
-
-                switch (partsOfStartAdress.length ) {
-                    case 3:
-                        leg.setStart_address(partsOfStartAdress[1]);
-                        break;
-                    case 4:
-                        leg.setStart_address(partsOfStartAdress[2]);
-                        break;
-                    case 5:
-                        leg.setStart_address(partsOfStartAdress[3]);
-                        break;
-                }
-
-                switch (partsOfEndAdress.length ) {
-                    case 3:
-                        leg.setEnd_address(partsOfEndAdress[1]);
-                        break;
-                    case 4:
-                        leg.setEnd_address(partsOfEndAdress[2]);
-                        break;
-                    case 5:
-                        leg.setEnd_address(partsOfEndAdress[3]);
-                        break;
-                }
+                leg.correctAddresses(leg.getStart_address(), leg.getEnd_address() );
             }
 
         modelAndView.addObject("legs",legs);

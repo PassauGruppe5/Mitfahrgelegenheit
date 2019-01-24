@@ -24,4 +24,6 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public double getTotalBalance(){return accountRepository.getTotalBalance();}
+
 }
