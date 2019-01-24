@@ -66,7 +66,8 @@
 
               height: 100%;
               float:right;
-              margin-right: 100px;
+              margin-right: 150px;
+              margin-left: 10px;
               border: solid black;
               margin-top: 20px;
               position: fixed;
@@ -455,7 +456,7 @@
 
         <div class="form-group">
         <label for="depdattime">Zeitpunkt der Abfahrt</label>
-        <output style="width: 150px;" type="text" id="departuretime" class="form-control" th:text="${journey.departureTime}"/>
+        <output style="width: 150px; margin-left: 1px;" type="text" id="departuretime" class="form-control" th:text="${journey.departureTime}"/>
         </div>
 
         </div>
@@ -464,7 +465,7 @@
 
         <div class="form-group">
         <label for="arrdatdat">Datum der Ankunft</label>
-        <output style="width: 150px;" type="date" id="arrivaldat" class="form-control" th:text="${journey.arrivalDate}"/>
+        <output style="width: 150px; margin-left: 1px;" type="date" id="arrivaldat" class="form-control" th:text="${journey.arrivalDate}"/>
         </div>
 
         <div class="form-group">
@@ -475,12 +476,12 @@
         </div>
         </div>
 
-    <div id="map" style="height: 450px; width: 450px"></div>
+    <div id="map" style="height: 325px; width: 325px"></div>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFtkAWeROn5POqzqjevKRYIo4cB0ZbZWw&libraries=places&callback=initAutocomplete"
     async defer></script>
 
-      <div class="container4" style="margin-top: -90px;">
+      <div class="container4" style="margin-top: -70px;">
       <div class="dropdown">
         <h3>Wiederholung der Fahrt:</h3>
         <output th:text="${journey.repeat.description}"></output>
