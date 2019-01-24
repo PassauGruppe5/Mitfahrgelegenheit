@@ -297,7 +297,7 @@
                         <td th:text="${journeyToPost.arrivalDate}"></td>
                         <td th:text="${journeyToPost.arrivalTime}+' Uhr'"></td>
                         <td th:text="${journeyToPost.priceKm}+' €'"></td>
-                        <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
+                        <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details?id='+${offeredToPost.id}}"role="button">Details</a></td>
                         <td><a style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" href="#" role="button">Bearbeiten</a></td>
                         <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success"  th:onclick="|cancelOffered('${journeyToPost.id}')|" type="submit" value="Stornieren"></td>
                           </tr>
@@ -334,7 +334,7 @@
                                 <td th:text="${bookedToPost.arrivalDate}"></td>
                                 <td th:text="${bookedToPost.arrivalTime}+' Uhr'"></td>
                                 <td th:text="${bookedToPost.priceKm}+' €'"></td>
-                                <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
+                                <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details?id='+${bookedTopost.id}}" role="button">Details</a></td>
                                 <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" type="submit"  th:onclick="|cancelBooked('${bookedToPost.id}')|"  th:value="Stornieren"></td>
                                   </tr>
                                 </tbody>
