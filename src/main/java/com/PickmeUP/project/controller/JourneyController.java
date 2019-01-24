@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -201,6 +202,39 @@ public class JourneyController {
 
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/details", method = RequestMethod.GET)
+    public ModelAndView handleDeatils(@RequestParam int id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journey = journeyService.findById(id);
+        ArrayList<Leg> legs = legService.findByJourney(journey);
+        if(legs.size() == 3){
+            Leg first = legs.get(1);
+            Leg second = legs.get(2);
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",first);
+        }
+        if(legs.size() == 2) {
+            Leg first = legs.get(1);
+            modelAndView.addObject("leg1",first);
+        }
+        if(legs.size() == 1){
+            Leg first = legs.get(0);
+            first.setStart_address("");
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",first);
+        }
+
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.addObject("journey",journey);
+        modelAndView.setViewName("/journey/show/Details");
         return modelAndView;
     }
 }
