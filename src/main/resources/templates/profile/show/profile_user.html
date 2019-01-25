@@ -38,7 +38,9 @@
                 }
             });
 
-            self.location['reload']()
+           setTimeout(function(){
+                self.location['reload']()
+            }, 500)
         }
 
         function cancelOffered(idToSend){
@@ -57,7 +59,9 @@
                 }
             });
 
-            self.location['reload']()
+           setTimeout(function(){
+                self.location['reload']()
+            }, 500)
         }
 
         window.onload = fillParam;
