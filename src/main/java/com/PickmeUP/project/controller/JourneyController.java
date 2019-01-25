@@ -236,4 +236,62 @@ public class JourneyController {
         modelAndView.setViewName("/journey/show/Details");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/journey/edit", method = RequestMethod.GET)
+    public ModelAndView handleEdit(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journey = journeyService.findById(id);
+        ArrayList<Leg> legs = legService.findByJourney(journey);
+        if(legs.size() == 3){
+            Leg first = legs.get(1);
+            Leg second = legs.get(2);
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",first);
+        }
+        if(legs.size() == 2) {
+            Leg first = legs.get(1);
+            modelAndView.addObject("leg1",first);
+        }
+        if(legs.size() == 1){
+            Leg first = legs.get(0);
+            first.setStart_address("");
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",first);
+        }
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.addObject("journey",journey);
+        modelAndView.setViewName("/journey/create/edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/edit", method = RequestMethod.POST)
+    public ModelAndView handleEdit(@RequestBody Journey journey) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journeyToUpdate = journeyService.findById(journey.getId());
+        Car carofJourney = journeyToUpdate.getCar();
+
+        carofJourney.setType(journey.getCar().getType());
+        carofJourney.setColour(journey.getCar().getColour());
+        carofJourney.setLicence(journey.getCar().getLicence());
+
+        carService.save(carofJourney);
+
+        journeyToUpdate.setCar(carofJourney);
+        journeyToUpdate.setSeats(journey.getSeats());
+        journeyToUpdate.setPriceKm(journey.getPriceKm());
+        journeyToUpdate.setBags(journey.getBags());
+        journeyToUpdate.setPriceBag(journey.getPriceBag());
+
+        journeyService.updateJourney(journeyToUpdate);
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.setViewName("/journey/create/edit");
+        return modelAndView;
+    }
 }
