@@ -6,9 +6,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class ProjectApplication extends SpringBootServletInitializer {
 @EnableScheduling
-public class ProjectApplication {
+public class ProjectApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
