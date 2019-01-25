@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de"
+xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <title>Admin_Dashboard</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <style>
+
+          .wrapper{
+
+              display: grid;
+              grid-auto-rows: minmax(auto, auto);
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 1em;
+
+          }
+
+          .container1{
+
+              position: relative;
+              margin-left: 120px;
+              margin-right: 150px;
+
+          }
+
+          #logo{
+
+             width:130px;
+             height:50px;
+             margin-top: 5px;
+
+          }
+
+          .navbar{
+
+              margin-top: 10px;
+
+          }
+
+          .row{
+
+              margin-top: 20px;
+              margin-left: 100px;
+          }
+
+        </style>
+
+        </head>
+
+        <body>
+
+      <div class="container1">
+
+          <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
+  <div class="container-fluid">
+    <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Navigation ein-/ausblenden</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
+        <li><a href="/journey/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
+          <ul class="dropdown-menu navbar-right">
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#offered'"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>   Angebotene Fahrten</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#booked'"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>   Gebuchte Fahrten</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#profil'"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Profil</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#balance'"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
+            <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#rating'"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>
+</div>
+
+        <div class="wrapper">
+        <div class="container bootstrap snippet">
+
+        <div class="row">
+
+    	<div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#geldsumme">Geldsumme</a></li>
+                <li><a data-toggle="tab" href="#aktuelle_fahrten">Akutelle Fahrten</a></li>
+                <li><a data-toggle="tab" href="#abgeschlossene_fahrten">Abgeschlossene Fahrten</a></li>
+                <li><a data-toggle="tab" href="#fahrer">Top 5 Fahrer</a></li>
+                <li><a data-toggle="tab" href="#mitfahrer">Top 5 Mitfahrer</a></li>
+              </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="geldsumme">
+                <hr>
+                <form class="form-inline">
+                <div class="form-group">
+                <label for="derzeitiges_guthaben">Derzeitiges Guthaben auf der Plattform: </label>
+                <output style="width: 100px;" type="text" class="form-control" id="guthaben_plattform" th:text="${total.balance}+' €'">
+                </output>
+                </div>
+                </form>
+                </div>
+
+
+              <div id="aktuelle_fahrten" class="tab-pane fade">
+              <hr>
+                  <h4><a style="margin-top: 10px; text-decoration: none;" href="">Name des Fahrers</a></h4>
+                  <div class="container2">
+                    <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">Startpunkt</th>
+                      <th scope="col">Endziel</th>
+                      <th scope="col">Abfahrtsdatum</th>
+                      <th scope="col">Abfahrtszeit</th>
+                      <th scope="col">Ankunftsdatum</th>
+                      <th scope="col">Ankunftszeit</th>
+                      <th scope="col">Preis/Km</th>
+                    </tr>
+                  </thead>
+                  <tbody th:if="${not #lists.isEmpty(activeJourneys)}">
+                    <tr th:each="activJourneyToPost: ${activeJourneys}">
+                    <th scope="row">-</th>
+                    <td th:text="${activJourneyToPost.origin}"></td>
+                    <td th:text="${activJourneyToPost.destination}"></td>
+                    <td th:text="${activJourneyToPost.departureDate}"></td>
+                    <td th:text="${activJourneyToPost.departureTime}+' Uhr'"></td>
+                    <td th:text="${activJourneyToPost.arrivalDate}"></td>
+                    <td th:text="${activJourneyToPost.arrivalTime}+' Uhr'"></td>
+                    <td th:text="${activJourneyToPost.priceKm}+' €'"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr>
+                </div>
+              </div>
+
+
+
+              <div id="abgeschlossene_fahrten" class="tab-pane fade">
+              <hr>
+                <div class="container3">
+                  <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">Starpunkt</th>
+                      <th scope="col">Endziel</th>
+                      <th scope="col">Abfahrtsdatum</th>
+                      <th scope="col">Abfahrtszeit</th>
+                      <th scope="col">Ankunftsdatum</th>
+                      <th scope="col">Ankunftszeit</th>
+                      <th scope="col">Preis/Km</th>
+                    </tr>
+                  </thead>
+                  <tbody th:if="${not #lists.isEmpty(doneJourneys)}">
+                    <tr th:each="doneJourneyToPost: ${doneJourneys}">
+                    <th scope="row">-</th>
+                    <td th:text="${doneJourneyToPost.origin}"></td>
+                    <td th:text="${doneJourneyToPost.destination}"></td>
+                    <td th:text="${doneJourneyToPost.departureDate}"></td>
+                    <td th:text="${doneJourneyToPost.departureTime}+' Uhr'"></td>
+                    <td th:text="${doneJourneyToPost.arrivalDate}"></td>
+                    <td th:text="${doneJourneyToPost.arrivalTime}+' Uhr'"></td>
+                    <td th:text="${doneJourneyToPost.priceKm}+' €'"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr>
+                </div>
+              </div>
+
+              <div id="fahrer" class="tab-pane fade">
+                <hr>
+                  <div class="container3">
+                  <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Aktuelle Fahrten</th>
+                      <th scope="col">Angebotene Fahrten</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                  <th scope="row">Zahl absteigend</th>
+                  <td>1</td>
+                  <td>Tobias Herrmann</td>
+                  <td>3</td>
+                  <td>30</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr>
+                </div>
+            </div>
+
+              <div id="mitfahrer" class="tab-pane fade">
+              <hr>
+              <div class="container4">
+                  <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Gebuchte Fahrten</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                  <th scope="row">Zahl absteigend</th>
+                  <td>1</td>
+                  <td>Tobias Herrmann</td>
+                  <td>50</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr>
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+        </body>
+
+    </html>
+

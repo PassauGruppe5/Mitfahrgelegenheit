@@ -59,4 +59,6 @@ public class JourneyService {
         }
             return arrayOfClones;
         }
+
+        public ArrayList<Journey> findAllByActiveAndCanceled(int active, int canceled){return journeyRepository.findAllByActiveAndCanceled(active, canceled);}
 }

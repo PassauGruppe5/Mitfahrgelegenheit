@@ -168,46 +168,41 @@ public class ProfileController {
         Account account = accountService.findbyUser(loggedIn);
         List<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
 
-        for (Journey journey : bookedList) {
-            if (journey.getActive() == 0) {
-                bookedList.remove(journey);
-            }
-        }
+        if(loggedIn == toView){
 
-        if (loggedIn == toView) {
+            for (int i = 0; i < bookedList.size(); i++) {
+                if(bookedList.get(i).getActive() == 0){
+                    bookedList.remove(i);
+                }
+            }
+
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
-            for (Journey journey : journeyList) {
+            for(Journey journey : journeyList) {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
             }
 
-            for (Journey journey : bookedList) {
+            for(Journey journey : bookedList) {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
             }
-            modelAndView.addObject("user", loggedIn);
-            modelAndView.addObject("account", account);
-            modelAndView.addObject("ratingList", ratingList);
-            modelAndView.addObject("journeyList", journeyList);
-            modelAndView.addObject("bookedList", bookedList);
+            modelAndView.addObject("user",loggedIn);
+            modelAndView.addObject("account",account);
+            modelAndView.addObject("ratingList",ratingList);
+            modelAndView.addObject("journeyList",journeyList);
+            modelAndView.addObject("bookedList",bookedList);
             modelAndView.setViewName("/profile/show/profile_user");
-        } else {
-            List<Rating> ratingList = ratingService.getRatingsOfUser(toView.getId());
-            List<Journey> journeyList = journeyService.findByDriverAndActive(toView, 1);
-
-            for (Journey journey : journeyList) {
-                journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
-                journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
-            }
-                modelAndView.addObject("userV", toView);
-                modelAndView.addObject("user", loggedIn);
-                modelAndView.addObject("rating", rating);
-                modelAndView.addObject("bookedList", bookedList);
-                modelAndView.addObject("ratingList", ratingList);
-                modelAndView.setViewName("/profile/show/userProfile_visitor");
-            }
-            return modelAndView;
         }
-
+        else{
+            List<Rating> ratingList = ratingService.getRatingsOfUser(toView.getId());
+            modelAndView.addObject("userV", toView);
+            modelAndView.addObject("user", loggedIn);
+            modelAndView.addObject("rating",rating);
+            modelAndView.addObject("ratingList",ratingList);
+            modelAndView.setViewName("/profile/show/userProfile_visitor");
+        }
+        return modelAndView;
     }
+
+}

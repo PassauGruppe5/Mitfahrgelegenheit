@@ -83,4 +83,34 @@ public class Leg {
         }
 
     }
+
+    public void correctAddresses(String start, String end){
+
+        String[] partsOfStartAdress = start.split(",");
+        String[] partsOfEndAdress = end.split(",");
+
+        switch (partsOfStartAdress.length ) {
+            case 3:
+                this.setStart_address(partsOfStartAdress[1]);
+                break;
+            case 4:
+                this.setStart_address(partsOfStartAdress[2]);
+                break;
+            case 5:
+                this.setStart_address(partsOfStartAdress[3]);
+                break;
+        }
+
+        switch (partsOfEndAdress.length ) {
+            case 3:
+                this.setEnd_address(partsOfEndAdress[1]);
+                break;
+            case 4:
+                this.setEnd_address(partsOfEndAdress[2]);
+                break;
+            case 5:
+                this.setEnd_address(partsOfEndAdress[3]);
+                break;
+        }
+    }
 }

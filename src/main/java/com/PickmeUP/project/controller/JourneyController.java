@@ -1,9 +1,6 @@
 package com.PickmeUP.project.controller;
 
-import com.PickmeUP.project.model.Car;
-import com.PickmeUP.project.model.Journey;
-import com.PickmeUP.project.model.Leg;
-import com.PickmeUP.project.model.User;
+import com.PickmeUP.project.model.*;
 import com.PickmeUP.project.service.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -41,6 +39,9 @@ public class JourneyController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
@@ -72,14 +73,13 @@ public class JourneyController {
 
         Journey journeyToSave = journey;
         journeyToSave.setDriver(loggedIn);
-        journeyToSave.setPriceKm(journey.getPriceKm()/100);
+        journeyToSave.setPriceKm(journey.getPriceKm());
         journeyToSave.setRepeat(repeatService.findRepeatById(journey.getRepeat().getId()));
         journeyToSave.setCar(carToSave);
 
         Calendar calendar = new GregorianCalendar();
         Date dateOfJourney = formatter.parse(journeyToSave.getDepartureDate());
         calendar.setTime(dateOfJourney);
-        System.out.println("Week number:" + calendar.get(Calendar.WEEK_OF_YEAR));
 
         int difDays = 0;
         int iterations = 0;
@@ -114,13 +114,10 @@ public class JourneyController {
                     JSONObject jsonLegNormal = legs.getJSONObject(i);
                     JSONObject duration = jsonLegNormal.getJSONObject("duration");
                     JSONObject distance = jsonLegNormal.getJSONObject("distance");
-                    JSONObject end_location = jsonLegNormal.getJSONObject("end_location");
-                    JSONObject start_location = jsonLegNormal.getJSONObject("start_location");
                     Leg leg = new Leg();
                     legService.saveLeg(leg);
                     leg.setPosition(i + 1);
-                    leg.setStart_address(jsonLegNormal.getString("start_address"));
-                    leg.setEnd_address(jsonLegNormal.getString("end_address"));
+                    leg.correctAddresses(jsonLegNormal.getString("start_address"), jsonLegNormal.getString("end_address"));
                     leg.setDistance(distance.getInt("value"));
                     leg.setDuration(duration.getInt("value"));
                     leg.setJourney(iteration);
@@ -186,10 +183,17 @@ public class JourneyController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
+        Account accountPassenger = accountService.findbyUser(loggedIn);
+        Account accountDriver = accountService.findbyUser(journeyToCancel.getDriver());
 
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
+                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance()/1000;
+                accountPassenger.setBalance(accountPassenger.getBalance()+balanceRefund);
+                accountService.updateAccount(accountPassenger);
+                accountDriver.setBalance(accountDriver.getBalance()-balanceRefund);
+                accountService.updateAccount(accountDriver);
                 passengersOfLeg.remove(loggedIn);
                 legService.saveLeg(leg);
             }
@@ -197,6 +201,103 @@ public class JourneyController {
 
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/details", method = RequestMethod.GET)
+    public ModelAndView handleDeatils(@RequestParam int id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journey = journeyService.findById(id);
+        ArrayList<Leg> legs = legService.findByJourney(journey);
+        if(legs.size() == 3){
+            Leg first = legs.get(1);
+            Leg second = legs.get(2);
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+        if(legs.size() == 2) {
+            Leg first = legs.get(1);
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+        if(legs.size() == 1){
+            Leg first = legs.get(0);
+            first.setStart_address("");
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.addObject("journey",journey);
+        modelAndView.setViewName("/journey/show/Details");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/edit", method = RequestMethod.GET)
+    public ModelAndView handleEdit(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journey = journeyService.findById(id);
+        ArrayList<Leg> legs = legService.findByJourney(journey);
+        if(legs.size() == 3){
+            Leg first = legs.get(1);
+            Leg second = legs.get(2);
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+        if(legs.size() == 2) {
+            Leg first = legs.get(1);
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+        if(legs.size() == 1){
+            Leg first = legs.get(0);
+            first.setStart_address("");
+            Leg second = legs.get(0);
+            second.setStart_address("");
+            modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
+        }
+
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.addObject("journey",journey);
+        modelAndView.setViewName("/journey/create/edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/journey/edit", method = RequestMethod.POST)
+    public ModelAndView handleEdit(@RequestBody Journey journey) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userService.findUserByEmail(auth.getName());
+        Journey journeyToUpdate = journeyService.findById(journey.getId());
+        Car carofJourney = journeyToUpdate.getCar();
+
+        carofJourney.setType(journey.getCar().getType());
+        carofJourney.setColour(journey.getCar().getColour());
+        carofJourney.setLicence(journey.getCar().getLicence());
+
+        carService.save(carofJourney);
+
+        journeyToUpdate.setCar(carofJourney);
+        journeyToUpdate.setSeats(journey.getSeats());
+        journeyToUpdate.setPriceKm(journey.getPriceKm());
+        journeyToUpdate.setBags(journey.getBags());
+        journeyToUpdate.setPriceBag(journey.getPriceBag());
+
+        journeyService.updateJourney(journeyToUpdate);
+        modelAndView.addObject("user",loggedIn);
+        modelAndView.setViewName("/journey/create/edit");
         return modelAndView;
     }
 }

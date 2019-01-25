@@ -38,7 +38,9 @@
                 }
             });
 
-            self.location['reload']()
+           setTimeout(function(){
+                self.location['reload']()
+            }, 500)
         }
 
         function cancelOffered(idToSend){
@@ -57,7 +59,9 @@
                 }
             });
 
-            self.location['reload']()
+           setTimeout(function(){
+                self.location['reload']()
+            }, 500)
         }
 
         window.onload = fillParam;
@@ -244,7 +248,7 @@
                        <div class="form-group">
                           <div class="col-xs-6">
                               <label for="Geburtstag"><h4>Geburtstag</h4></label>
-                              <output type="text" class="form-control" th:text="${user.phone}" name="Geburtstag" id="g_burt" title="Geburtsdatum eingeben"></output>
+                              <output type="text" class="form-control" th:text="${user.birth}" name="Geburtstag" id="g_burt" title="Geburtsdatum eingeben"></output>
                           </div>
                       </div>
 
@@ -306,8 +310,8 @@
                         <td th:text="${journeyToPost.arrivalDate}"></td>
                         <td th:text="${journeyToPost.arrivalTime}+' Uhr'"></td>
                         <td th:text="${journeyToPost.priceKm}+' €'"></td>
-                        <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
-                        <td><a style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" href="#" role="button">Bearbeiten</a></td>
+                        <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details/?id='+${journeyToPost.id}}" role="button">Details</a></td>
+                        <td><a style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/edit?id='+${journeyToPost.id}}" role="button">Bearbeiten</a></td>
                         <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success"  th:onclick="|cancelOffered('${journeyToPost.id}')|" type="submit" value="Stornieren"></td>
                           </tr>
                         </tbody>
@@ -343,7 +347,7 @@
                                 <td th:text="${bookedToPost.arrivalDate}"></td>
                                 <td th:text="${bookedToPost.arrivalTime}+' Uhr'"></td>
                                 <td th:text="${bookedToPost.priceKm}+' €'"></td>
-                                <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" href="#" role="button">Details</a></td>
+                                <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details/?id='+${bookedToPost.id}}" role="button">Details</a></td>
                                 <td><input style="margin-top: -5px; transform: scale(0.9);" class="btn btn-success" type="submit"  th:onclick="|cancelBooked('${bookedToPost.id}')|"  th:value="Stornieren"></td>
                                   </tr>
                                 </tbody>
@@ -367,6 +371,15 @@
               <div id="rating" class="tab-pane fade">
                   <hr>
                       <table frame="void" class="table">
+                    <thead>
+                        <tr>
+                          <th scope="col">-</th>
+                          <th scope="col">Note</th>
+                          <th scope="col">Von</th>
+                          <th scope="col">Kommentar</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
                           <tbody th:if="${not #lists.isEmpty(ratingList)}">
                               <tr th:each="ratingToPost: ${ratingList}">
                               <td>

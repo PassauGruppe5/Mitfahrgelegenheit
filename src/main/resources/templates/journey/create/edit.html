@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de"
-xmlns:th="http://www.thymeleaf.org">
+ xmlns:th="http://www.thymeleaf.org">
     <head>
-      <title>Fahrt_anbieten</title>
+      <title>Grid_Template</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,165 +10,127 @@ xmlns:th="http://www.thymeleaf.org">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      
+
       <style>
-      
+
+            .closebtn:hover {
+            color: black;
+            }
+
+          .wrapper{
+
+              display: grid;
+              grid-auto-rows: minmax(auto, auto);
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 1em;
+
+          }
+
+          .wrapper > div{
+
+              padding: 1em;
+          }
+
+          .wrapper > div:nth-child(odd){
+
+
+          }
+
           .container1{
-            
+
               position: relative;
-              margin-left: 150px;
+              margin-left: 120px;
               margin-right: 150px;
-              
-          }
-          
-          .container2{
-              
-              position: absolute;
-              margin-left: 10px;
-              width: 40%;
-              margin-top: -25px;
-          }
-          
-          .container3{
-              
-              position: absolute;
-              margin-top: 450px;
-              margin-left: 10px;
-              width: 40%;
-          }
-          
-          .container4{
-              
-              position: absolute;
-              margin-left: 400px;
-              width: 40%;
-              margin-top: -25px;
-              width: 30%;
+
           }
 
-        .container5{
 
-            position: absolute;
-            margin-left: 18px;
-            margin-top: 340px;
-        }
-          
+          .container5{
+
+              grid-column: 3;
+              grid-column: 3/1;
+          }
+
+
            #logo{
-              
+
              width:130px;
              height:50px;
              margin-top: 5px;
-               
+
           }
-          
+
           .navbar{
-              
+
               margin-top: 10px;
-              
+
           }
-          
+
           #map {
-              
+
               height: 100%;
-              float: right;
-              margin-right: 100px;
+              float:right;
+              margin-right: 150px;
+              margin-left: 10px;
               border: solid black;
               margin-top: 20px;
               position: fixed;
-              
-          }
-    
-          .input{
-              
-              border-radius: 10px;
-              
-          }
-          
-          .form-control{
-              
-              width: 100%;
-              border-radius:10px;
-              
-          }
-          
-          #departuredat{
-              
-              border-radius: 10px;
-              width: 130px;
-              margin-left:8px;
-          }
-
-            #departuretime{
-
-                border-radius: 10px;
-                width: 100px;
-                margin-left:8px;
-            }
-          
-          #arrivaldat{
-              
-              border-radius: 10px;
-              width: 130px;
-              margin-left: 8px;
-          }
-
-          #arrivaltime{
-
-              border-radius:10px;
-              width: 100px;
-              margin-left: 8px;
-          }
-
-          #repeat{
-
-              border-radius: 10px;
-              height: 25px;
-              margin-left: 8px;
-          }
-
-          .col-md-3{
-
-              margin-left: 8px;
-          }
-
-          .btn{
-
-              margin-bottom: 10px;
-              border-radius: 10px;
-              margin-left: 8px;
-          }
-
-          label{
-
-              margin-left: 8px;
-          }
-
-          .dropdown{
-
-              float:right;
 
           }
-      
+
+
       </style>
-      
+
       <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>
-              var userId;
+
               var places = {};
               var autocompletes = {};
               var journey = {};
               var repeat = {};
               var car = {};
 
-              function fillParam(){
+            function updateJourney(){
+             /*<![CDATA[*/
 
-              /*<![CDATA[*/
-
-                  userId = [[${user.id}]]
+              journey.id = [[${journey.id}]];
 
               /*]]>*/
+              car.colour = $("#colour").val();
+              car.type = $("#type").val();
+              car.licence = $("#licence").val();
+              journey.seats = $("#seats").val();
+              journey.bags = $("#bags").val();
+              journey.priceKm = $("#priceKm").val();
+              journey.priceBag = $("#priceBag").val();
+              journey.departureDate = $("#departuredat").val();
+              journey.arrivalDate = $("#arrivaldat").val();
+              journey.departureTime = $("#departuretime").val();
+              journey.arrivalTime = $("#arrivaltime").val();
+              journey.origin = $("#origin").val();
+              journey.destination = $("#destination").val();
+              journey.repeat = repeat;
+              journey.car = car;
+
+              $.ajax({
+                  url: "/journey/edit",
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(journey),
+                  success: function(data, status){
+                  if(data){
+                      }
+                  }.bind(this),
+                  error: function(xhr, error) {
+                    console.log(error);
+                  }
+              });
+               setTimeout(function(){
+                    self.location['reload']()
+                }, 500)
               }
+
 
               function initAutocomplete() {
 
@@ -430,7 +392,7 @@ xmlns:th="http://www.thymeleaf.org">
                         }, function(response, status) {
                           if (status === 'OK') {
                             journey.route = JSON.stringify(response)
-                            journey.legs = JSON.stringify(response.routes[0].legs);
+                            journey.legs = response.routes[0].legs;
                             directionsDisplay.setDirections(response);
                           } else {
                             window.alert('Directions request failed due to ' + status);
@@ -457,57 +419,12 @@ xmlns:th="http://www.thymeleaf.org">
                   return LatLng;
               }
 
-              function saveJourney(){
-
-                  /*<![CDATA[*/
-
-                  userId = [[${user.id}]]
-
-                  /*]]>*/
-
-                  car.colour = $("#color").val();
-                  car.licence = $("#licence").val();
-                  car.type = $("#type").val();
-                  repeat.id = $("#repeat").val();
-                journey.seats = $("#seats").val();
-                journey.bags = $("#bags").val();
-                journey.priceKm = $("#priceKm").val();
-                journey.priceBag = $("#priceBag").val();
-                journey.departureDate = $("#departuredat").val();
-                journey.arrivalDate = $("#arrivaldat").val();
-                journey.departureTime = $("#departuretime").val();
-                journey.arrivalTime = $("#arrivaltime").val();
-                journey.origin = $("#origin").val();
-                journey.destination = $("#destination").val();
-                journey.repeat = repeat;
-                journey.car = car;
-
-                console.log(journey);
-
-                $.ajax({
-                    url: "/journey/create",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(journey),
-                    success: function(data, status){
-                    if(data){
-                        window.location.href="/profile/show/profile?id="+userId+"#offered";
-                        }
-                    }.bind(this),
-                    error: function(xhr, error) {
-                      console.log(error);
-                    }
-                });
-              };
-
-            window.onload.fillParam;
             </script>
-      
+
       </head>
   <body>
-      
       <div class="container1">
-          
+
           <nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
   <div class="container-fluid">
     <!-- Titel und Schalter werden für eine bessere mobile Ansicht zusammengefasst -->
@@ -544,140 +461,137 @@ xmlns:th="http://www.thymeleaf.org">
   </nav>
 </div>
       <hr>
+        <div class="alert alert-success alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+           Alle Werte im Reiter <strong>"Weitere Angaben"</strong> können geändert werden.
+        </div>
+    <div class="wrapper">
+
     <div class="container2">
-    <h3 style="margin-left: -8px;">Routenplanung:</h3>
+
+    <h3>Routenplanung:</h3>
+
         <div class="form-group">
         <label for="Startpunkt">Startpunkt</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="origin" required placeholder="Startpunkt">
+        <output style="width: 300px;" type="text" class="input form-control" id="origin" th:text="${journey.origin}"></output>
         </div>
+
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 1</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="stop1" placeholder="Zwischenstop 1">
+        <div><output style="width: 300px;" type="text" class="input form-control" id="stop1" th:text="${leg1.start_address}"></output></div>
         </div>
+
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 2</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="stop2" placeholder="Zwischenstop 2">
+        <div><output style="width: 300px;" type="text" class="input form-control" id="stop2" th:text="${leg2.start_address}"></output></div>
         </div>
+
         <div class="form-group">
         <label for="Startpunkt">Endziel</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="destination" required placeholder="Endziel">
+        <output style="width: 300px;" type="text" class="input form-control" id="destination" th:text="${journey.destination}"></output>
+
         </div>
+
     </div>
-      
-    <div id="map" style="margin-left: 10px; height: 450px; width: 450px"></div>
-      
-    <div class="container4">
-    <h3>Zeitplanung:</h3>
 
-        <div class="row">
+    <div class="container3">
+    <h3 style="margin-left: -15px;">Zeitplanung:</h3>
 
-        <div class="col-md-12">
-        <div class ="form-group">
+        <div class="row col-md-4">
+
+
+        <div class="form-group">
         <label for="depdatdat">Datum der Abfahrt</label>
-        <input style="margin-top: 25px;" type="date" id="departuredat" required class="form-inline"/>
-        </div>
+        <output style="width: 150px;" type="text" id="departuredat" class="form-control" th:text="${journey.departureDate}" />
         </div>
 
-        <div class="col-md-12">
         <div class="form-group">
         <label for="depdattime">Zeitpunkt der Abfahrt</label>
-        <input style="margin-top: 33px;" type="time" id="departuretime" required class="form-inline"/>
+        <output style="width: 150px; margin-left: 1px;" type="text" id="departuretime" class="form-control" th:text="${journey.departureTime}"/>
+        </div>
+
+        </div>
+
+        <div class="row col-md-4">
+
+        <div class="form-group">
+        <label for="arrdatdat">Datum der Ankunft</label>
+        <output style="width: 150px; margin-left: 1px;" type="date" id="arrivaldat" class="form-control" th:text="${journey.arrivalDate}"/>
+        </div>
+
+        <div class="form-group">
+        <label for="arrdattie">Zeitpunkt der Ankunft</label>
+        <output style="width: 150px;" type="time" id="arrivaltime" class="form-control" th:text="${journey.arrivalTime}"/>
+        </div>
+
+        </div>
+        </div>
+
+    <div id="map" style="height: 325px; width: 325px"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFtkAWeROn5POqzqjevKRYIo4cB0ZbZWw&libraries=places&callback=initAutocomplete"
+    async defer></script>
+
+      <div class="container4" style="margin-top: -70px;">
+      <div class="dropdown">
+        <h3>Wiederholung der Fahrt:</h3>
+        <output th:text="${journey.repeat.description}"></output>
+        </div>
+        </div>
+
+    <div class="container5" style="margin-top: -40px;">
+    <h3>Weitere Angaben:</h3>
+        <div class="row">
+        <div class="col-md-3">
+        <div class="form-group">
+        <label for="Automarke">Automarke</label>
+        <input style="width: 160px;" type="text" class="form-control" id="type"  th:field="*{journey.car.type}"/></div>
+        </div>
+
+        <div class="col-md-3">
+        <div class="form-group">
+        <label for="Kennzeichen">Kennzeichen</label>
+        <input style="width: 160px;" type="text" class="form-control" id="licence"  th:field="*{journey.car.licence}"></div>
+        </div>
+
+        <div class="col-md-3">
+        <div class="form-group">
+        <label for="Farbe">Farbe</label>
+        <input style="width: 160px;" type="text" class="form-control" id="colour"  th:field="*{journey.car.colour}"></div>
         </div>
         </div>
 
         <div class="row">
-
-        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="col-md-3">
         <div class="form-group">
-        <label for="arrdatdat">Datum der Ankunft</label>
-        <input style="margin-top: 33px;" type="date" id="arrivaldat" required class="form-inline"/>
-        </div>
+        <label for="Plätze">Plätze</label>
+        <input style="width: 160px;" type="number" class="form-control" id="seats"  min="1" max="6" th:field="*{journey.seats}"></div>
         </div>
 
-        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="col-md-3">
         <div class="form-group">
-        <label for="arrdatti e">Zeitpunkt der Ankunft</label>
-        <input style="margin-top: 33px;" type="time" id="arrivaltime" required class="form-inline"/>
+        <label for="Gepäck">Gepäck</label>
+        <input style="width: 160px;" type="number" class="form-control" id="bags"  min="0" max="10" th:field="*{journey.bags}"></div>
+        </div>
+
+        <div class="col-md-3">
+        <div class="form-group">
+        <label for="Preis/Km">Preis/Km</label>
+        <input style="width: 160px;" type="text" class="form-control" id="priceKm"  min="0" th:field="*{journey.priceKm}"></div>
         </div>
         </div>
 
-        </div>
-
-        </div>
-
-    </div>
-
-      <div class="container5">
-      <div class="dropdown">
-        <h3>Wiederholung der Fahrt:</h3>
-        <select id="repeat" name="repeat">
-            <option value="1">Einmalig</option>
-            <option value="2">Täglich</option>
-            <option value="3">Wöchentlich</option>
-            <option value="4">Monatlich</option>
-        </select>
+        <div class="row">
+         <div class="col-md-3">
+        <div class="form-group">
+        <label for="Preis/Gepäck">Preis/Gepäck</label>
+        <input style="width: 160px;" type="text" class="form-control" id="priceBag" min="0" th:field="*{journey.priceBag}"></div>
         </div>
         </div>
-      
-    <div class="container3">
-        <h3>Weitere Angaben:</h3>
-            <div class="row">
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Automarke">Automarke</label>
-            <input style="width: 160px;" type="text" class="form-control" id="type" required placeholder="Automarke"></div>
-            </div>
-
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Kennzeichen">Kennzeichen</label>
-            <input style="width: 160px;" type="text" class="form-control" id="licence" required placeholder="z.B. PA-R-1997 "></div>
-            </div>
-
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Farbe">Farbe</label>
-            <input style="width: 160px;" type="text" class="form-control" id="color" required placeholder="Farbe"></div>
-            </div>
-            </div>
-
-            <div class="row">
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Plätze">Plätze</label>
-            <input style="width: 160px;" type="number" class="form-control" id="seats" required placeholder="Plätze" min="1" max="6"></div>
-            </div>
-
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Gepäck">Gepäck</label>
-            <input style="width: 160px;" type="number" class="form-control" id="bags" required placeholder="Gepäck" min="0" max="10"></div>
-            </div>
-
-            <div class="col-md-3">
-            <div class="form-group">
-            <label for="Preis/Km">Preis/Km (z.B.0.05)</label>
-            <input style="width: 160px;" type="text" class="form-control" id="priceKm" required placeholder="0.05" min="0"></div>
-            </div>
-            </div>
-
-            <div class="row">
-             <div class="col-md-3">
-            <div class="form-group">
-            <label for="Preis/Gepäck">Preis/Gepäck</label>
-            <input style="width: 180px;" type="text" class="form-control" id="priceBag" placeholder="Preis/Gepäck in Euro" min="0"></div>
-            </div>
-            </div>
-          <button class="btn btn-success" id="saveButton" onclick="saveJourney()">Fahrt anbieten</button>
-
-          </div>
-          <div>
-          </div>
-
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFtkAWeROn5POqzqjevKRYIo4cB0ZbZWw&libraries=places&callback=initAutocomplete"
-        async defer></script>
+        <button class="btn btn-success" id="saveButton" onclick="updateJourney()">Ändern</button>
+        </div>
 
 
-
-      </body>
-      </html>
+  </div>
+  </body>
+  </html>
