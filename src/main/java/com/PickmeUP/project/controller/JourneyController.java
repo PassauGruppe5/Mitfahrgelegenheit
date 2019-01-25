@@ -215,11 +215,14 @@ public class JourneyController {
             Leg first = legs.get(1);
             Leg second = legs.get(2);
             modelAndView.addObject("leg1",first);
-            modelAndView.addObject("leg2",first);
+            modelAndView.addObject("leg2",second);
         }
         if(legs.size() == 2) {
             Leg first = legs.get(1);
+            Leg second = legs.get(0);
+            second.setStart_address("");
             modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
         }
         if(legs.size() == 1){
             Leg first = legs.get(0);
@@ -227,7 +230,7 @@ public class JourneyController {
             Leg second = legs.get(0);
             second.setStart_address("");
             modelAndView.addObject("leg1",first);
-            modelAndView.addObject("leg2",first);
+            modelAndView.addObject("leg2",second);
         }
 
 
@@ -248,11 +251,14 @@ public class JourneyController {
             Leg first = legs.get(1);
             Leg second = legs.get(2);
             modelAndView.addObject("leg1",first);
-            modelAndView.addObject("leg2",first);
+            modelAndView.addObject("leg2",second);
         }
         if(legs.size() == 2) {
             Leg first = legs.get(1);
+            Leg second = legs.get(0);
+            second.setStart_address("");
             modelAndView.addObject("leg1",first);
+            modelAndView.addObject("leg2",second);
         }
         if(legs.size() == 1){
             Leg first = legs.get(0);
@@ -260,7 +266,7 @@ public class JourneyController {
             Leg second = legs.get(0);
             second.setStart_address("");
             modelAndView.addObject("leg1",first);
-            modelAndView.addObject("leg2",first);
+            modelAndView.addObject("leg2",second);
         }
 
         modelAndView.addObject("user",loggedIn);
