@@ -2,6 +2,7 @@ package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
 import com.PickmeUP.project.model.Journey;
+import com.PickmeUP.project.model.TopFiveDestinationObject;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.service.AccountService;
 import com.PickmeUP.project.service.JourneyService;
@@ -32,23 +33,26 @@ public class Dashboard {
     @Autowired
     UserService userService;
 
+
     @RequestMapping(value={"/admin/dashboard"}, method = RequestMethod.GET)
     public ModelAndView showDashboard(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         double totalBalance = accountService.getTotalBalance();
-        ArrayList<Object[]> topfiveDestinations= legService.topOfALl();
-        ArrayList<Object> topfiveDestinationsClean = new ArrayList<Object>();
+        ArrayList<TopFiveDestinationObject> topFiveDestinations = new ArrayList<>();
+        ArrayList<Object[]> testtest = legService.topOfALl();
+        for(Object object[] : testtest ) {
+            TopFiveDestinationObject topDestinations = new TopFiveDestinationObject(object);
+            topFiveDestinations.add(topDestinations);
+        }
         Account totalAccount = new Account();
         totalAccount.setBalance(totalBalance);
-        for(Object object: topfiveDestinations){
 
-        }
         ArrayList<Journey> activeJourneys = journeyService.findAllByActiveAndCanceled(1,0);
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(0,0);
 
-        modelAndView.addObject("topDestinations",topfiveDestinations);
+        modelAndView.addObject("topDestinations",topFiveDestinations);
         modelAndView.addObject("doneJourneys",doneJourneys);
         modelAndView.addObject("activeJourneys",activeJourneys);
         modelAndView.addObject("total",totalAccount);

@@ -2,7 +2,7 @@
 <html lang="de"
 xmlns:th="http://www.thymeleaf.org">
     <head>
-      <title>Admin_Dashboard</title>
+      <title>PickmeUp - Admin - Dashboard</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -106,6 +106,7 @@ xmlns:th="http://www.thymeleaf.org">
                 <li><a data-toggle="tab" href="#abgeschlossene_fahrten">Abgeschlossene Fahrten</a></li>
                 <li><a data-toggle="tab" href="#fahrer">Top 5 Fahrer</a></li>
                 <li><a data-toggle="tab" href="#mitfahrer">Top 5 Mitfahrer</a></li>
+                <li><a data-toggle="tab" href="#destinations">Top 5 angefahrene Städte</a></li>
               </ul>
 
           <div class="tab-content">
@@ -190,26 +191,22 @@ xmlns:th="http://www.thymeleaf.org">
                 </div>
               </div>
 
-              <div id="fahrer" class="tab-pane fade">
+              <div id="destinations" class="tab-pane fade">
                 <hr>
                   <div class="container3">
                   <table frame="void" class="table table-hover">
                 <thead>
                     <tr>
                       <th scope="col">-</th>
-                      <th scope="col">ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Aktuelle Fahrten</th>
-                      <th scope="col">Angebotene Fahrten</th>
+                      <th scope="col">Stadt</th>
+                      <th scope="col">Anzahl</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                  <th scope="row">Zahl absteigend</th>
-                  <td>1</td>
-                  <td>Tobias Herrmann</td>
-                  <td>3</td>
-                  <td>30</td>
+                  <tbody th:if="${not #lists.isEmpty(topDestinations)}">
+                    <tr th:each="top5, iStat: ${topDestinations}">
+                  <th th:text="${iStat.count}"></th>
+                  <td th:text="${top5.named}"></td>
+                  <td th:text="${top5.counted}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -241,6 +238,31 @@ xmlns:th="http://www.thymeleaf.org">
                 <hr>
                 </div>
               </div>
+
+                <div id="fahrer" class="tab-pane fade">
+                <hr>
+                <div class="container4">
+                    <table frame="void" class="table table-hover">
+                  <thead>
+                      <tr>
+                        <th scope="col">-</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Gebuchte Fahrten</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                    <th scope="row">Zahl absteigend</th>
+                    <td>1</td>
+                    <td>Tobias Herrmann</td>
+                    <td>50</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <hr>
+                  </div>
+                </div>
 
           </div>
         </div>

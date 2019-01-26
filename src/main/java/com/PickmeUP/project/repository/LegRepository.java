@@ -15,7 +15,8 @@ public interface LegRepository extends JpaRepository<Leg, Integer> {
 
     ArrayList<Leg> findLegsByPassengersContaining(User user);
 
-    @Query(value = "SELECT COUNT(l.id),l.end_address from leg as l group by end_address ORDER BY end_address DESC LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT COUNT(l.id),l.end_address FROM leg AS l WHERE l.journey IN" +
+                    "(SELECT j.id FROM journey AS j WHERE j.canceled != 1)" +
+                    "group by end_address ORDER BY count(l.id) DESC LIMIT 5", nativeQuery = true)
     ArrayList<Object[]> topOfALl();
-
 }
