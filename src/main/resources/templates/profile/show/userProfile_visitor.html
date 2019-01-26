@@ -236,16 +236,18 @@
               <hr>
                 <div id="ratingList">
                       <table frame="void" class="table">
+                    <thead>
+                        <tr>
+                          <th scope="col">Note</th>
+                          <th scope="col">Von</th>
+                          <th scope="col">Kommentar</th>
+                        </tr>
+                      </thead>
                           <tbody th:if="${not #lists.isEmpty(ratingList)}">
                               <tr th:each="ratingToPost: ${ratingList}">
-                              <td>
-                              <form action="" method="post">
-                              <td th:text="${ratingToPost.grade}"></td>
-                              <td th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName} "></td>
+                              <th th:text="${ratingToPost.grade}"></th>
+                              <td> <a th:href="@{'/profile/show/profile?id='+${ratingToPost.publisher.id}}" th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}"/></td>
                               <td th:text="${ratingToPost.message}"></td>
-                              <td><a id="btn_details" class="btn-success" th:href="@{'/profile/show/profile?id='+${ratingToPost.publisher.id}}">Profil</a></td>
-                              </form>
-                              </td>
                               </tr>
                           </tbody>
                       </table>

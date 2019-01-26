@@ -2,7 +2,6 @@ package com.PickmeUP.project.controller;
 
 import com.PickmeUP.project.model.Account;
 import com.PickmeUP.project.model.Journey;
-import com.PickmeUP.project.model.TopFiveDestinationObject;
 import com.PickmeUP.project.model.User;
 import com.PickmeUP.project.service.AccountService;
 import com.PickmeUP.project.service.JourneyService;
@@ -40,12 +39,8 @@ public class Dashboard {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         double totalBalance = accountService.getTotalBalance();
-        ArrayList<TopFiveDestinationObject> topFiveDestinations = new ArrayList<>();
-        ArrayList<Object[]> testtest = legService.topOfALl();
-        for(Object object[] : testtest ) {
-            TopFiveDestinationObject topDestinations = new TopFiveDestinationObject(object);
-            topFiveDestinations.add(topDestinations);
-        }
+        ArrayList<Object[]> topFiveDestinations = legService.topOfALl();
+        ArrayList<Object[]> topFiveDrivers    = journeyService.findTopDrivers();
         Account totalAccount = new Account();
         totalAccount.setBalance(totalBalance);
 
@@ -54,6 +49,7 @@ public class Dashboard {
 
         modelAndView.addObject("topDestinations",topFiveDestinations);
         modelAndView.addObject("doneJourneys",doneJourneys);
+        modelAndView.addObject("topDrivers",topFiveDrivers);
         modelAndView.addObject("activeJourneys",activeJourneys);
         modelAndView.addObject("total",totalAccount);
         modelAndView.addObject("user",loggedIn);

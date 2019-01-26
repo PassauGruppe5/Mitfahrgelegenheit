@@ -123,8 +123,6 @@ xmlns:th="http://www.thymeleaf.org">
 
 
               <div id="aktuelle_fahrten" class="tab-pane fade">
-              <hr>
-                  <h4><a style="margin-top: 10px; text-decoration: none;" href="">Name des Fahrers</a></h4>
                   <div class="container2">
                     <table frame="void" class="table table-hover">
                 <thead>
@@ -137,6 +135,7 @@ xmlns:th="http://www.thymeleaf.org">
                       <th scope="col">Ankunftsdatum</th>
                       <th scope="col">Ankunftszeit</th>
                       <th scope="col">Preis/Km</th>
+                      <th scope="col">ID</th>
                     </tr>
                   </thead>
                   <tbody th:if="${not #lists.isEmpty(activeJourneys)}">
@@ -149,6 +148,7 @@ xmlns:th="http://www.thymeleaf.org">
                     <td th:text="${activJourneyToPost.arrivalDate}"></td>
                     <td th:text="${activJourneyToPost.arrivalTime}+' Uhr'"></td>
                     <td th:text="${activJourneyToPost.priceKm}+' €'"></td>
+                    <td><a th:href="@{'/journey/details?id='+${activJourneyToPost.id}}" th:text="${activJourneyToPost.id}"/></td>
                     </tr>
                   </tbody>
                 </table>
@@ -159,7 +159,6 @@ xmlns:th="http://www.thymeleaf.org">
 
 
               <div id="abgeschlossene_fahrten" class="tab-pane fade">
-              <hr>
                 <div class="container3">
                   <table frame="void" class="table table-hover">
                 <thead>
@@ -172,6 +171,7 @@ xmlns:th="http://www.thymeleaf.org">
                       <th scope="col">Ankunftsdatum</th>
                       <th scope="col">Ankunftszeit</th>
                       <th scope="col">Preis/Km</th>
+                      <th scope="col">ID</th>
                     </tr>
                   </thead>
                   <tbody th:if="${not #lists.isEmpty(doneJourneys)}">
@@ -184,6 +184,7 @@ xmlns:th="http://www.thymeleaf.org">
                     <td th:text="${doneJourneyToPost.arrivalDate}"></td>
                     <td th:text="${doneJourneyToPost.arrivalTime}+' Uhr'"></td>
                     <td th:text="${doneJourneyToPost.priceKm}+' €'"></td>
+                    <td><a th:href="@{'/journey/details?id='+${doneJourneyToPost.id}}" th:text="${doneJourneyToPost.id}"/></td>
                     </tr>
                   </tbody>
                 </table>
@@ -192,7 +193,6 @@ xmlns:th="http://www.thymeleaf.org">
               </div>
 
               <div id="destinations" class="tab-pane fade">
-                <hr>
                   <div class="container3">
                   <table frame="void" class="table table-hover">
                 <thead>
@@ -205,8 +205,8 @@ xmlns:th="http://www.thymeleaf.org">
                   <tbody th:if="${not #lists.isEmpty(topDestinations)}">
                     <tr th:each="top5, iStat: ${topDestinations}">
                   <th th:text="${iStat.count}"></th>
-                  <td th:text="${top5.named}"></td>
-                  <td th:text="${top5.counted}"></td>
+                  <td th:text="${top5[1]}"></td>
+                  <td th:text="${top5[0]}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -240,7 +240,6 @@ xmlns:th="http://www.thymeleaf.org">
               </div>
 
                 <div id="fahrer" class="tab-pane fade">
-                <hr>
                 <div class="container4">
                     <table frame="void" class="table table-hover">
                   <thead>
@@ -251,12 +250,12 @@ xmlns:th="http://www.thymeleaf.org">
                         <th scope="col">Gebuchte Fahrten</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                    <th scope="row">Zahl absteigend</th>
-                    <td>1</td>
-                    <td>Tobias Herrmann</td>
-                    <td>50</td>
+                    <tbody th:if="${not #lists.isEmpty(topDrivers)}">
+                      <tr th:each="top5, iStat: ${topDrivers}">
+                    <th th:text="${iStat.count}"></th>
+                    <td><a th:href="@{'/profile/show/profile?id='+${top5[3]}}" th:text="${top5[3]}"/></td>
+                    <td th:text="${top5[1]}+' '+${top5[2]}"></td>
+                    <td th:text="${top5[0]}"></td>
                       </tr>
                     </tbody>
                   </table>

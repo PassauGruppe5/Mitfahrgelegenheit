@@ -277,9 +277,10 @@
 
               	</form>
 
-                  <form id="kommentarbox" action="" th:method="post" th:action="@{/profile/alter/comment}" >
-                <label> Persönliche Angaben: <br><textarea id="comment" th:field= "*{user.comment}"cols="45" rows="5" name="message"></textarea></label>
-                <input id="btn_speichern" class="btn btn-success" type="submit" value="Speichern">
+                <form id="kommentarbox" action="" th:method="post" th:action="@{/profile/alter/comment}" >
+                  <label> Persönliche Angaben: <br><textarea id="comment" th:field= "*{user.comment}"cols="45" rows="5" name="message"></textarea></label>
+                  <br>
+                  <input id="btn_speichern" class="btn btn-success" type="submit" value="Speichern">
                 </form>
                 </div>
 
@@ -373,23 +374,17 @@
                       <table frame="void" class="table">
                     <thead>
                         <tr>
-                          <th scope="col">-</th>
+
                           <th scope="col">Note</th>
                           <th scope="col">Von</th>
                           <th scope="col">Kommentar</th>
-                          <th scope="col"></th>
                         </tr>
                       </thead>
                           <tbody th:if="${not #lists.isEmpty(ratingList)}">
                               <tr th:each="ratingToPost: ${ratingList}">
-                              <td>
-                              <form action="" method="post">
-                              <td th:text="${ratingToPost.grade}"></td>
-                              <td th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName} "></td>
+                              <th th:text="${ratingToPost.grade}"></th>
+                              <td> <a th:href="@{'/profile/show/profile?id='+${ratingToPost.publisher.id}}" th:text="${ratingToPost.publisher.name}+' '+${ratingToPost.publisher.lastName}"/></td>
                               <td th:text="${ratingToPost.message}"></td>
-                              <td><a id="btn_details" class="btn-success" th:href="@{'/profile/show/profile?id='+${ratingToPost.publisher.id}}">Profil</a></td>
-                              </form>
-                              </td>
                               </tr>
                           </tbody>
                       </table>

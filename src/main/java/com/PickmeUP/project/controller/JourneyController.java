@@ -233,7 +233,6 @@ public class JourneyController {
             modelAndView.addObject("leg2",second);
         }
 
-
         modelAndView.addObject("user",loggedIn);
         modelAndView.addObject("journey",journey);
         modelAndView.setViewName("/journey/show/Details");
@@ -267,6 +266,13 @@ public class JourneyController {
             second.setStart_address("");
             modelAndView.addObject("leg1",first);
             modelAndView.addObject("leg2",second);
+        }
+
+        if (loggedIn != journey.getDriver()){
+            modelAndView.addObject("user",loggedIn);
+            modelAndView.addObject("journey",journey);
+            modelAndView.setViewName("/journey/show/Details");
+            return modelAndView;
         }
 
         modelAndView.addObject("user",loggedIn);

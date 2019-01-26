@@ -23,12 +23,12 @@ public class SchedulerTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(cron = "0 */30 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void reportCurrentTime() throws ParseException {
         log.info("Deactivated ended journeys.", dateFormat.format(new Date()));
 
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(1,0);
-        SimpleDateFormat dateTimeformatter = new SimpleDateFormat("dd-M-yyyy hh:mm");
+        SimpleDateFormat dateTimeformatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         Date current = new Date();
         for(Journey done : doneJourneys ) {
             Date dateOfJourney = dateTimeformatter.parse(done.getArrivalDate()+ ' '+ done.getArrivalTime());

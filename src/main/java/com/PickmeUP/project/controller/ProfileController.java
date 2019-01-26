@@ -134,6 +134,10 @@ public class ProfileController {
         User userToShow = userService.findUserById(usrAsInt);
         rating.setReceiver(userToShow);
         rating.setPublisher(userToView);
+
+        if(rating.getGrade() == null){
+            rating.setGrade("0.0");
+        }
         ratingService.saveRating(rating);
         modelAndView.addObject("userToShow", userToShow);
         modelAndView.addObject("userToView", userToView);
