@@ -25,7 +25,7 @@ public class SchedulerTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void setDoneJourneysToInactive(){
         log.info("Deactivated ended journeys.", dateFormat.format(new Date()));
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(1,0);

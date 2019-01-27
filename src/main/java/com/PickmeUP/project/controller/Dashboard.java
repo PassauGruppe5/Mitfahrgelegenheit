@@ -41,15 +41,16 @@ public class Dashboard {
         double totalBalance = accountService.getTotalBalance();
         ArrayList<Object[]> topFiveDestinations = legService.topOfALl();
         ArrayList<Object[]> topFiveDrivers    = journeyService.findTopDrivers();
+        ArrayList<Object[]> topFivePassengers    = legService.findTopPassengers();
         Account totalAccount = new Account();
         totalAccount.setBalance(totalBalance);
-
         ArrayList<Journey> activeJourneys = journeyService.findAllByActiveAndCanceled(1,0);
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(0,0);
 
         modelAndView.addObject("topDestinations",topFiveDestinations);
         modelAndView.addObject("doneJourneys",doneJourneys);
         modelAndView.addObject("topDrivers",topFiveDrivers);
+        modelAndView.addObject("topPassengers",topFivePassengers);
         modelAndView.addObject("activeJourneys",activeJourneys);
         modelAndView.addObject("total",totalAccount);
         modelAndView.addObject("user",loggedIn);

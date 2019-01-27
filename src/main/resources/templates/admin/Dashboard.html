@@ -139,16 +139,16 @@ xmlns:th="http://www.thymeleaf.org">
                     </tr>
                   </thead>
                   <tbody th:if="${not #lists.isEmpty(activeJourneys)}">
-                    <tr th:each="activJourneyToPost: ${activeJourneys}">
+                    <tr th:each="activeJourneyToPost: ${activeJourneys}">
                     <th scope="row">-</th>
-                    <td th:text="${activJourneyToPost.origin}"></td>
-                    <td th:text="${activJourneyToPost.destination}"></td>
-                    <td th:text="${activJourneyToPost.departureDate}"></td>
-                    <td th:text="${activJourneyToPost.departureTime}+' Uhr'"></td>
-                    <td th:text="${activJourneyToPost.arrivalDate}"></td>
-                    <td th:text="${activJourneyToPost.arrivalTime}+' Uhr'"></td>
-                    <td th:text="${activJourneyToPost.priceKm}+' €'"></td>
-                    <td><a th:href="@{'/journey/details?id='+${activJourneyToPost.id}}" th:text="${activJourneyToPost.id}"/></td>
+                    <td th:text="${activeJourneyToPost.origin}"></td>
+                    <td th:text="${activeJourneyToPost.destination}"></td>
+                    <td th:text="${activeJourneyToPost.departureDate}"></td>
+                    <td th:text="${activeJourneyToPost.departureTime}+' Uhr'"></td>
+                    <td th:text="${activeJourneyToPost.arrivalDate}"></td>
+                    <td th:text="${activeJourneyToPost.arrivalTime}+' Uhr'"></td>
+                    <td th:text="${activeJourneyToPost.priceKm}+' €'"></td>
+                    <td><a th:href="@{'/journey/details?id='+${activeJourneyToPost.id}}" th:text="${activeJourneyToPost.id}"/></td>
                     </tr>
                   </tbody>
                 </table>
@@ -203,10 +203,10 @@ xmlns:th="http://www.thymeleaf.org">
                     </tr>
                   </thead>
                   <tbody th:if="${not #lists.isEmpty(topDestinations)}">
-                    <tr th:each="top5, iStat: ${topDestinations}">
+                    <tr th:each="destination, iStat: ${topDestinations}">
                   <th th:text="${iStat.count}"></th>
-                  <td th:text="${top5[1]}"></td>
-                  <td th:text="${top5[0]}"></td>
+                  <td th:text="${destination[1]}"></td>
+                  <td th:text="${destination[0]}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -226,14 +226,14 @@ xmlns:th="http://www.thymeleaf.org">
                       <th scope="col">Gebuchte Fahrten</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                  <th scope="row">Zahl absteigend</th>
-                  <td>1</td>
-                  <td>Tobias Herrmann</td>
-                  <td>50</td>
-                    </tr>
-                  </tbody>
+                    <tbody th:if="${not #lists.isEmpty(topPassengers)}">
+                      <tr th:each="passenger, iStat: ${topPassengers}">
+                    <th th:text="${iStat.count}"></th>
+                    <td><a th:href="@{'/profile/show/profile?id='+${passenger[3]}}" th:text="${passenger[3]}"/></td>
+                    <td th:text="${passenger[1]}+' '+${passenger[2]}"></td>
+                    <td th:text="${passenger[0]}"></td>
+                      </tr>
+                    </tbody>
                 </table>
                 <hr>
                 </div>
@@ -247,15 +247,15 @@ xmlns:th="http://www.thymeleaf.org">
                         <th scope="col">-</th>
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Gebuchte Fahrten</th>
+                        <th scope="col">Angebotene Fahrten</th>
                       </tr>
                     </thead>
                     <tbody th:if="${not #lists.isEmpty(topDrivers)}">
-                      <tr th:each="top5, iStat: ${topDrivers}">
+                      <tr th:each="driver, iStat: ${topDrivers}">
                     <th th:text="${iStat.count}"></th>
-                    <td><a th:href="@{'/profile/show/profile?id='+${top5[3]}}" th:text="${top5[3]}"/></td>
-                    <td th:text="${top5[1]}+' '+${top5[2]}"></td>
-                    <td th:text="${top5[0]}"></td>
+                    <td><a th:href="@{'/profile/show/profile?id='+${driver[3]}}" th:text="${driver[3]}"/></td>
+                    <td th:text="${driver[1]}+' '+${driver[2]}"></td>
+                    <td th:text="${driver[0]}"></td>
                       </tr>
                     </tbody>
                   </table>

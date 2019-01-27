@@ -24,4 +24,6 @@ public class LegService {
     public ArrayList<Leg> findLegsByPassengersContaining(User passenger){ return legRepository.findLegsByPassengersContaining(passenger);}
 
     public ArrayList<Object[]> topOfALl(){return legRepository.topOfALl();}
+
+    public ArrayList<Object[]> findTopPassengers(){return legRepository.findTopPassengers();}
  }

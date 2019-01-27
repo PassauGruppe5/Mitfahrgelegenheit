@@ -38,7 +38,7 @@ public class Leg {
     private Journey journey;
 
     @ManyToMany
-    @JoinColumn(name = "passengers")
+    @JoinTable(name = "leg_user",joinColumns = @JoinColumn(name = "leg_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> passengers;
 
     public int getId(){return this.id;}
