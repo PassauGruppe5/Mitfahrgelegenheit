@@ -90,7 +90,7 @@ public class HomeController {
 
             if(genug_platz){
 
-               if(journey.checkDate(searchDate) && journey.checkTime(searchTime) && journey.getActive() == 1){
+               if(journey.checkDate(searchDate) && journey.checkTime(searchTime) && journey.getActive() == 1 && journey.getCanceled() == 0){
 
                     journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland",""));
                     journey.setArrivalTime(journey.getArrivalTime().substring(0,5));

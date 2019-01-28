@@ -68,13 +68,13 @@ xmlns:th="http://www.thymeleaf.org">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-     <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
+     <a th:href="@{/}" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
-        <li><a href="/journey/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
+        <li><a th:href="@{/}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
+        <li><a th:href="@{/journey/create}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
           <ul class="dropdown-menu navbar-right">
@@ -85,7 +85,7 @@ xmlns:th="http://www.thymeleaf.org">
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#balance'"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#rating'"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
           </ul>
         </li>
       </ul>
@@ -101,12 +101,12 @@ xmlns:th="http://www.thymeleaf.org">
 
     	<div class="col-sm-9">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#geldsumme">Geldsumme</a></li>
-                <li><a data-toggle="tab" href="#aktuelle_fahrten">Akutelle Fahrten</a></li>
-                <li><a data-toggle="tab" href="#abgeschlossene_fahrten">Abgeschlossene Fahrten</a></li>
-                <li><a data-toggle="tab" href="#fahrer">Top 5 Fahrer</a></li>
-                <li><a data-toggle="tab" href="#mitfahrer">Top 5 Mitfahrer</a></li>
-                <li><a data-toggle="tab" href="#destinations">Top 5 angefahrene Städte</a></li>
+                <li class="active"><a data-toggle="tab" th:href="@{#geldsumme}">Geldsumme</a></li>
+                <li><a data-toggle="tab" th:href="@{#aktuelle_fahrten}">Akutelle Fahrten</a></li>
+                <li><a data-toggle="tab" th:href="@{#abgeschlossene_fahrten}">Abgeschlossene Fahrten</a></li>
+                <li><a data-toggle="tab" th:href="@{#fahrer}">Top 5 Fahrer</a></li>
+                <li><a data-toggle="tab" th:href="@{#mitfahrer}">Top 5 Mitfahrer</a></li>
+                <li><a data-toggle="tab" th:href="@{#destinations}">Top 5 angefahrene Städte</a></li>
               </ul>
 
           <div class="tab-content">
