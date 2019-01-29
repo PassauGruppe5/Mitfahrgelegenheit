@@ -32,13 +32,10 @@ public class SchedulerTasks {
         LocalDateTime current = LocalDateTime.now();
 
         for(Journey done : doneJourneys ) {
-            LocalDateTime testest   =  LocalDateTime.of(LocalDate.parse(done.getArrivalDate()), LocalTime.parse(done.getArrivalTime()));
-            System.out.println(testest);
-            if (current.isAfter(LocalDateTime.of(LocalDate.parse(done.getArrivalDate()), LocalTime.parse(done.getArrivalTime())))) {
+                if (current.isAfter(LocalDateTime.of(LocalDate.parse(done.getArrivalDate()), LocalTime.parse(done.getArrivalTime())))) {
                 done.setActive(0);
                 journeyService.updateJourney(done);
             }
-            System.out.println(testest);
         }
 
     }

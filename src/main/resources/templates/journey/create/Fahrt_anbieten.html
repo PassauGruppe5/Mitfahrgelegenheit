@@ -154,21 +154,21 @@ xmlns:th="http://www.thymeleaf.org">
       <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>
-              var userId;
               var places = {};
               var autocompletes = {};
               var journey = {};
               var repeat = {};
               var car = {};
 
-              function fillParam(){
-
-              /*<![CDATA[*/
-
-                  userId = [[${user.id}]]
-
-              /*]]>*/
-              }
+                function precision(number) {
+                  var str = "" + number;
+                  var index = str.indexOf('.');
+                  if (index >= 0) {
+                    return str.length - index - 1;
+                  } else {
+                    return 0;
+                  }
+}
 
               function initAutocomplete() {
 
@@ -459,6 +459,10 @@ xmlns:th="http://www.thymeleaf.org">
 
               function saveJourney(){
 
+                    var current = new Date();
+                    var deptdt = new Date($("#departuredat").val());
+                    var arrivdt = new Date($("#arrivaldat").val());
+
                   /*<![CDATA[*/
 
                   userId = [[${user.id}]]
@@ -484,6 +488,135 @@ xmlns:th="http://www.thymeleaf.org">
 
                 console.log(journey);
 
+                 if(document.getElementById('seats').value <= 0){
+                     alert("Es muss mindestens ein Platz angeboten werden.");
+                     return;
+                 }
+
+                if(document.getElementById('seats').value % 1 != 0){
+                     alert("Ungülter Wert des freien Gepäcks.");
+                     return;
+                 }
+
+                  if(document.getElementById('seats').value > 6){
+                      alert("Zu viele Plätze angeboten.");
+                      return;
+                  }
+
+                    if(document.getElementById('bags').value > 10 ){
+                        alert("Zu viele Gepäckplätze angeboten.");
+                        return;
+                    }
+
+                    if(document.getElementById('bags').value < 0 ||document.getElementById('bags').value % 1 != 0){
+                        alert("Ungülter Wert des freien Gepäcks.");
+                        return;
+                    }
+
+                    if(document.getElementById('bags').value <= 10 && document.getElementById('bags').value > 0 && parseFloat(document.getElementById('priceBags').value) <=0 ){
+                        alert("Es muss ein Preis für das Gepäck angegeben werden..");
+                        return;
+                    }
+
+                    if(parseFloat(document.getElementById('priceKm').value) < 0.01 || precision(document.getElementById('priceKm').value) > 2 ){
+                        alert("Ungülter Wert des geforderten Preises pro Kilometer.");
+                        return;
+                    }
+
+                    if(parseFloat(journey.priceKm.value) < 0.01 || precision(document.getElementById('priceBag').value) > 2){
+                        alert("Ungülter Wert des geforderten Preises pro Gepäckstück.");
+                        return;
+                    }
+
+                    if(journey.priceKm == ""){
+                        alert("Bitte geben Sie einen Preis pro Kilometer an.");
+                        return;
+                    }
+
+                    if(/^\d+\.\d+$/.test(journey.priceKm) != true){
+
+                        alert("Bitte geben Sie einen gültigen Preis pro Kilometer an.");
+                        return;
+                    }
+
+                   if(/^\d+\.\d+$/.test(journey.priceBag) != true && journey.priceBag >0){
+                        alert("Bitte geben Sie einen gültigen Preis pro Gepäckstück an.");
+                        return;
+                    }
+
+                    if(journey.seats == ""){
+                        alert("Bitte geben Sie die Anzahl der freien Plätze an.");
+                        return;
+                    }
+
+                    if(journey.departureDate == ""){
+                        alert("Bitte geben Sie ein Abfahrtsdatum an.");
+                        return;
+                    }
+
+                    if(journey.departureTime == ""){
+                        alert("Bitte geben Sie eine Abfahrtszeit an.");
+                        return;
+                    }
+
+                    if(journey.arrivalDate == ""){
+                        alert("Bitte geben Sie ein Ankunftsdatum an.");
+                        return;
+                    }
+
+                    if( deptdt  < current ){
+                        alert("Ungültiges Abfahrtsdatum.");
+                        return;
+                    }
+
+                    if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                        alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
+                        return;
+                    }
+
+                    if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                        alert("Die Fahrt muss.");
+                        return;
+                    }
+
+                    if( arrivdt < deptdt ){
+                        alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
+                        return;
+                    }
+
+                    if( arrivdt >= deptdt ){
+                        if($("#arrivaltime").val() <= $("#departuretime").val()){
+                        alert("Ungültige Kombination aus Abfahrtszeit und Ankunftszeit.");
+                        return;
+                        }
+                    }
+
+                    if(journey.arrivalTime == ""){
+                        alert("Bitte geben Sie einen Ankunftszeitpunkt an.");
+                        return;
+                    }
+                    if(journey.origin == ""){
+                        alert("Bitte geben Sie einen Abfahrtsort an.");
+                        return;
+                    }
+                    if(journey.destination == ""){
+                        alert("Bitte geben Sie einen Ankunftsort an.");
+                        return;
+                    }
+                    if(car.colour == ""){
+                        alert("Bitte geben Sie die Farbe ihres Autos an.");
+                        return;
+                    }
+                    if(car.type == ""){
+                        alert("Bitte geben Sie den Typen ihres Autos an.");
+                        return;
+                    }
+                    if(car.licence == ""){
+                        alert("Bitte geben Sie das KFZ-Kennzeichen Autos an.");
+                        return;
+                    }
+
+
                 $.ajax({
                     url: "/journey/create",
                     type: "POST",
@@ -500,7 +633,6 @@ xmlns:th="http://www.thymeleaf.org">
                 });
               };
 
-            window.onload.fillParam;
             </script>
       
       </head>
@@ -636,8 +768,19 @@ xmlns:th="http://www.thymeleaf.org">
 
             <div class="col-md-3">
             <div class="form-group">
-            <label for="Farbe">Farbe</label>
-            <input style="width: 160px;" type="text" class="form-control" id="color" required placeholder="Farbe"></div>
+            <label for="farbe">Farbe</label>
+            <select id="color" name="color" style="width: 160px;" type="text" class="form-control">
+                <option value="Blau">Blau</option>
+                <option value="Braun">Braun</option>
+                <option value="Gelb">Gelb</option>
+                <option value="Grau">Grau</option>
+                <option value="Grün">Grün</option>
+                <option value="Orange">Orange</option>
+                <option value="Rot">Rot</option>
+                <option value="Schwarz">Schwarz</option>
+                <option value="Silber">Silber</option>
+                <option value="Weiß">Weiß</option>
+            </select>
             </div>
             </div>
 
@@ -645,18 +788,37 @@ xmlns:th="http://www.thymeleaf.org">
             <div class="col-md-3">
             <div class="form-group">
             <label for="Plätze">Plätze</label>
-            <input style="width: 160px;" type="number" class="form-control" id="seats" required placeholder="Plätze" min="1" max="6"></div>
+            <select id="seats" name="seats" style="width: 160px;" type="text" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
             <label for="Gepäck">Gepäck</label>
-            <input style="width: 160px;" type="number" class="form-control" id="bags" required placeholder="Gepäck" min="0" max="10"></div>
+            <select id="bags" name="bags" style="width: 160px;" type="text" class="form-control">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="8">9</option>
+                <option value="8">10</option>
+            </select>
             </div>
 
             <div class="col-md-3">
             <div class="form-group">
-            <label for="Preis/Km">Preis/Km (z.B.0.05)</label>
+            <label for="Preis/Km">Preis/Km</label>
             <input style="width: 160px;" type="text" class="form-control" id="priceKm" required placeholder="0.05" min="0"></div>
             </div>
             </div>
