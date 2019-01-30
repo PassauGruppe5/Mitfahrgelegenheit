@@ -52,10 +52,10 @@ public class SchedulerTasks {
     @Scheduled(cron = "0 */5 * * * *")
     public void sendReminders(){
         log.info("Reminders sent.", dateFormat.format(new Date()));
-        ArrayList<Journey> jounreysToCheck = journeyService.findAllByActiveAndCanceled(1,0);
+        ArrayList<Journey> journeysToCheck = journeyService.findAllByActiveAndCanceled(1,0);
         LocalDateTime current = LocalDateTime.now();
 
-        for(Journey done : jounreysToCheck ) {
+        for(Journey done : journeysToCheck ) {
             if ((current.plusHours(1).isBefore(LocalDateTime.of(LocalDate.parse(done.getDepartureDate()), LocalTime.parse(done.getDepartureTime()))) && current.plusHours(1).plusMinutes(5).isAfter(LocalDateTime.of(LocalDate.parse(done.getDepartureDate()), LocalTime.parse(done.getDepartureTime())))) || current.plusHours(1).isEqual(LocalDateTime.of(LocalDate.parse(done.getDepartureDate()), LocalTime.parse(done.getDepartureTime())))) {
 
                 ArrayList<Leg> legsOfJourneys = legService.findByJourney(done);
