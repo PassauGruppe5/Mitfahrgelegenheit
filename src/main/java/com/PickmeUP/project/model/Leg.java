@@ -37,7 +37,7 @@ public class Leg {
     @JoinColumn(name = "journey")
     private Journey journey;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "leg_user",joinColumns = @JoinColumn(name = "leg_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> passengers;
 

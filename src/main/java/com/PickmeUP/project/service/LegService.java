@@ -18,7 +18,7 @@ public class LegService {
     public Leg findById(int id){return legRepository.findById(id);}
 
     public void saveLeg(Leg leg) { legRepository.save(leg); }
-
+    
     public ArrayList<Leg> findByJourney(Journey journey){return legRepository.findByJourney(journey);}
 
     public ArrayList<Leg> findLegsByPassengersContaining(User passenger){ return legRepository.findLegsByPassengersContaining(passenger);}

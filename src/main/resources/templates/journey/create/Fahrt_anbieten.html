@@ -563,19 +563,15 @@ xmlns:th="http://www.thymeleaf.org">
                         alert("Bitte geben Sie ein Ankunftsdatum an.");
                         return;
                     }
-
-                    if( deptdt  < current ){
+                    console.log(current.setHours(0,0,0,0));
+                    console.log(deptdt.setHours(0,0,0,0));
+                    if( deptdt.setHours(0,0,0,0)  < current.setHours(0,0,0,0) ){
                         alert("Ungültiges Abfahrtsdatum.");
                         return;
                     }
 
-                    if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                    if( deptdt.setHours(0,0,0,0)  == current.setHours(0,0,0,0) && $("#departuretime").val() <= current.getTime()){
                         alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
-                        return;
-                    }
-
-                    if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
-                        alert("Die Fahrt muss.");
                         return;
                     }
 
