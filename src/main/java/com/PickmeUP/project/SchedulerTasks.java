@@ -69,7 +69,7 @@ public class SchedulerTasks {
                         if(remindedUsers.contains(user) != true) {
                             remindedUsers.add(user);
                             try {
-                                GmailService.sendWelcomeMail(user);
+                                GmailService.sendJourneyInfoMail(user);
                             } catch (MailException e) {
                                 e.printStackTrace();
                             }
