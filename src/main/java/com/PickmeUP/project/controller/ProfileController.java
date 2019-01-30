@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -60,22 +61,32 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView();
         Transaction transaction = new Transaction();
         if (account.getBalance()<= 0) {
+            modelAndView.addObject("errorMessage", "Der Betrag muss mindestens 0.01 betragen.");
             modelAndView.setViewName("/profile/create/payment-in");
             modelAndView.addObject("user", user);
             modelAndView.addObject("account",account);
-            modelAndView.addObject("errorMessage", "Der Betrag muss mindestens 0.01 betragen.");
+            return modelAndView;
         }
-        else{
+        if(BigDecimal.valueOf(account.getBalance()).scale() > 2){
+
+            modelAndView.addObject("errorMessage", "Ungültiger Betrag.");
+            modelAndView.setViewName("/profile/create/payment-in");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("account",account);
+            return modelAndView;
+        }
+         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()+account.getBalance());
             accountService.updateAccount(accountToUpdate);
             transaction.setMessage("Einzahlung an eigenes Konto.");
             transaction.setAmount(account.getBalance());
             transaction.setReceiverAndTransmitter(user);
-            transactionService.saveTransaction(transaction);modelAndView.addObject("user",user);
-            modelAndView.addObject("account",accountToUpdate);
+            transactionService.saveTransaction(transaction);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich eingebucht.");
-            modelAndView.setViewName("/profile/create/payment-in");
         }
+        modelAndView.setViewName("/profile/create/payment-in");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("account",account);
         return modelAndView;
     }
 
@@ -109,6 +120,12 @@ public class ProfileController {
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
             modelAndView.setViewName("/profile/create/payment-out");
         }
+        if(BigDecimal.valueOf(account.getBalance()).scale() > 2){
+            modelAndView.setViewName("/profile/create/payment-in");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("account",account);
+            modelAndView.addObject("errorMessage", "Ungültiger Betrag.");
+        }
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()-account.getBalance());
             accountService.updateAccount(accountToUpdate);
@@ -134,6 +151,10 @@ public class ProfileController {
         User userToShow = userService.findUserById(usrAsInt);
         rating.setReceiver(userToShow);
         rating.setPublisher(userToView);
+
+        if(rating.getGrade() == null){
+            rating.setGrade("0.0");
+        }
         ratingService.saveRating(rating);
         modelAndView.addObject("userToShow", userToShow);
         modelAndView.addObject("userToView", userToView);

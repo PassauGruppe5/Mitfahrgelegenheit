@@ -37,8 +37,8 @@ public class Leg {
     @JoinColumn(name = "journey")
     private Journey journey;
 
-    @ManyToMany
-    @JoinColumn(name = "passengers")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "leg_user",joinColumns = @JoinColumn(name = "leg_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> passengers;
 
     public int getId(){return this.id;}

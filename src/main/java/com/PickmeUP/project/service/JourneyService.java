@@ -61,4 +61,7 @@ public class JourneyService {
         }
 
         public ArrayList<Journey> findAllByActiveAndCanceled(int active, int canceled){return journeyRepository.findAllByActiveAndCanceled(active, canceled);}
+
+        public ArrayList<Object[]> findTopDrivers(){return journeyRepository.findTopDrivers();}
+
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="de">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="de"
+xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Fehlermeldung angemeldet</title>
+      <title>Fehlermeldung</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +27,7 @@
 
     <h3>...Ups, hier ist etwas schiefgelaufen</h3>
     <br>
-    <a style="text-decoration: none;" href="/">Zurück zur Homepage</a>
+    <a style="text-decoration: none;" th:href="@{/}">Zurück zur Homepage</a>
 
     </body>
 

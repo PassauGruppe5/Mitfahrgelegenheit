@@ -2,7 +2,7 @@
 <html lang="de"
 xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Angebotene_Fahrten_Details</title>
+      <title>PickmeUp - Buchung</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +20,8 @@ xmlns:th="http://www.thymeleaf.org">
 
         var balance;
 
+        var possibleBags;
+
         function fillLegs(){
 
         document.getElementById('priceKmPrint').innerHTML = 0;
@@ -29,8 +31,8 @@ xmlns:th="http://www.thymeleaf.org">
 
             priceKm = [[${journey.priceKm}]];
             priceBag = [[${journey.priceBag}]];
-            userId = [[${user.id}]]
-            balance = [[${account.balance}]]
+            userId = [[${user.id}]];
+            balance = [[${account.balance}]];
 
         /*]]>*/
 
@@ -41,9 +43,9 @@ xmlns:th="http://www.thymeleaf.org">
         function handoverCheckedLegs(){
             var selectedLegs = [];
             var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
-            var bagsCount = document.getElementById("baggage").value;;
+            var bagsCount = document.getElementById("baggage").value;
 
-            for (var i = 0; i < checkboxes.length; i++) {
+                for (var i = 0; i < checkboxes.length; i++) {
                     selectedLegs.push(legs[checkboxes[i].value])
                  }
 
@@ -54,19 +56,19 @@ xmlns:th="http://www.thymeleaf.org">
 
                 for(var z = 0; z <selectedLegs.length; z++){
                     var tooManyBags= z+1;
-                     if(bagsCount > selectedLegs[z].bags){
+                     if(parseFloat(bagsCount) > parseFloat(selectedLegs[z].bags)){
                      alert("Nicht genug freies Gepäck in Teilstrecke "+tooManyBags+"!");
                      return;
                     }
                  }
 
-                var checkedBlanace = 0;
+                var checkedBalanace = 0;
 
                 for(var j = 0; j <selectedLegs.length; j++){
-                    checkedBlanace = selectedLegs[j].distance * priceKm/1000;
+                    checkedBalanace = selectedLegs[j].distance * priceKm/1000;
                     }
 
-                 if(balance < checkedBlanace + priceBag * bagsCount){
+                 if(balance < checkedBalanace + priceBag * bagsCount){
                      alert("Nicht genug Guthaben.")
                      return;
                  }
@@ -100,7 +102,7 @@ xmlns:th="http://www.thymeleaf.org">
                     leg.end_address = "[(${n.start_address})]";
                     leg.end_address = "[(${n.end_address})]";
                     leg.seats = "[(${n.seats})]";
-                    leg.bags = bagsCount;
+                    leg.bags = "[(${n.seats})]" ;
                     leg.distance = "[(${n.distance})]";
                     leg.duration = "[(${n.duration})]";
                     legs.push(leg);
@@ -206,13 +208,13 @@ xmlns:th="http://www.thymeleaf.org">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
+      <a th:href="@{/}" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"/></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
-        <li><a href="/journey/create"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
+        <li><a th:href="@{/}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Suche</a></li>
+        <li><a th:href="@{/journey/create}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Fahrt anbieten</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü <span class="caret"></span></a>
           <ul class="dropdown-menu navbar-right">
@@ -223,7 +225,7 @@ xmlns:th="http://www.thymeleaf.org">
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#balance'"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#rating'"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
           </ul>
         </li>
       </ul>
@@ -235,10 +237,10 @@ xmlns:th="http://www.thymeleaf.org">
 
       <div class="col-sm-9">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#routenplanung">Routenplanung</a></li>
-                <li><a data-toggle="tab" href="#reisekosten">Reisekosten</a></li>
-                <li><a data-toggle="tab" href="#fahrerinformationen">Fahrerinformationen</a></li>
-                <li><a data-toggle="tab" href="#fahrzeugdaten">Fahrzeugdaten</a></li>
+                <li class="active"><a data-toggle="tab" th:href="@{#routenplanung}">Routenplanung</a></li>
+                <li><a data-toggle="tab" th:href="@{#reisekosten}">Reisekosten</a></li>
+                <li><a data-toggle="tab" th:href="@{#fahrerinformationen}">Fahrerinformationen</a></li>
+                <li><a data-toggle="tab" th:href="@{#fahrzeugdaten}">Fahrzeugdaten</a></li>
               </ul>
 
 

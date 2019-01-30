@@ -2,7 +2,7 @@
 <html lang="de">
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Auszahlung</title>
+      <title>PickmeUp - Auszahlung</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -127,7 +127,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="/" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"></a>
+      <a th:href="@{/}" class="navbar-left"><img id="logo" th:src="@{/images/logo.png}"></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -144,7 +144,7 @@
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#balance'"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>   Verfügbares Guthaben</a></li>
             <li><a th:href="@{'/profile/show/profile?id='+${user.id}}+'#rating'"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>   Bewertung</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/logout"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>   Ausloggen</a></li>
           </ul>
         </li>
       </ul>
@@ -187,7 +187,7 @@
         <input type="text" th:field="*{balance}" class="form-control" id="balance" placeholder="Summe wie 17.89">
       </div>
     </div>
-    <button id="btn_betrageinz" type="submit" class="btn btn-default">Betrag einzahlen</button>
+    <button id="btn_betrageinz" type="submit" class="btn btn-default">Betrag auszahlen</button>
 </form>
 </form>
 
