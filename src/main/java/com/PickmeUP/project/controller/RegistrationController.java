@@ -45,7 +45,7 @@ public class RegistrationController {
             bindingResult
                     .rejectValue("name", "error.user", "Der Name darf nur aus Buchstaben bestehen.");
         }
-        if(user.getLastName().matches("[a-zA-Z]+") != true){
+        if(user.getLastName().matches("[a-zA-Z]+") == true){
             bindingResult
                     .rejectValue("lastName", "error.user", "Der Nachname darf nur aus Buchstaben bestehen.");
         }
