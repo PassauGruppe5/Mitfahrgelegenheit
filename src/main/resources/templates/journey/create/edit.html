@@ -97,6 +97,8 @@
               journey.id = [[${journey.id}]];
 
               /*]]>*/
+
+
               car.colour = $("#colour").val();
               car.type = $("#type").val();
               car.licence = $("#licence").val();
@@ -112,6 +114,135 @@
               journey.destination = $("#destination").val();
               journey.repeat = repeat;
               journey.car = car;
+
+
+                               if(document.getElementById('seats').value <= 0){
+                                   alert("Es muss mindestens ein Platz angeboten werden.");
+                                   return;
+                               }
+
+                              if(document.getElementById('seats').value % 1 != 0){
+                                   alert("Ungülter Wert des freien Gepäcks.");
+                                   return;
+                               }
+
+                                if(document.getElementById('seats').value > 6){
+                                    alert("Zu viele Plätze angeboten.");
+                                    return;
+                                }
+
+                                  if(document.getElementById('bags').value > 10 ){
+                                      alert("Zu viele Gepäckplätze angeboten.");
+                                      return;
+                                  }
+
+                                  if(document.getElementById('bags').value < 0 ||document.getElementById('bags').value % 1 != 0){
+                                      alert("Ungülter Wert des freien Gepäcks.");
+                                      return;
+                                  }
+
+                                  if(document.getElementById('bags').value <= 10 && document.getElementById('bags').value > 0 && parseFloat(document.getElementById('priceBags').value) <=0 ){
+                                      alert("Es muss ein Preis für das Gepäck angegeben werden..");
+                                      return;
+                                  }
+
+                                  if(parseFloat(document.getElementById('priceKm').value) < 0.01 || precision(document.getElementById('priceKm').value) > 2 ){
+                                      alert("Ungülter Wert des geforderten Preises pro Kilometer.");
+                                      return;
+                                  }
+
+                                  if(parseFloat(journey.priceKm.value) < 0.01 || precision(document.getElementById('priceBag').value) > 2){
+                                      alert("Ungülter Wert des geforderten Preises pro Gepäckstück.");
+                                      return;
+                                  }
+
+                                  if(journey.priceKm == ""){
+                                      alert("Bitte geben Sie einen Preis pro Kilometer an.");
+                                      return;
+                                  }
+
+                                  if(/^\d+\.\d+$/.test(journey.priceKm) != true){
+
+                                      alert("Bitte geben Sie einen gültigen Preis pro Kilometer an.");
+                                      return;
+                                  }
+
+                                 if(/^\d+\.\d+$/.test(journey.priceBag) != true && journey.priceBag >0){
+                                      alert("Bitte geben Sie einen gültigen Preis pro Gepäckstück an.");
+                                      return;
+                                  }
+
+                                  if(journey.seats == ""){
+                                      alert("Bitte geben Sie die Anzahl der freien Plätze an.");
+                                      return;
+                                  }
+
+                                  if(journey.departureDate == ""){
+                                      alert("Bitte geben Sie ein Abfahrtsdatum an.");
+                                      return;
+                                  }
+
+                                  if(journey.departureTime == ""){
+                                      alert("Bitte geben Sie eine Abfahrtszeit an.");
+                                      return;
+                                  }
+
+                                  if(journey.arrivalDate == ""){
+                                      alert("Bitte geben Sie ein Ankunftsdatum an.");
+                                      return;
+                                  }
+
+                                  if( deptdt  < current ){
+                                      alert("Ungültiges Abfahrtsdatum.");
+                                      return;
+                                  }
+
+                                  if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                                      alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
+                                      return;
+                                  }
+
+                                  if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                                      alert("Die Fahrt muss.");
+                                      return;
+                                  }
+
+                                  if( arrivdt < deptdt ){
+                                      alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
+                                      return;
+                                  }
+
+                                  if( arrivdt >= deptdt ){
+                                      if($("#arrivaltime").val() <= $("#departuretime").val()){
+                                      alert("Ungültige Kombination aus Abfahrtszeit und Ankunftszeit.");
+                                      return;
+                                      }
+                                  }
+
+                                  if(journey.arrivalTime == ""){
+                                      alert("Bitte geben Sie einen Ankunftszeitpunkt an.");
+                                      return;
+                                  }
+                                  if(journey.origin == ""){
+                                      alert("Bitte geben Sie einen Abfahrtsort an.");
+                                      return;
+                                  }
+                                  if(journey.destination == ""){
+                                      alert("Bitte geben Sie einen Ankunftsort an.");
+                                      return;
+                                  }
+                                  if(car.colour == ""){
+                                      alert("Bitte geben Sie die Farbe ihres Autos an.");
+                                      return;
+                                  }
+                                  if(car.type == ""){
+                                      alert("Bitte geben Sie den Typen ihres Autos an.");
+                                      return;
+                                  }
+                                  if(car.licence == ""){
+                                      alert("Bitte geben Sie das KFZ-Kennzeichen Autos an.");
+                                      return;
+                                  }
 
               $.ajax({
                   url: "/journey/edit",
