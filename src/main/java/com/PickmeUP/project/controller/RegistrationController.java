@@ -45,11 +45,11 @@ public class RegistrationController {
             bindingResult
                     .rejectValue("name", "error.user", "Der Name darf nur aus Buchstaben bestehen.");
         }
-        if(user.getLastName().matches("[a-zA-Z]+") == true){
+        if(user.getLastName().matches("[a-zA-Z]+") != true){
             bindingResult
                     .rejectValue("lastName", "error.user", "Der Nachname darf nur aus Buchstaben bestehen.");
         }
-        if(current.isBefore(LocalDate.parse(user.getBirth(), formatter)) != true){
+        if(current.isBefore(LocalDate.parse(user.getBirth(), formatter)) == true){
             bindingResult
                     .rejectValue("birth", "error.user", "Das Geburtsdatum ist ungültig.");
         }
@@ -64,12 +64,12 @@ public class RegistrationController {
         else
         {
 
-        userService.saveUser(user);
-        try {
-            GmailService.sendWelcomeMail(user);
-        } catch (MailException e) {
-            e.printStackTrace();
-        }
+            userService.saveUser(user);
+            try {
+                GmailService.sendWelcomeMail(user);
+            } catch (MailException e) {
+                e.printStackTrace();
+            }
             modelAndView.addObject("successMessage", "User wurde erfolgreich registriert");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("registration");
