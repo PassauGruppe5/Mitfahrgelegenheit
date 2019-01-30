@@ -49,7 +49,7 @@ public class RegistrationController {
             bindingResult
                     .rejectValue("lastName", "error.user", "Der Nachname darf nur aus Buchstaben bestehen.");
         }
-        if(current.isBefore(LocalDate.parse(user.getBirth(), formatter)) != true){
+        if(current.isBefore(LocalDate.parse(user.getBirth(), formatter)) == true){
             bindingResult
                     .rejectValue("birth", "error.user", "Das Geburtsdatum ist ungültig.");
         }

@@ -107,7 +107,6 @@ public class BookingController {
 
         if(bookedJourneys.size() >= 5) {
             if (initialSize % 49 == 0) {
-                loggedIn.setBonus(bonusService.findBonusById(4));
             }
             if (initialSize % 9 == 0 && initialSize % 49 != 0) {
                 loggedIn.setBonus(bonusService.findBonusById(3));
