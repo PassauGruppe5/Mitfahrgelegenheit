@@ -23,7 +23,7 @@ public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     ArrayList<Journey> findAllByActiveAndCanceled(int active, int canceled);
 
     @Query(value = "SELECT  count(*),user.name, user.last_name, user.user_id from journey JOIN " +
-                    "user on user.user_id = journey.driver WHERE journey.canceled != 0 GROUP BY driver ORDER BY" +
+                    "user on user.user_id = journey.driver WHERE journey.canceled = 0 GROUP BY driver ORDER BY" +
                     " count(*) DESC LIMIT 5",nativeQuery = true)
     ArrayList<Object[]> findTopDrivers();
 

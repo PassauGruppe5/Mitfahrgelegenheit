@@ -16,8 +16,6 @@
                 .container1{
 
                     position:relative;
-                    margin-left: 150px;
-                    margin-right: 150px;
 
                 }
 
@@ -31,7 +29,7 @@
                 .container2{
 
                   margin-top: 0px;
-                  position: fixed;
+                  margin: 0 auto
                   width: auto;
                   height: auto;
 
@@ -60,7 +58,6 @@
 
                .btn{
 
-                    border-radius: 20px;
                     width: 200px;
                     height: 42px;
                     font-size: 15px;
@@ -120,27 +117,27 @@
                 th:object="${user}" method="post" role="form">
         <h1><font color=#fff>Registrierung</font></h1>
       <div class="form-group">
-        <label for="Vorname" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message" ><font color=#white>Vorname</font></label>
+        <label style="color: white;" for="Vorname" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message" ><font color=#white>Vorname</font></label>
         <input type="text" class="form-control" id="name" placeholder="Vorname" th:field="*{name}" required>
       </div>
       <div class="form-group">
-        <label for="Nachname"th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"><font color=white>Nachname</font></label>
+        <label  style="color: white;" for="Nachname"th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"><font color=white>Nachname</font></label>
         <input type="text" class="form-control" id="lastName" placeholder="Nachname" th:field="*{lastName}"required>
       </div>
       <div class="form-group">
-        <label for="Geburtstag" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="validation-message" ><font color=white>Geburtstag</font></label>
+        <label style="color: white;" for="Geburtstag" th:if="${#fields.hasErrors('birth')}" th:errors="*{birth}" class="validation-message" ><font color=white>Geburtstag</font></label>
         <input type="date" class="form-control" id="birth" placeholder="Geburtstag" th:field="*{birth}" required>
       </div>
       <div class="form-group">
-        <label for="Email-Adresse" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message" ><font color=white>Email-Adresse</font></label>
+        <label style="color: white;" for="Email-Adresse" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message" ><font color=white>Email-Adresse</font></label>
         <input type="email" class="form-control" id="email" placeholder="Email-Adresse" th:field="*{email}" required>
       </div>
       <div class="form-group">
-        <label for="Telefonnummer" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="validation-message" ><font color=white>Telefonnummer</font></label>
+        <label style="color: white;" for="Telefonnummer" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="validation-message" ><font color=white>Telefonnummer</font></label>
         <input type="text" class="form-control" id="phone" placeholder="0151********" th:field="*{phone}" required>
       </div>
       <div class="form-group">
-        <label for="Passwort" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" lass="validation-message"><font color=white>Passwort</font></label>
+        <label style="color: white;" for="Passwort" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" lass="validation-message"><font color=white>Passwort</font></label>
         <input type="password" class="form-control" id="password" placeholder="Passwort" th:field="*{password}" required>
       </div>
       <div>

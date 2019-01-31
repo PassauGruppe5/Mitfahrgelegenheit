@@ -12,17 +12,15 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       
        <style>
-          
-         .container{
-              
-              background-image: url(https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)  no-repeat;
-              margin-left: 0px;
-              margin-right: 0px;
-              background-size: auto;
-             
-              
-              
-          }
+
+
+         .container2{
+
+          position: fixed;
+          width: auto;
+          height: auto;
+
+        }
           
           #hintergrund{
               
@@ -51,8 +49,8 @@
           
           .form-inline{
               
-              margin-left:175px;
-              margin-top: 500px;
+              margin-left:225px;
+              margin-top: 350px;
           }
           
           .glyphicon{
@@ -61,8 +59,7 @@
           }
           
           #bt1{
-              
-              border-radius: 20px;
+
               width: 200px;
               height: 42px;
               font-size: 15px;
@@ -71,8 +68,8 @@
            
            #name{
                
-               margin-left: 500px;
-               margin-top: 400px;
+               margin-left: 650px;
+               margin-top: 250px;
                float: left;
                font-size: 60px;
                color: white;
@@ -80,7 +77,7 @@
            
            #satz{
                
-               margin-left: 350px;
+               margin-left: 500px;
                margin-top: 50px;
                font-size: 25px;
                color: white;
@@ -89,7 +86,7 @@
            
             #satz2{
               
-              margin-left: 510px;
+              margin-left: 660px;
                margin-top: 0px;
                font-size: 25px;
                color: white;
@@ -125,11 +122,11 @@
   </div><!-- /.container-fluid -->
   </nav>
       
-   <div class="container">
+   <div class="container2">
        
     <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
     
-    <div><p id="name"><b>Pick Me Up</b></p></div>
+    <div><p id="name"><b>PickmeUp</b></p></div>
        
     
     <form class="form-inline" method="post" role="form" th:action="@{/}">
@@ -150,13 +147,13 @@
   </div>
     <div class="form-group has-feedback">
       <label class="sr-only" for="Zeit">Zeit</label>
-          <input style="width: 250px; height:42px; font-size:14pt" type="time" class="form-control" id="zei" name ="zeit" required placeholder="Datum">
+          <input style="width: 250px; height:42px; font-size:14pt" type="time" class="form-control" id="zeit" name ="zeit" required placeholder="Datum">
       <span class="form-control-feedback glyphicon glyphicon-calendar"></span>
     </div>
   <button id="bt1" type="submit" class="btn btn-primary">Fahrt suchen</button>
 </form>
        
-<div><p id="satz"><b>Die einfach Art von A nach B zu gelangen - Jederzeit!</b></p></div>
+<div><p id="satz"><b>Die einfache Art von A nach B zu gelangen - Jederzeit!</b></p></div>
        
 <div><p id="satz2"><b>Mitfahrgelegenheit finden</b></p></div>
        

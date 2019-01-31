@@ -47,7 +47,7 @@ xmlns:th="http://www.thymeleaf.org">
 
               height: 100%;
               float: right;
-              margin-top: -325px;
+              margin-top: -280px;
               border: solid black;
               position: fixed;
 
@@ -88,222 +88,7 @@ xmlns:th="http://www.thymeleaf.org">
                     center: {lat: 51.133481, lng: 10.018343},
                     streetViewControl: false,
                     fullscreenControl: false,
-                    mapTypeControlOptions: { mapTypeIds: [] },
-                    styles: [
-                              {
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#ebe3cd"
-                                  }
-                                ]
-                              },
-                              {
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#523735"
-                                  }
-                                ]
-                              },
-                              {
-                                "elementType": "labels.text.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#f5f1e6"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "administrative",
-                                "elementType": "geometry.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#c9b2a6"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "administrative.land_parcel",
-                                "elementType": "geometry.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#dcd2be"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "administrative.land_parcel",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#ae9e90"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "landscape.natural",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#dfd2ae"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "poi",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#dfd2ae"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "poi",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#93817c"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "poi.park",
-                                "elementType": "geometry.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#a5b076"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "poi.park",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#447530"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#f5f1e6"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.arterial",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#fdfcf8"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.highway",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#f8c967"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.highway",
-                                "elementType": "geometry.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#e9bc62"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.highway.controlled_access",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#e98d58"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.highway.controlled_access",
-                                "elementType": "geometry.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#db8555"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "road.local",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#806b63"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "transit.line",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#dfd2ae"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "transit.line",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#8f7d77"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "transit.line",
-                                "elementType": "labels.text.stroke",
-                                "stylers": [
-                                  {
-                                    "color": "#ebe3cd"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "transit.station",
-                                "elementType": "geometry",
-                                "stylers": [
-                                  {
-                                    "color": "#dfd2ae"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "water",
-                                "elementType": "geometry.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#b9d3c2"
-                                  }
-                                ]
-                              },
-                              {
-                                "featureType": "water",
-                                "elementType": "labels.text.fill",
-                                "stylers": [
-                                  {
-                                    "color": "#92998d"
-                                  }
-                                ]
-                              }
-                            ]
+                    mapTypeControlOptions: { mapTypeIds: [] }
                   });
                   directionsDisplay.setMap(map);
 
@@ -567,7 +352,6 @@ xmlns:th="http://www.thymeleaf.org">
   </div>
   </nav>
 </div>
-<hr>
 
 <div class="wrapper">
       <div class="col-sm-9">
@@ -597,7 +381,7 @@ xmlns:th="http://www.thymeleaf.org">
         <input style="width: 300px;" type="text" class="input form-control" id="destination" required placeholder="Endziel">
         </div>
 
-        <div id="map" style="margin-left: 400px; height: 450px; width: 450px"></div>
+        <div id="map" style="margin-left: 500px; height: 450px; width: 650px"></div>
 
         </div>
 
@@ -605,44 +389,46 @@ xmlns:th="http://www.thymeleaf.org">
         <div id="zeitplanung" class="tab-pane fade">
         <hr>
         <div class="container2">
+
         <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-3">
         <div class ="form-group">
         <label for="depdatdat">Datum der Abfahrt</label>
-        <input  type="date" id="departuredat" required class="form-inline"/>
+        <input style="width: 160px;" type="date" id="departuredat" required class="form-control"/>
         </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-3">
         <div class="form-group">
-        <label for="depdattime">Zeitpunkt der Abfahrt</label>
-        <input style="margin-top: 33px;" type="time" id="departuretime" required class="form-inline"/>
+        <label for="depdattime">Zeitpunkt der Abfahrt</label><br>
+        <input style="width: 140px;" type="time" id="departuretime" required class="form-control"/>
+        </div>
         </div>
         </div>
 
         <div class="row">
 
-        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="col-md-3">
         <div class="form-group">
         <label for="arrdatdat">Datum der Ankunft</label>
-        <input style="margin-top: 33px;" type="date" id="arrivaldat" required class="form-inline"/>
+        <input style="width: 160px;" type="date" id="arrivaldat" required class="form-control"/>
         </div>
         </div>
 
-        <div style="margin-left: 15px;" class="col-md-12">
+        <div class="col-md-3">
         <div class="form-group">
         <label for="arrdatti e">Zeitpunkt der Ankunft</label>
-        <input style="margin-top: 33px;" type="time" id="arrivaltime" required class="form-inline"/>
+        <input style="width: 140px;" type="time" id="arrivaltime" required class="form-control"/>
         </div>
         </div>
 
         </div>
 
         </div>
-        </div>
 
-        <div class="container3" style="margin-top: 40px;">
+
+        <div class="container3" style="margin-top: 30px;">
         <div class="dropdown">
         <h4>Wiederholung der Fahrt:</h4>
         <select id="repeat" name="repeat">
@@ -659,15 +445,21 @@ xmlns:th="http://www.thymeleaf.org">
         <div id="weitereAngaben" class="tap-pane fade">
         <hr>
 
+            <div class="row">
+
+            <div class="col-md-3">
             <div class="form-group">
             <label for="Automarke">Automarke</label>
             <input style="width: 160px;" type="text" class="form-control" id="type" required placeholder="Automarke"></div>
+            </div>
 
+            <div class="col-md-3">
             <div class="form-group">
             <label for="Kennzeichen">Kennzeichen</label>
             <input style="width: 160px;" type="text" class="form-control" id="licence" required placeholder="z.B. PA-R-1997 "></div>
+            </div>
 
-
+            <div class="col-md-3">
             <div class="form-group">
             <label for="farbe">Farbe</label>
             <select id="color" name="color" style="width: 160px;" type="text" class="form-control">
@@ -683,8 +475,13 @@ xmlns:th="http://www.thymeleaf.org">
                 <option value="Weiß">Weiß</option>
             </select>
             </div>
+            </div>
 
+            </div>
 
+            <div class="row">
+
+            <div class="col-md-3">
             <div class="form-group">
             <label for="Plätze">Plätze</label>
             <select id="seats" name="seats" style="width: 160px;" type="text" class="form-control">
@@ -696,8 +493,9 @@ xmlns:th="http://www.thymeleaf.org">
                 <option value="6">6</option>
             </select>
             </div>
+            </div>
 
-
+            <div class="col-md-3">
             <div class="form-group">
             <label for="Gepäck">Gepäck</label>
             <select id="bags" name="bags" style="width: 160px;" type="text" class="form-control">
@@ -714,23 +512,24 @@ xmlns:th="http://www.thymeleaf.org">
                 <option value="8">10</option>
             </select>
             </div>
+            </div>
 
-
+            <div class="col-md-3">
             <div class="form-group">
             <label for="Preis/Km">Preis/Km</label>
             <input style="width: 160px;" type="text" class="form-control" id="priceKm" required placeholder="0.05" min="0"></div>
+            </div>
 
-
+            </div>
 
             <div class="form-group">
             <label for="Preis/Gepäck">Preis/Gepäck</label>
-            <input style="width: 180px;" type="text" class="form-control" id="priceBag" placeholder="Preis/Gepäck in Euro" min="0"></div>
+            <input style="width: 160px;" type="text" class="form-control" id="priceBag" placeholder="Preis/Gepäck in Euro" min="0"></div>
 
 
 
             <button class="btn btn-success" id="saveButton" onclick="saveJourney()">Fahrt anbieten</button>
 
-        </div>
         </div>
         </div>
         </div>

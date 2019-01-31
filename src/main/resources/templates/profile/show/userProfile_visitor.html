@@ -65,8 +65,7 @@
           }
           .navbar{
 
-              margin-left: 150px;
-              margin-right: 150px;
+            margin-top: 10px;
           }
 
           #profilname{
@@ -199,7 +198,7 @@
                           <div class="col-xs-6">
                               <label for="Telefonnummer"><h4>Telefonnummer</h4></label>
                               <output type="text" class="form-control"  th:text="${userV.phone}" name="Telefonnummer" id="t_nummer" title="Telefonnummer"></output>
-                              <label> Persönliche Angaben: <br><textarea readonly disabled th:text="${userV.comment}" cols="45" rows="5" name="message"></textarea></label>
+                              <label style="margin-top: 20px;"> Persönliche Angaben: <br><textarea readonly disabled th:text="${userV.comment}" cols="45" rows="5" name="message"></textarea></label>
                           </div>
                       </div>
               	</form>
