@@ -335,14 +335,14 @@ xmlns:th="http://www.thymeleaf.org">
                <div class="form-group">
                         <div class="col-xs-6">
                           <label for="Vorname"><h4>Vorname</h4></label>
-                            <output type="text" class="form-control"  th:text="${driver.name}" name="Vorname" id="name" title="Vorname"></output>
+                            <output type="text" class="form-control" name="Vorname" id="name" title="Vorname"><a th:text="${driver.name}" th:href="@{'/profile/show/profile?id='+${driver.id}}"></a></output>
                           </div>
                       </div>
 
               <div class="form-group">
                           <div class="col-xs-6">
                             <label for="last_name"><h4>Nachname</h4></label>
-                              <output type="text" class="form-control" th:text="${driver.lastName}" name="Nachname" id="lastName" title="Nachname"></output>
+                              <output type="text" class="form-control"  name="Nachname" id="lastName" title="Nachname"><a th:text="${driver.lastName}" th:href="@{'/profile/show/profile?id='+${driver.id}}"></a></output>
                           </div>
                       </div>
 

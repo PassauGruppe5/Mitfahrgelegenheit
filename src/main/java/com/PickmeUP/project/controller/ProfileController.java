@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -188,10 +189,13 @@ public class ProfileController {
         Rating rating = new Rating();
         Account account = accountService.findbyUser(loggedIn);
         List<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
-
+        ArrayList<Journey> doneList = new ArrayList<>();
         if(loggedIn == toView){
 
             for (int i = 0; i < bookedList.size(); i++) {
+                if(bookedList.get(i).getCanceled() == 0 && bookedList.get(i).getActive() == 0){
+                    doneList.add(bookedList.get(i));
+                }
                 if(bookedList.get(i).getActive() == 0){
                     bookedList.remove(i);
                 }
@@ -213,6 +217,7 @@ public class ProfileController {
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.addObject("journeyList",journeyList);
             modelAndView.addObject("bookedList",bookedList);
+            modelAndView.addObject("doneList",doneList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{

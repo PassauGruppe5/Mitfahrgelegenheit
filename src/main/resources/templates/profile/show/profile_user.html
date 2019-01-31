@@ -214,11 +214,12 @@
 
 
         </div><!--/col-3-->
-    	<div class="col-sm-9">
-            <ul class="nav nav-tabs">
+    	<div class="col-sm-9" style="width:73%;">
+            <ul class="nav nav-tabs" style="width:100%;">
                 <li class="active"><a data-toggle="tab" th:href="@{#profil}">Profil</a></li>
                 <li><a data-toggle="tab" th:href="@{#offered}">Angebotene Fahrten</a></li>
                 <li><a data-toggle="tab" th:href="@{#booked}">Gebuchte Fahrten</a></li>
+                <li><a data-toggle="tab" th:href="@{#done}">Beendete Mitfahrten</a></li>
                 <li><a data-toggle="tab" th:href="@{#balance}">Verfügbares Guthaben</a></li>
                 <li><a data-toggle="tab" th:href="@{#rating}">Bewertung</a></li>
               </ul>
@@ -388,6 +389,40 @@
                           </tbody>
                       </table>
                   <hr>
+              </div>
+
+              <div id="done" class="tab-pane fade">
+              <hr>
+                <div class="container2">
+                  <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">Startpunkt</th>
+                      <th scope="col">Endziel</th>
+                      <th scope="col">Abfahrtsdatum</th>
+                      <th scope="col">Abfahrtszeit</th>
+                      <th scope="col">Ankunftsdatum</th>
+                      <th scope="col">Ankunftszeit</th>
+                      <th scope="col">Preis/Km</th>
+                    </tr>
+                  </thead>
+                  <tbody th:if="${not #lists.isEmpty(doneList)}">
+                    <tr th:each="doneToPost: ${doneList}">
+                  <th scope="row">-</th>
+                  <td th:text="${doneToPost.origin}"></td>
+                  <td th:text="${doneToPost.destination}"></td>
+                  <td th:text="${doneToPost.departureDate}"></td>
+                  <td th:text="${doneToPost.departureTime}+' Uhr'"></td>
+                  <td th:text="${doneToPost.arrivalDate}"></td>
+                  <td th:text="${doneToPost.arrivalTime}+' Uhr'"></td>
+                  <td th:text="${doneToPost.priceKm}+' €'"></td>
+                  <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details/?id='+${doneToPost.id}}" role="button">Details</a></td>
+                  <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/profile/show/profile?id='+${doneToPost.driver.id}}" role="button">Fahrer</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
               </div>
 
           </div>
