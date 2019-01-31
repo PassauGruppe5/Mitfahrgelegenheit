@@ -256,7 +256,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://http://132.231.36.206/pickmeup/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -297,7 +297,7 @@ public class GmailService {
                 "                                    <w:anchorlock/>\n" +
                 "                                    <center style=\"color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;\">Pick Me Up!</center>\n" +
                 "                                </v:roundrect>\n" +
-                "                                <![endif]--><a class=\"button-mobile\" href=\"132.231.36.206/\"\n" +
+                "                                <![endif]--><a class=\"button-mobile\" href=\"http://132.231.36.206/pickmeup/\"\n" +
                 "                                               style=\"background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;\">Pick Me Up!</a></div>\n" +
                 "                        </td>\n" +
                 "                    </tr>\n" +
@@ -615,7 +615,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://http://132.231.36.206/pickmeup/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -656,7 +656,7 @@ public class GmailService {
                 "                                    <w:anchorlock/>\n" +
                 "                                    <center style=\"color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;\">Pick Me Up!</center>\n" +
                 "                                </v:roundrect>\n" +
-                "                                <![endif]--><a class=\"button-mobile\" href=\"132.231.36.206/\"\n" +
+                "                                <![endif]--><a class=\"button-mobile\" href=\"http://132.231.36.206/pickmeup/\"\n" +
                 "                                               style=\"background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;\">Pick Me Up!</a></div>\n" +
                 "                        </td>\n" +
                 "                    </tr>\n" +
@@ -974,7 +974,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://http://132.231.36.206/pickmeup/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -1015,7 +1015,7 @@ public class GmailService {
                 "                                    <w:anchorlock/>\n" +
                 "                                    <center style=\"color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;\">Pick Me Up!</center>\n" +
                 "                                </v:roundrect>\n" +
-                "                                <![endif]--><a class=\"button-mobile\" href=\"132.231.36.206/\"\n" +
+                "                                <![endif]--><a class=\"button-mobile\" href=\"http://132.231.36.206/pickmeup/\"\n" +
                 "                                               style=\"background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;\">Pick Me Up!</a></div>\n" +
                 "                        </td>\n" +
                 "                    </tr>\n" +
@@ -1333,7 +1333,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://http://132.231.36.206/pickmeup/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -1374,7 +1374,7 @@ public class GmailService {
                 "                                    <w:anchorlock/>\n" +
                 "                                    <center style=\"color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;\">Pick Me Up!</center>\n" +
                 "                                </v:roundrect>\n" +
-                "                                <![endif]--><a class=\"button-mobile\" href=\"132.231.36.206/\"\n" +
+                "                                <![endif]--><a class=\"button-mobile\" href=\"http://132.231.36.206/pickmeup/\"\n" +
                 "                                               style=\"background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;\">Pick Me Up!</a></div>\n" +
                 "                        </td>\n" +
                 "                    </tr>\n" +
@@ -1692,7 +1692,7 @@ public class GmailService {
                 "                                <table cellpadding=\"0\" cellspacing=\"0\" width=\"600\" class=\"w320\">\n" +
                 "                                    <tr>\n" +
                 "                                        <td class=\"pull-left mobile-header-padding-left\" style=\"vertical-align: middle;\">\n" +
-                "                                            <a href=\"http://132.231.36.206/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
+                "                                            <a href=\"http://http://132.231.36.206/pickmeup/\" target=\"_blank\"\"><img width=\"137\" height=\"47\" src=\"https://www2.pic-upload.de/img/36322705/pick-me-up_logo.png\" alt=\"logo\"></a>\n" +
                 "                                        </td>\n" +
                 "                                        <td class=\"pull-right mobile-header-padding-right\" style=\"color: #4d4d4d;\">\n" +
                 "                                            <a href=\"\"><img width=\"44\" height=\"47\" src=\"http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif\" alt=\"twitter\" /></a>\n" +
@@ -1733,7 +1733,7 @@ public class GmailService {
                 "                                    <w:anchorlock/>\n" +
                 "                                    <center style=\"color:#ffffff;font-family:Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;\">Pick Me Up!</center>\n" +
                 "                                </v:roundrect>\n" +
-                "                                <![endif]--><a class=\"button-mobile\" href=\"132.231.36.206/\"\n" +
+                "                                <![endif]--><a class=\"button-mobile\" href=\"http://132.231.36.206/pickmeup/\"\n" +
                 "                                               style=\"background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;font-family:'Cabin', Helvetica, Arial, sans-serif;font-size:14px;font-weight:regular;line-height:45px;text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;\">Pick Me Up!</a></div>\n" +
                 "                        </td>\n" +
                 "                    </tr>\n" +
