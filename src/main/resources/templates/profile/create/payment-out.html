@@ -16,8 +16,6 @@
           .container1{
 
               position:relative;
-              margin-left: 150px;
-              margin-right: 150px;
 
           }
 
@@ -76,7 +74,6 @@
           .btn-block{
 
               width: 40%;
-              border-radius: 20px;
           }
 
           #btn_credit{
@@ -160,8 +157,8 @@
  <form th:object="${account}" th:action="@{/profile/create/payment-out}" method="post" class="form-conatiner" role="form">
  <h1><font color=#fff>Auszahlung</font></h1>
               <div>
-                                 <h4 th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></h4>
-                                 <h4 th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></h4>
+                                 <h4 th:utext="${errorMessage}" style="font-size: 20; color: white;"></h4>
+                                 <h4 th:utext="${successMessage}" style="font-size: 20; color: white;" ></h4>
               </div>
  <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
  <div id="paypal" class="collapse">

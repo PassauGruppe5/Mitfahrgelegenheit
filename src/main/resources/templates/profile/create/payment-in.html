@@ -16,8 +16,6 @@
               .container1{
 
               position:relative;
-              margin-left: 150px;
-              margin-right: 150px;
 
           }
 
@@ -76,7 +74,6 @@
           .btn-block{
 
               width: 40%;
-              border-radius: 20px;
           }
 
           #btn_credit{
@@ -152,8 +149,8 @@
  <h1><font color=#fff>Einzahlung</font></h1>
 
  <div>
-              <h4 th:utext="${errorMessage}" style="font-size: 20; color: #FF1C19;"></h4>
-              <h4 th:utext="${successMessage}" style="font-size: 20; color: #FFFFFF;" ></h4>
+              <h4 th:utext="${errorMessage}" style="font-size: 20; color: white;"></h4>
+              <h4 th:utext="${successMessage}" style="font-size: 20; color: white;" ></h4>
 </div>
 
   <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
@@ -194,7 +191,7 @@
         </div>
 
     <div class="col-md-3">
-    <div style="width: 100px; margin-left: 50px;" class="form-group">
+    <div style="width: 130px; margin-left: 50px;" class="form-group">
        <label for="Gültigkeitsdatum" style="color: white">Gültigkeitsdatum</label>
        <input type="text" class="form-control" id="email" placeholder="05-23" min="5" max="5" maxlength="5">
      </div>

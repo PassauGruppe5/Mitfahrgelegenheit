@@ -16,8 +16,6 @@
                 .container1{
 
                     position:relative;
-                    margin-left: 150px;
-                    margin-right: 150px;
 
                 }
 
@@ -60,7 +58,6 @@
 
                .btn{
 
-                    border-radius: 20px;
                     width: 200px;
                     height: 42px;
                     font-size: 15px;
@@ -120,7 +117,7 @@
                 th:object="${user}" method="post" role="form">
         <h1><font color=#fff>Registrierung</font></h1>
       <div class="form-group">
-        <label for="Vorname" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message" ><font color=#white>Vorname</font></label>
+        <label style="color: white;" for="Vorname" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message" ><font color=#white>Vorname</font></label>
         <input type="text" class="form-control" id="name" placeholder="Vorname" th:field="*{name}" required>
       </div>
       <div class="form-group">

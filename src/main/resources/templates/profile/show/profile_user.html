@@ -95,9 +95,6 @@
           .container1{
 
               position: relative;
-              margin-left: 120px;
-              margin-right: 150px;
-
           }
 
           .navbar{
@@ -115,7 +112,7 @@
           #kommentarbox{
 
               margin-left: 15px;
-              margin-top: 300px;
+              margin-top: 250px;
               position: absolute;
           }
 
@@ -364,8 +361,8 @@
                 <output type="text" th:text="${account.balance}" class="form-control" id="derzeitiges_guthaben">
                 </output>
                 </div>
-                <a class="btn btn-success btn-block" th:href="@{/profile/create/payment-in}" role="button">Einzahlen</a>
-                <a class="btn btn-success btn-block" th:href="@{/profile/create/payment-out}" role="button">Auszahlen</a>
+                <a class="btn btn-success" th:href="@{/profile/create/payment-in}" role="button">Einzahlen</a>
+                <a class="btn btn-success" th:href="@{/profile/create/payment-out}" role="button">Auszahlen</a>
                 </form>
             </div>
 
