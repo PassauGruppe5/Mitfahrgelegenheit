@@ -38,7 +38,7 @@ public class Journey {
     private int seats;
 
     @Column(name = "priceBag", nullable = false)
-    private int priceBag;
+    private double priceBag;
 
     @Column(name = "priceKm", nullable = false)
     private double priceKm;
@@ -92,8 +92,8 @@ public class Journey {
     public int getSeats() {return this.seats;}
     public void setSeats(int seats) {this.seats = seats;}
 
-    public int getPriceBag() {return this.priceBag;}
-    public void setPriceBag(int priceBag) {this.priceBag = priceBag;}
+    public double getPriceBag() {return this.priceBag;}
+    public void setPriceBag(double priceBag) {this.priceBag = priceBag;}
 
     public double getPriceKm() {return this.priceKm;}
     public void setPriceKm(double priceKm) {this.priceKm = priceKm;}
