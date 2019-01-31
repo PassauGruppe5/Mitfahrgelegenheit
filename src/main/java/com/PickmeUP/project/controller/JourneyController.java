@@ -43,7 +43,7 @@ public class JourneyController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
+    @RequestMapping(value = "pickmeup/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -53,7 +53,7 @@ public class JourneyController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/journey/create", method = RequestMethod.POST)
+    @RequestMapping(value = "pickmeup/journey/create", method = RequestMethod.POST)
     public ModelAndView handleJourney(@RequestBody Journey journey) throws JSONException, ParseException {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -457,12 +457,12 @@ xmlns:th="http://www.thymeleaf.org">
                         return;
                     }
 
-                    if( deptdt  < current ){
+                    if( deptdt.setHours(0,0,0,0)  < current.setHours(0,0,0,0) ){
                         alert("Ungültiges Abfahrtsdatum.");
                         return;
                     }
 
-                    if( deptdt  == current && $("#departuretime").val() <= current.getTime()){
+                    if( deptdt.setHours(0,0,0,0)  == current.setHours(0,0,0,0) && $("#departuretime").val() <= current.getTime()){
                         alert("Ungültige Kombination aus Abfahrtsdatum und Ankunftsdatum.");
                         return;
                     }
@@ -511,7 +511,7 @@ xmlns:th="http://www.thymeleaf.org">
 
 
                 $.ajax({
-                    url: "/journey/create",
+                    url: "pickmeup/journey/create",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(journey),
