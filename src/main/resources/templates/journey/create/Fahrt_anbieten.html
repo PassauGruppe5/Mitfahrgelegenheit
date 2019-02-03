@@ -31,15 +31,12 @@ xmlns:th="http://www.thymeleaf.org">
 
               display: grid;
               grid-auto-rows: minmax(auto, auto);
-              grid-template-columns: 1fr;
 
           }
 
           .container1{
 
               position: relative;
-              margin-left: 150px;
-              margin-right: 150px;
 
           }
 
@@ -354,7 +351,7 @@ xmlns:th="http://www.thymeleaf.org">
 </div>
 
 <div class="wrapper">
-      <div class="col-sm-9">
+      <div class="col-sm-9" style="width:80%; margin-left: 5%; margin-right:5% ">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#routenplanung">Routenplanung</a></li>
                 <li><a data-toggle="tab" href="#zeitplanung">Zeitplanung</a></li>
@@ -366,22 +363,22 @@ xmlns:th="http://www.thymeleaf.org">
         <hr>
         <div class="form-group">
         <label for="Startpunkt">Startpunkt</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="origin" required placeholder="Startpunkt">
+        <input style="width: 450px;" type="text" class="input form-control" id="origin" required placeholder="Startpunkt">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 1</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="stop1" placeholder="Zwischenstop 1">
+        <input style="width: 450px;" type="text" class="input form-control" id="stop1" placeholder="Zwischenstop 1">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Zwischenstop 2</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="stop2" placeholder="Zwischenstop 2">
+        <input style="width: 450px;" type="text" class="input form-control" id="stop2" placeholder="Zwischenstop 2">
         </div>
         <div class="form-group">
         <label for="Startpunkt">Endziel</label>
-        <input style="width: 300px;" type="text" class="input form-control" id="destination" required placeholder="Endziel">
+        <input style="width: 450px;" type="text" class="input form-control" id="destination" required placeholder="Endziel">
         </div>
 
-        <div id="map" style="margin-left: 500px; height: 450px; width: 650px"></div>
+        <div id="map" style="margin-left: 150px; height: 450px; width: 650px"></div>
 
         </div>
 
@@ -390,7 +387,7 @@ xmlns:th="http://www.thymeleaf.org">
         <hr>
         <div class="container2">
 
-        <div class="row">
+        <div class="row" style="">
 
         <div class="col-md-3">
         <div class ="form-group">
@@ -419,7 +416,7 @@ xmlns:th="http://www.thymeleaf.org">
         <div class="col-md-3">
         <div class="form-group">
         <label for="arrdatti e">Zeitpunkt der Ankunft</label>
-        <input style="width: 140px;" type="time" id="arrivaltime" required class="form-control"/>
+        <input style="width: 140px; margin-left: 5%" type="time" id="arrivaltime" required class="form-control"/>
         </div>
         </div>
 

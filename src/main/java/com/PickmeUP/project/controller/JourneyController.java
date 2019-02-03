@@ -43,6 +43,12 @@ public class JourneyController {
     @Autowired
     private AccountService accountService;
 
+
+    //      Gets journey creation page.
+    //
+    //      @return the ModelAndView modelandview.
+
+
     @RequestMapping(value = "/journey/create", method = RequestMethod.GET)
     public ModelAndView ShowMap(){
         ModelAndView modelAndView = new ModelAndView();
@@ -53,11 +59,19 @@ public class JourneyController {
         return modelAndView;
     }
 
+
+    //      Handles Jounrey creation.
+    //
+    //      @param Journey              Journey instance formed by JSON.
+    //      @return modelAndView        the ModelAndView.
+
     @RequestMapping(value = "/journey/create", method = RequestMethod.POST)
     public ModelAndView handleJourney(@RequestBody Journey journey) throws JSONException, ParseException {
+        // get currently logged in user.
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+        // parse legs from route element.
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String rawJson = journey.getRoute();
         JSONObject root = new JSONObject(rawJson);
@@ -65,6 +79,7 @@ public class JourneyController {
         JSONObject summary = routesArray.getJSONObject(0);
         JSONArray legs = summary.getJSONArray("legs");
 
+        // create car
         Car carToSave = new Car();
         carToSave.setColour(journey.getCar().getColour());
         carToSave.setType(journey.getCar().getType());
@@ -81,6 +96,7 @@ public class JourneyController {
         Date dateOfJourney = formatter.parse(journeyToSave.getDepartureDate());
         calendar.setTime(dateOfJourney);
 
+        //store repeats.
         int difDays = 0;
         int iterations = 0;
         LocalDate startDate = LocalDate.parse(journeyToSave.getDepartureDate());
@@ -130,7 +146,7 @@ public class JourneyController {
                 iteration.setLegsInJourney(legsToSave);
             }
 
-
+            // send jounrey created mail.
             try {
                 GmailService.sendCreatedMail(loggedIn);
             } catch (MailException e) {
@@ -141,9 +157,14 @@ public class JourneyController {
             return modelAndView;
         }
 
+    //      Gets search result page.
+    //
+    //      @param Journey            the Journey mimicked by Search input.
+    //      @return modelAndView      the ModelAndView.
     @RequestMapping(value = "/journey/list/show", method = RequestMethod.GET)
     public ModelAndView handleSearchResult(@RequestBody Journey journey) throws JSONException {
         ModelAndView modelAndView = new ModelAndView();
+        // get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
 
@@ -152,14 +173,20 @@ public class JourneyController {
         return modelAndView;
     }
 
+    //      Handles offered Jounrey delete.
+    //
+    //      @param id                   id of Journey Object to be deleted.
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = "/journey/cancelOffered", method = RequestMethod.POST)
     public ModelAndView handleCancelOffered(@RequestBody int id) {
         ModelAndView modelAndView = new ModelAndView();
         Journey journeyToCancelOffered = journeyService.findById(id);
+        // get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
         List<Leg> legsOfJourney = legService.findByJourney(journeyToCancelOffered);
 
+        //empty all passengers from journey.
         for(Leg leg : legsOfJourney){
             List<User> passengersOfLeg = leg.getPassengers();
             passengersOfLeg.clear();
@@ -167,10 +194,11 @@ public class JourneyController {
             legService.saveLeg(leg);
         }
 
+        // deactivate Journey and mark as canceled.
         journeyToCancelOffered.setActive(0);
         journeyToCancelOffered.setCanceled(1);
         journeyService.updateJourney(journeyToCancelOffered);
-
+        modelAndView.addObject("stornoSuccess","True");
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
         return modelAndView;

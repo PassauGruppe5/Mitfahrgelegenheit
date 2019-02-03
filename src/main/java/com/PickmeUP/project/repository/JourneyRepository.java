@@ -11,7 +11,7 @@ import java.util.List;
 public interface JourneyRepository extends JpaRepository<Journey, Integer> {
     Journey findById(int id);
 
-    List<Journey> findByDriverAndActive(User driver,int active);
+    List<Journey> findByDriverAndActiveOrderByDepartureDateAscDapartureTimeAsc(User driver, int active);
 
     List<Journey> findAll();
 

@@ -12,14 +12,14 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <script>
         var userId;
+        var commentSuccess;
 
         function fillParam(){
           /*<![CDATA[*/
 
-          userId = [[${user.id}]]
+          userId = [[${user.id}]];
 
           /*]]>*/
-        }
 
         function cancelBooked(idToSend){
              console.log(booked);
@@ -53,15 +53,18 @@
                 success: function(data, status){
                 if(data){
                     }
+                    document.getElementById("stornoOffered").style.display = "block";
                 }.bind(this),
                 error: function(xhr, error) {
                   console.log(error);
                 }
-            });
 
+            });
            setTimeout(function(){
                 self.location['reload']()
-            }, 500)
+            }, 1500)
+
+
         }
 
         window.onload = fillParam;
@@ -199,6 +202,10 @@
 </div>
 
 <hr>
+<div id="stornoOffered" class="alert alert-success alert-dismissible" style="display: none;">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    Die Fahrt wurde erfolgreich storniert.
+</div>
 <div class="container bootstrap snippet">
     <div class="row">
   		<div class="col-sm-10"><div id="profilname" th:text="${user.name}+' '+${user.lastName}"></div></div>
@@ -214,11 +221,12 @@
 
 
         </div><!--/col-3-->
-    	<div class="col-sm-9">
-            <ul class="nav nav-tabs">
+    	<div class="col-sm-9" style="width:73%;">
+            <ul class="nav nav-tabs" style="width:100%;">
                 <li class="active"><a data-toggle="tab" th:href="@{#profil}">Profil</a></li>
                 <li><a data-toggle="tab" th:href="@{#offered}">Angebotene Fahrten</a></li>
                 <li><a data-toggle="tab" th:href="@{#booked}">Gebuchte Fahrten</a></li>
+                <li><a data-toggle="tab" th:href="@{#done}">Beendete Mitfahrten</a></li>
                 <li><a data-toggle="tab" th:href="@{#balance}">Verfügbares Guthaben</a></li>
                 <li><a data-toggle="tab" th:href="@{#rating}">Bewertung</a></li>
               </ul>
@@ -358,8 +366,7 @@
                 <form class="form-inline">
                 <div class="form-group">
                 <label for="derzeitiges_guthaben">Ihr derzeitiges Guthaben beträgt: </label>
-                <output type="text" th:text="${account.balance}" class="form-control" id="derzeitiges_guthaben">
-                </output>
+                <output type="text" th:text="${account.balance}+'€'" class="form-control" id="derzeitiges_guthaben"></output>
                 </div>
                 <div style="margin-top: 20px;">
                 <a class="btn btn-success" th:href="@{/profile/create/payment-in}" role="button">Einzahlen</a>
@@ -388,6 +395,40 @@
                           </tbody>
                       </table>
                   <hr>
+              </div>
+
+              <div id="done" class="tab-pane fade">
+              <hr>
+                <div class="container2">
+                  <table frame="void" class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">-</th>
+                      <th scope="col">Startpunkt</th>
+                      <th scope="col">Endziel</th>
+                      <th scope="col">Abfahrtsdatum</th>
+                      <th scope="col">Abfahrtszeit</th>
+                      <th scope="col">Ankunftsdatum</th>
+                      <th scope="col">Ankunftszeit</th>
+                      <th scope="col">Preis/Km</th>
+                    </tr>
+                  </thead>
+                  <tbody th:if="${not #lists.isEmpty(doneList)}">
+                    <tr th:each="doneToPost: ${doneList}">
+                  <th scope="row">-</th>
+                  <td th:text="${doneToPost.origin}"></td>
+                  <td th:text="${doneToPost.destination}"></td>
+                  <td th:text="${doneToPost.departureDate}"></td>
+                  <td th:text="${doneToPost.departureTime}+' Uhr'"></td>
+                  <td th:text="${doneToPost.arrivalDate}"></td>
+                  <td th:text="${doneToPost.arrivalTime}+' Uhr'"></td>
+                  <td th:text="${doneToPost.priceKm}+' €'"></td>
+                  <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/journey/details/?id='+${doneToPost.id}}" role="button">Details</a></td>
+                  <td><a style="margin-top: -5px;transform: scale(0.9);" class="btn btn-success" th:href="@{'/profile/show/profile?id='+${doneToPost.driver.id}}" role="button">Fahrer</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
               </div>
 
           </div>

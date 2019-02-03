@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -116,15 +117,17 @@ public class ProfileController {
         Transaction transaction = new Transaction();
         if (accountToUpdate.getBalance()-account.getBalance()< 0) {
             modelAndView.addObject("user",user);
-            modelAndView.addObject("account",accountToUpdate);
+            modelAndView.addObject("account",account);
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
             modelAndView.setViewName("/profile/create/payment-out");
+            return modelAndView;
         }
-        if(BigDecimal.valueOf(account.getBalance()).scale() > 2){
-            modelAndView.setViewName("/profile/create/payment-in");
+        if(BigDecimal.valueOf(account.getBalance()).scale() > 2 ||account.getBalance() < 0 ){
+            modelAndView.setViewName("/profile/create/payment-out");
             modelAndView.addObject("user", user);
             modelAndView.addObject("account",account);
             modelAndView.addObject("errorMessage", "Ungültiger Betrag.");
+            return modelAndView;
         }
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()-account.getBalance());
@@ -134,7 +137,7 @@ public class ProfileController {
             transaction.setReceiverAndTransmitter(user);
             transactionService.saveTransaction(transaction);
             modelAndView.addObject("user",user);
-            modelAndView.addObject("account",accountToUpdate);
+            modelAndView.addObject("account",account);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich abgebucht.");
             modelAndView.setViewName("/profile/create/payment-out");
         }
@@ -188,10 +191,13 @@ public class ProfileController {
         Rating rating = new Rating();
         Account account = accountService.findbyUser(loggedIn);
         List<Journey> bookedList = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
-
+        ArrayList<Journey> doneList = new ArrayList<>();
         if(loggedIn == toView){
 
             for (int i = 0; i < bookedList.size(); i++) {
+                if(bookedList.get(i).getCanceled() == 0 && bookedList.get(i).getActive() == 0){
+                    doneList.add(bookedList.get(i));
+                }
                 if(bookedList.get(i).getActive() == 0){
                     bookedList.remove(i);
                 }
@@ -199,6 +205,7 @@ public class ProfileController {
 
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
+
             for(Journey journey : journeyList) {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
@@ -208,11 +215,13 @@ public class ProfileController {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
             }
+
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);
             modelAndView.addObject("journeyList",journeyList);
             modelAndView.addObject("bookedList",bookedList);
+            modelAndView.addObject("doneList",doneList);
             modelAndView.setViewName("/profile/show/profile_user");
         }
         else{

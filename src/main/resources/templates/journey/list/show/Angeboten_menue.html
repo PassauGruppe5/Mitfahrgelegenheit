@@ -63,7 +63,6 @@ xmlns:th="http://www.thymeleaf.org">
 
               padding: 5px 15px;
               font-size: 20px;
-              border-radius: 20px;
               text-decoration: none;
 
           }
@@ -112,6 +111,12 @@ xmlns:th="http://www.thymeleaf.org">
       </div>
 
       <hr>
+      <div th:if="${#lists.isEmpty(results)}">
+          <div class="alert alert-danger alert-dismissible" style="display: block;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+             Es wurden keine Fahrten gefunden, welche mit den eingegebenen Daten übereinstimmen.
+          </div>
+      </div>
 
       <div class="container2">
       <table frame="void" class="table table-hover">

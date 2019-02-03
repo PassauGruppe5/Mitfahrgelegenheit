@@ -50,14 +50,14 @@ xmlns:th="http://www.thymeleaf.org">
                  }
 
                 if(selectedLegs.length == 0){
-                    alert("Bitte Zwischenstrecke auswählen!");
+                    document.getElementById("errorLegs").style.display = "block";
                     return;
                 }
 
                 for(var z = 0; z <selectedLegs.length; z++){
                     var tooManyBags= z+1;
                      if(parseFloat(bagsCount) > parseFloat(selectedLegs[z].bags)){
-                     alert("Nicht genug freies Gepäck in Teilstrecke "+tooManyBags+"!");
+                     document.getElementById("errorBags").style.display = "block";
                      return;
                     }
                  }
@@ -69,7 +69,7 @@ xmlns:th="http://www.thymeleaf.org">
                     }
 
                  if(balance < checkedBalanace + priceBag * bagsCount){
-                     alert("Nicht genug Guthaben.")
+                     document.getElementById("errorBalance").style.display = "block";
                      return;
                  }
 
@@ -231,6 +231,18 @@ xmlns:th="http://www.thymeleaf.org">
   </nav>
   </div>
   <hr>
+    <div id="errorLegs" class="alert alert-danger alert-dismissible" style="display: none;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Fehler!</strong> Es muss eine Zwischenstrecke ausgewählt werden.
+    </div>
+      <div id="errorBags" class="alert alert-danger alert-dismissible" style="display: none;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Fehler!</strong> Die anegegebene Gepäckanzahl übersteigt den verfügbaren Platz.
+      </div>
+        <div id="errorBalance" class="alert alert-danger alert-dismissible" style="display: none;">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Fehler!</strong> Nicht genug Guthaben für diese Fahrt.
+        </div>
 
       <div class="col-sm-9">
             <ul class="nav nav-tabs">
@@ -335,14 +347,14 @@ xmlns:th="http://www.thymeleaf.org">
                <div class="form-group">
                         <div class="col-xs-6">
                           <label for="Vorname"><h4>Vorname</h4></label>
-                            <output type="text" class="form-control"  th:text="${driver.name}" name="Vorname" id="name" title="Vorname"></output>
+                            <output type="text" class="form-control" name="Vorname" id="name" title="Vorname"><a th:text="${driver.name}" th:href="@{'/profile/show/profile?id='+${driver.id}}"></a></output>
                           </div>
                       </div>
 
               <div class="form-group">
                           <div class="col-xs-6">
                             <label for="last_name"><h4>Nachname</h4></label>
-                              <output type="text" class="form-control" th:text="${driver.lastName}" name="Nachname" id="lastName" title="Nachname"></output>
+                              <output type="text" class="form-control"  name="Nachname" id="lastName" title="Nachname"><a th:text="${driver.lastName}" th:href="@{'/profile/show/profile?id='+${driver.id}}"></a></output>
                           </div>
                       </div>
 
@@ -370,7 +382,7 @@ xmlns:th="http://www.thymeleaf.org">
                       </div>
 
                 <form id="kommentarbox" action="" method="post">
-                <label> Persönliche Angaben: <br><textarea readonly cols="45" rows="5" name="message"></textarea></label>
+                <label> Persönliche Angaben: <br><textarea th:text="${driver.comment}" disabled readonly cols="45" rows="5" name="message"></textarea></label>
                 </form>
                 </div>
 

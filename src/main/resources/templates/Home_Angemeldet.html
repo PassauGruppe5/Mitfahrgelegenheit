@@ -2,7 +2,7 @@
 <html lang="de"
 xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>PickmeUp - Fehlermeldung</title>
+      <title>PickmeUp</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -135,17 +135,17 @@ xmlns:th="http://www.thymeleaf.org">
 
     <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
 
-    <div><p id="name"><b>Pick Me Up</b></p></div>
+    <div><p id="name"><b>PickmeUp</b></p></div>
 
     <form class="form-inline" method="post" role="form" th:action="@{/}">
   <div class="form-group has-feedback">
     <label class="sr-only" for="Von">Von</label>
-    <input style=" width:250px; height:42px; font-size:14pt"type="text" class="form-control" name ="von" id="von" placeholder="Von...">
+    <input style=" width:250px; height:42px; font-size:14pt"type="text" class="form-control" name ="von" id="von" placeholder="Von..." required>
     <span class="form-control-feedback glyphicon glyphicon-road"></span>
   </div>
   <div class="form-group has-feedback">
     <label class="sr-only" for="Nach">Nach</label>
-    <input style=" width: 250px; height:42px; font-size:14pt" type="text" class="form-control" name ="nach" id="nach" placeholder="Nach...">
+    <input style=" width: 250px; height:42px; font-size:14pt" type="text" class="form-control" name ="nach" id="nach" placeholder="Nach..." required>
     <span class="form-control-feedback glyphicon glyphicon-road"></span>
   </div>
   <div class="form-group has-feedback">
@@ -155,7 +155,7 @@ xmlns:th="http://www.thymeleaf.org">
   </div>
     <div class="form-group has-feedback">
       <label class="sr-only" for="Zeit">Uhrzeit</label>
-      <input style="width: 250px; height:42px; font-size:14pt" type="time" class="form-control" id="zeit" name ="zeit" placeholder="Uhrzeit">
+      <input style="width: 250px; height:42px; font-size:14pt" type="time" class="form-control" id="zeit" required name ="zeit" placeholder="Uhrzeit">
       <span class="form-control-feedback glyphicon glyphicon-time"></span>
     </div>
   <button id="bt1" type="submit" class="btn btn-primary">Fahrt suchen</button>
