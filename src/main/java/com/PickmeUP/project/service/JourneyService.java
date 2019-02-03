@@ -24,7 +24,7 @@ public class JourneyService {
         journeyRepository.save(journey);
     }
 
-    public List<Journey> findByDriverAndActive(User driver, int active) {return journeyRepository.findByDriverAndActive(driver,active);}
+    public List<Journey> findByDriverAndActive(User driver, int active) {return journeyRepository.findByDriverAndActiveOrderByDepartureDateAscDapartureTimeAsc(driver,active);}
 
     public void updateJourney(Journey journey){journeyRepository.save(journey);
     }

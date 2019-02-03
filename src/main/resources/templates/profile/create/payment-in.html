@@ -145,27 +145,27 @@
           <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
          </div>
 
- <form th:object="${account}" th:action="@{/profile/create/payment-in}" class="form-conatiner" method="post" role="form">
- <h1><font color=#fff>Einzahlung</font></h1>
+ <form th:object="${account}" th:action="@{/profile/create/payment-in}"  style="background-color: lightgray" class="form-conatiner" method="post" role="form">
+ <h1 style="color: black;">Einzahlung</h1>
 
  <div>
-              <h4 th:utext="${errorMessage}" style="font-size: 20; color: white;"></h4>
-              <h4 th:utext="${successMessage}" style="font-size: 20; color: white;" ></h4>
+              <h4 th:utext="${errorMessage}" style="font-size: 20; color: red;"></h4>
+              <h4 th:utext="${successMessage}" style="font-size: 20; color: black;" ></h4>
 </div>
 
   <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
   <div id="paypal" class="collapse">
    <div class="container3">
    <div class="form-group">
-     <label for="E-Mail" style="color: white">Email-Adresse</label>
+     <label for="E-Mail" style="color: black;">Email-Adresse</label>
      <input type="email" class="form-control" id="email" placeholder="Email-Adresse">
    </div>
    <div class="form-group">
-     <label for="Passwort" style="color: white">Passwort</label>
+     <label for="Passwort" style="color: black;">Passwort</label>
      <input type="password" class="form-control" id="pword" placeholder="Passwort">
    </div>
    </div>
-   <hr>
+   <hr style="border-color: black;">
    </div>
 
     <button id="btn_credit" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#kreditkarte">Per Kreditkarte</button>
@@ -178,21 +178,21 @@
 
     <div class="col-md-3">
     <div style="width: 150px;" class="form-group">
-       <label for="Vorname" style="color: white">Vorname</label>
+       <label for="Vorname" style="color: black;">Vorname</label>
        <input type="text" class="form-control" id="v_name" placeholder="Vorname">
      </div>
      </div>
 
     <div class="col-md-3">
     <div style="margin-left: 25px; width: 150px;" class="form-group">
-       <label for="Nachname" style="color: white">Nachname</label>
+       <label for="Nachname" style="color: black;">Nachname</label>
        <input type="text" class="form-control" id="n_name" placeholder="Nachname">
         </div>
         </div>
 
     <div class="col-md-3">
     <div style="width: 130px; margin-left: 50px;" class="form-group">
-       <label for="Gültigkeitsdatum" style="color: white">Gültigkeitsdatum</label>
+       <label for="Gültigkeitsdatum" style="color: black;">Gültigkeitsdatum</label>
        <input type="text" class="form-control" id="email" placeholder="05-23" min="5" max="5" maxlength="5">
      </div>
     </div>
@@ -201,19 +201,19 @@
     <div class="row">
     <div class="col-md-3">
     <div class="form-group">
-       <label for="Kreditkartennummer" style="color: white">Kreditkartennummer</label>
+       <label for="Kreditkartennummer" style="color: black;">Kreditkartennummer</label>
        <input type="text" class="form-control" id="I_ban" placeholder="1111-2222-3333-4444" maxlength="19">
      </div>
      </div>
 
     <div class="col-md-3">
     <div style="margin-left: 150px; width: 100px;" class="form-group">
-       <label for="CVC-Code" style="color: white">CVC-Code</label>
+       <label for="CVC-Code" style="color: black; text-align: right">CVC-Code</label>
        <input type="text" class="form-control" id="email" placeholder="CVC" min="3" max="3" maxlegnth="3">
      </div>
      </div>
      </div>
-     <hr>
+     <hr style="border-color: black;">
      </div>
 
   <form  class="form-inline">
@@ -221,7 +221,7 @@
     <label class="sr-only" for="beispielFeldSumme">Summe (in Euro)</label>
     <div class="input-group">
       <div class="input-group-addon">€</div>
-      <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" ><font color=#fff>betrag</font></label>
+      <label for="balance" th:if="${#fields.hasErrors('balance')}" style="color: red;" th:errors="*{balance}" >betrag</label>
       <input type="text" class="form-control" th:field="*{balance}" id="beispielFeldSumme" placeholder="Summe wie 14.79">
     </div>
   </div>

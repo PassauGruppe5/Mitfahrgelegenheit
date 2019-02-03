@@ -111,14 +111,14 @@
       <div class="col-md-4 col-sm-4 col-xs-12"></div>
       <div class="col-md-4 col-sm-4 col-xs-12">
 
- <form th:action="@{/login}" method="POST" class="form-conatiner">
- <h1><font color=#fff>Anmeldung</font></h1>
+ <form style="background-color: lightgray" th:action="@{/login}" method="POST" class="form-conatiner">
+ <h1><font color=black>Anmeldung</font></h1>
   <div class="form-group">
-      <label for="E-Mail"><font color=#fff>Email-Adresse</font></label>
+      <label for="E-Mail"><font color=black>Email-Adresse</font></label>
     <input type="email"  name="email" id="email" class="form-control" th:placeholder="Email-Adresse" required>
   </div>
   <div class="form-group">
-    <label for="Passwort"><font color=#fff>Passwort</font></label>
+    <label for="Passwort"><font color=black>Passwort</font></label>
     <input type="password" id="password" name="password" class="form-control" th:placeholder="Passwort" required>
   </div>
   <div align="center" th:if="${param.error}">

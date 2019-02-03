@@ -117,15 +117,17 @@ public class ProfileController {
         Transaction transaction = new Transaction();
         if (accountToUpdate.getBalance()-account.getBalance()< 0) {
             modelAndView.addObject("user",user);
-            modelAndView.addObject("account",accountToUpdate);
+            modelAndView.addObject("account",account);
             modelAndView.addObject("errorMessage", "Nicht genug Guthaben vorhanden.");
             modelAndView.setViewName("/profile/create/payment-out");
+            return modelAndView;
         }
-        if(BigDecimal.valueOf(account.getBalance()).scale() > 2){
-            modelAndView.setViewName("/profile/create/payment-in");
+        if(BigDecimal.valueOf(account.getBalance()).scale() > 2 ||account.getBalance() < 0 ){
+            modelAndView.setViewName("/profile/create/payment-out");
             modelAndView.addObject("user", user);
             modelAndView.addObject("account",account);
             modelAndView.addObject("errorMessage", "Ungültiger Betrag.");
+            return modelAndView;
         }
         else{
             accountToUpdate.setBalance(accountToUpdate.getBalance()-account.getBalance());
@@ -135,7 +137,7 @@ public class ProfileController {
             transaction.setReceiverAndTransmitter(user);
             transactionService.saveTransaction(transaction);
             modelAndView.addObject("user",user);
-            modelAndView.addObject("account",accountToUpdate);
+            modelAndView.addObject("account",account);
             modelAndView.addObject("successMessage","Der Betrag: "+account.getBalance()+"€ wurde erfolgreich abgebucht.");
             modelAndView.setViewName("/profile/create/payment-out");
         }
@@ -203,6 +205,7 @@ public class ProfileController {
 
             List<Rating> ratingList = ratingService.getRatingsOfUser(loggedIn.getId());
             List<Journey> journeyList = journeyService.findByDriverAndActive(loggedIn, 1);
+
             for(Journey journey : journeyList) {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
@@ -212,6 +215,7 @@ public class ProfileController {
                 journey.setOrigin(journey.getOrigin().replaceFirst(", Deutschland", ""));
                 journey.setDestination(journey.getDestination().replaceFirst(", Deutschland", ""));
             }
+
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("account",account);
             modelAndView.addObject("ratingList",ratingList);

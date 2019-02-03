@@ -154,25 +154,25 @@
         <img id="hintergrund" src="https://images.pexels.com/photos/239520/pexels-photo-239520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
   </div>
 
- <form th:object="${account}" th:action="@{/profile/create/payment-out}" method="post" class="form-conatiner" role="form">
- <h1><font color=#fff>Auszahlung</font></h1>
+ <form th:object="${account}" th:action="@{/profile/create/payment-out}" method="post" style="background-color: lightgray;" class="form-conatiner" role="form">
+ <h1 style="color: black;">Auszahlung</h1>
               <div>
-                                 <h4 th:utext="${errorMessage}" style="font-size: 20; color: white;"></h4>
-                                 <h4 th:utext="${successMessage}" style="font-size: 20; color: white;" ></h4>
+                                 <h4 th:utext="${errorMessage}" style="font-size: 20; color: red;"></h4>
+                                 <h4 th:utext="${successMessage}" style="font-size: 20; color: black;" ></h4>
               </div>
  <button id="btn_paypal" type="button" class="btn btn-info btn-block" data-toggle="collapse" data-target="#paypal">Per PayPal</button>
  <div id="paypal" class="collapse">
   <div class="container3">
   <div class="form-group">
-    <label for="E-Mail" style="color: white">Email-Adresse</label>
+    <label for="E-Mail" style="color: black;">Email-Adresse</label>
     <input type="email" class="form-control" id="email" placeholder="Email-Adresse">
   </div>
   <div class="form-group">
-    <label for="Passwort" style="color: white">Passwort</label>
+    <label for="Passwort" style="color: black;">Passwort</label>
     <input type="password" class="form-control" id="pword" placeholder="Passwort">
   </div>
   </div>
-  <hr>
+  <hr style="border-color: black;">
   </div>
 
   <form class="form-inline">
@@ -180,7 +180,7 @@
       <label class="sr-only" for="beispielFeldSumme">Summe (in Euro)</label>
       <div class="input-group">
         <div class="input-group-addon">€</div>
-        <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" ><font color=#fff>betrag</font></label>
+        <label for="balance" th:if="${#fields.hasErrors('balance')}" th:errors="*{balance}" style="color: red;" >betrag</label>
         <input type="text" th:field="*{balance}" class="form-control" id="balance" placeholder="Summe wie 17.89">
       </div>
     </div>

@@ -198,7 +198,7 @@ public class JourneyController {
         journeyToCancelOffered.setActive(0);
         journeyToCancelOffered.setCanceled(1);
         journeyService.updateJourney(journeyToCancelOffered);
-
+        modelAndView.addObject("stornoSuccess","True");
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
         return modelAndView;

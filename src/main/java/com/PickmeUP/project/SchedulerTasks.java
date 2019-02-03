@@ -49,7 +49,7 @@ public class SchedulerTasks {
 
     }
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void sendReminders(){
         log.info("Reminders sent.", dateFormat.format(new Date()));
         ArrayList<Journey> journeysToCheck = journeyService.findAllByActiveAndCanceled(1,0);
