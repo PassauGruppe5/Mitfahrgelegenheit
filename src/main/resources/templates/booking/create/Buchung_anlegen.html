@@ -74,13 +74,13 @@ xmlns:th="http://www.thymeleaf.org">
                  }
 
                 $.ajax({
-                    url: "/booking/create",
+                    url: "pickmeup/booking/create",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(selectedLegs),
                     success: function(data, status){
                         if(data){
-                            window.location.href="/profile/show/profile?id="+userId+"#booked";
+                            window.location.href="/pickmeup/profile/show/profile?id="+userId+"#booked";
                         }
                     }.bind(this),
                     error: function(xhr, error) {
