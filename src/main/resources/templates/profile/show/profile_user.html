@@ -27,7 +27,7 @@
              console.log(booked);
 
             $.ajax({
-                url: "/journey/cancelBooked",
+                url: "pickmeup/journey/cancelBooked",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(idToSend),
@@ -48,7 +48,7 @@
         function cancelOffered(idToSend){
 
             $.ajax({
-                url: "/journey/cancelOffered",
+                url: "/pickmeup/journey/cancelOffered",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(idToSend),
