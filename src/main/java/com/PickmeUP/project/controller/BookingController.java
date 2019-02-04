@@ -139,7 +139,13 @@ public class BookingController {
             }
 
             try {
-                GmailService.sendBookingMail(loggedIn);
+                GmailService.sendBookingMailPassenger(loggedIn);
+            } catch (MailException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                GmailService.sendBookingMailDriver(journey.getDriver());
             } catch (MailException e) {
                 e.printStackTrace();
             }
