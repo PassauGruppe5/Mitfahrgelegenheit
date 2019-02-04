@@ -32,6 +32,7 @@
                 data: JSON.stringify(idToSend),
                 success: function(data, status){
                 if(data){
+                    document.getElementById("stornoBooked").style.display = "block";
                     }
                 }.bind(this),
                 error: function(xhr, error) {
@@ -206,6 +207,10 @@
 <div id="stornoOffered" class="alert alert-success alert-dismissible" style="display: none;">
   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     Die Fahrt wurde erfolgreich storniert.
+</div>
+<div id="stornoBooked" class="alert alert-success alert-dismissible" style="display: none;">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    Die Mitfahrt wurde erfolgreich storniert.
 </div>
 <div class="container bootstrap snippet">
     <div class="row">
