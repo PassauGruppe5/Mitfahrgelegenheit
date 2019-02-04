@@ -42,6 +42,9 @@ public class BookingController {
     @Autowired
     private BonusService bonusService;
 
+    @Autowired
+    private BookingService bookingService;
+
     @RequestMapping(value = "/booking/create", method = RequestMethod.GET)
     public ModelAndView showBookingPage(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -76,6 +79,7 @@ public class BookingController {
         Account userAccount = accountService.findbyUser(loggedIn);
         Account driverAccount = accountService.findbyUser(journey.getDriver());
         Transaction transaction = new Transaction();
+        Booking booking = new Booking(loggedIn);
         LocalDate now = LocalDate.now().withDayOfMonth(1);
         LocalDate minusOneMonth = now.minusMonths(1);
         List<Journey> bookedJourneys = journeyService.findJourneysByLegs(legService.findLegsByPassengersContaining(loggedIn));
@@ -139,6 +143,12 @@ public class BookingController {
             } catch (MailException e) {
                 e.printStackTrace();
             }
+
+            booking.setJourney(journey);
+            booking.setAmount(modifiedprice);
+            booking.setBags(selectedLegs.get(0).getBags());
+            bookingService.save(booking);
+
 
             transaction.setReceiver(journey.getDriver());
             transaction.setAmount(modifiedprice);

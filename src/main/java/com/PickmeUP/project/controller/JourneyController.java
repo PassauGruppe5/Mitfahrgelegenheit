@@ -43,6 +43,9 @@ public class JourneyController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private BookingService bookingService;
+
 
     //      Gets journey creation page.
     //
@@ -213,19 +216,22 @@ public class JourneyController {
         List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
         Account accountPassenger = accountService.findbyUser(loggedIn);
         Account accountDriver = accountService.findbyUser(journeyToCancel.getDriver());
+        Booking booking = bookingService.findByJourneyAndActive(journeyToCancel,1);
 
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
-                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance()/1000;
-                accountPassenger.setBalance(accountPassenger.getBalance()+balanceRefund);
-                accountService.updateAccount(accountPassenger);
-                accountDriver.setBalance(accountDriver.getBalance()-balanceRefund);
-                accountService.updateAccount(accountDriver);
                 passengersOfLeg.remove(loggedIn);
                 legService.saveLeg(leg);
             }
         }
+
+        accountPassenger.setBalance(accountPassenger.getBalance()+ booking.getAmount());
+        accountService.updateAccount(accountPassenger);
+        accountDriver.setBalance(accountDriver.getBalance()- booking.getAmount());
+        accountService.updateAccount(accountDriver);
+        booking.setActive(0);
+        bookingService.update(booking);
 
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
