@@ -43,6 +43,9 @@ public class JourneyController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private BookingService bookingService;
+
 
     //      Gets journey creation page.
     //
@@ -189,6 +192,15 @@ public class JourneyController {
         //empty all passengers from journey.
         for(Leg leg : legsOfJourney){
             List<User> passengersOfLeg = leg.getPassengers();
+            for(User user : passengersOfLeg){
+
+                // send jounrey changed mail.
+                try {
+                    GmailService.sendChangedJourneyMailPassenger(user);
+                } catch (MailException e) {
+                    e.printStackTrace();
+                }
+            }
             passengersOfLeg.clear();
             leg.setPassengers(passengersOfLeg);
             legService.saveLeg(leg);
@@ -198,6 +210,14 @@ public class JourneyController {
         journeyToCancelOffered.setActive(0);
         journeyToCancelOffered.setCanceled(1);
         journeyService.updateJourney(journeyToCancelOffered);
+
+        // send jounrey changed mail.
+        try {
+            GmailService.sendChangedJourneyMailDriver(loggedIn);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+
         modelAndView.addObject("stornoSuccess","True");
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
@@ -213,19 +233,34 @@ public class JourneyController {
         List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
         Account accountPassenger = accountService.findbyUser(loggedIn);
         Account accountDriver = accountService.findbyUser(journeyToCancel.getDriver());
+        Booking booking = bookingService.findByJourneyAndActive(journeyToCancel,1);
 
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
-                double balanceRefund = journeyToCancel.getPriceKm() * leg.getDistance()/1000;
-                accountPassenger.setBalance(accountPassenger.getBalance()+balanceRefund);
-                accountService.updateAccount(accountPassenger);
-                accountDriver.setBalance(accountDriver.getBalance()-balanceRefund);
-                accountService.updateAccount(accountDriver);
                 passengersOfLeg.remove(loggedIn);
                 legService.saveLeg(leg);
             }
         }
+
+        try {
+            GmailService.sendCancelBookedJourneyMailDriver(journeyToCancel.getDriver());
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            GmailService.sendCancelBookedJourneyMailPassenger(loggedIn);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+
+        accountPassenger.setBalance(accountPassenger.getBalance()+ booking.getAmount());
+        accountService.updateAccount(accountPassenger);
+        accountDriver.setBalance(accountDriver.getBalance()- booking.getAmount());
+        accountService.updateAccount(accountDriver);
+        booking.setActive(0);
+        bookingService.update(booking);
 
         modelAndView.addObject("id", loggedIn.getId());
         modelAndView.setViewName("redirect:/profile/show/profile");
