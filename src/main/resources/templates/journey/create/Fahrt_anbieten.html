@@ -299,7 +299,7 @@ xmlns:th="http://www.thymeleaf.org">
                     data: JSON.stringify(journey),
                     success: function(data, status){
                     if(data){
-                        window.location.href("pickmeup/profile/show/profile?id="+userId+"#offered");
+                        window.location.href="pickmeup/profile/show/profile?id="+userId+"#offered";
                         }
                     }.bind(this),
                     error: function(xhr, error) {
