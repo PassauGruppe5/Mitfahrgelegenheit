@@ -32,21 +32,39 @@ public class Dashboard {
     @Autowired
     UserService userService;
 
-
+    //      handles admin dashboard presentation.
+    //
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value={"/admin/dashboard"}, method = RequestMethod.GET)
     public ModelAndView showDashboard(){
+
+        //get currently logged in user.
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //store SQL result of total balance.
         double totalBalance = accountService.getTotalBalance();
-        ArrayList<Object[]> topFiveDestinations = legService.topOfALl();
-        ArrayList<Object[]> topFiveDrivers    = journeyService.findTopDrivers();
-        ArrayList<Object[]> topFivePassengers    = legService.findTopPassengers();
         Account totalAccount = new Account();
         totalAccount.setBalance(totalBalance);
+
+        //store SQL result of top five destination.
+        ArrayList<Object[]> topFiveDestinations = legService.topOfALl();
+
+        //store SQL result of top five drivers.
+        ArrayList<Object[]> topFiveDrivers    = journeyService.findTopDrivers();
+
+        //store SQL result of top five passengers.
+        ArrayList<Object[]> topFivePassengers    = legService.findTopPassengers();
+
+        //store SQL result of all active journeys.
         ArrayList<Journey> activeJourneys = journeyService.findAllByActiveAndCanceled(1,0);
+
+        //store SQL result of all inactive journey, that are not canceled.
         ArrayList<Journey> doneJourneys = journeyService.findAllByActiveAndCanceled(0,0);
 
+        //add objects to modelAndView for presentation purposes.
+        //set response html page.
         modelAndView.addObject("topDestinations",topFiveDestinations);
         modelAndView.addObject("doneJourneys",doneJourneys);
         modelAndView.addObject("topDrivers",topFiveDrivers);

@@ -19,12 +19,20 @@ public class CustomErrorController implements ErrorController {
     @Autowired
     private UserService userService;
 
+    //      handles Errors of unrecognized URLs.
+    //      sets html pages accourding to logged in status of user to call URL.
+    //
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = PATH, method = RequestMethod.GET)
     public ModelAndView handleError() {
+
+        //get currently logged in user.
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //if there is no logged in user set response html to "/error_unangemeldet",
+        //else set response html to "error_angemeldet".
         if (loggedIn == null) {
             modelAndView.setViewName("/error_unangemeldet");
         }
@@ -36,6 +44,7 @@ public class CustomErrorController implements ErrorController {
         return modelAndView;
     }
 
+    //defines the UTL end path of error-URLs.
     @Override
     public String getErrorPath() {
         return PATH;

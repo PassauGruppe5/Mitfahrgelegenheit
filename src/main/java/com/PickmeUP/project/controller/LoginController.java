@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
+    //      Handles Spring Boot Security Login.
+    //
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();

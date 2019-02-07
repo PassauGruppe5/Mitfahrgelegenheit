@@ -70,10 +70,12 @@ public class JourneyController {
 
     @RequestMapping(value = "/journey/create", method = RequestMethod.POST)
     public ModelAndView handleJourney(@RequestBody Journey journey) throws JSONException, ParseException {
+
         // get currently logged in user.
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
         // parse legs from route element.
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String rawJson = journey.getRoute();
@@ -82,13 +84,14 @@ public class JourneyController {
         JSONObject summary = routesArray.getJSONObject(0);
         JSONArray legs = summary.getJSONArray("legs");
 
-        // create car
+        // create Car object.
         Car carToSave = new Car();
         carToSave.setColour(journey.getCar().getColour());
         carToSave.setType(journey.getCar().getType());
         carToSave.setLicence(journey.getCar().getLicence());
         carService.save(carToSave);
 
+        //create Journey object top be saved.
         Journey journeyToSave = journey;
         journeyToSave.setDriver(loggedIn);
         journeyToSave.setPriceKm(journey.getPriceKm());
@@ -105,12 +108,14 @@ public class JourneyController {
         LocalDate startDate = LocalDate.parse(journeyToSave.getDepartureDate());
         LocalDate endDate = LocalDate.parse(journeyToSave.getArrivalDate());
 
+        //set interval of additional dates depending on selected repeat option.
         switch (journeyToSave.getRepeat().getId()){
             case 2: difDays = 1; iterations = 13; break;
             case 3: difDays = 7; iterations = 11; break;
             case 4: difDays = 1; iterations = 11; break;
         }
 
+        //create needed amount of new journeys with added date depending on chosen repeat
         for(int j = iterations; j >=0  ;j--){
 
             if(journeyToSave.getRepeat().getId() == 4) {
@@ -124,10 +129,12 @@ public class JourneyController {
             }
                 journey.setroute("");
 
+                //generate a copy of the oroginal Journey Object and set new dates.
                 Journey iteration = journeyService.saveAsClone(journeyToSave);
 
                 List<Leg> legsToSave = new ArrayList<>();
 
+                //add Leg objects to copy of Jounrey object.
                 for (int i = 0; i < legs.length(); i++) {
 
                     JSONObject jsonLegNormal = legs.getJSONObject(i);
@@ -167,6 +174,7 @@ public class JourneyController {
     @RequestMapping(value = "/journey/list/show", method = RequestMethod.GET)
     public ModelAndView handleSearchResult(@RequestBody Journey journey) throws JSONException {
         ModelAndView modelAndView = new ModelAndView();
+
         // get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
@@ -183,7 +191,10 @@ public class JourneyController {
     @RequestMapping(value = "/journey/cancelOffered", method = RequestMethod.POST)
     public ModelAndView handleCancelOffered(@RequestBody int id) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //get Journey object correspondint to parameter id.
         Journey journeyToCancelOffered = journeyService.findById(id);
+
         // get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
@@ -194,7 +205,7 @@ public class JourneyController {
             List<User> passengersOfLeg = leg.getPassengers();
             for(User user : passengersOfLeg){
 
-                // send jounrey changed mail.
+                //send jounrey changed mail to passengers.
                 try {
                     GmailService.sendChangedJourneyMailPassenger(user);
                 } catch (MailException e) {
@@ -211,7 +222,7 @@ public class JourneyController {
         journeyToCancelOffered.setCanceled(1);
         journeyService.updateJourney(journeyToCancelOffered);
 
-        // send jounrey changed mail.
+        // send jounrey changed mail to driver.
         try {
             GmailService.sendChangedJourneyMailDriver(loggedIn);
         } catch (MailException e) {
@@ -224,17 +235,35 @@ public class JourneyController {
         return modelAndView;
     }
 
+    //      Handles booked Jounrey delete.
+    //
+    //      @param id                   id of Journey Object contained in the booking to be deleted.
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = "/journey/cancelBooked", method = RequestMethod.POST)
     public ModelAndView handleCancelBooked(@RequestBody int id) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //get Journey object corresponding to parameter id.
         Journey journeyToCancel = journeyService.findById(id);
+
+        //get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //get all Leg objects of selected Journey object.
         List<Leg> legsToBeCanceled = legService.findByJourney(journeyToCancel);
+
+        //get Account object of logged in user.
         Account accountPassenger = accountService.findbyUser(loggedIn);
+
+        //get Account object of journey's driver.
         Account accountDriver = accountService.findbyUser(journeyToCancel.getDriver());
+
+        //get latest Booking object corresponding to journey and active status.
         Booking booking = bookingService.findByJourneyAndActive(journeyToCancel,1);
 
+        //if logged in user is passenger of a leg, the correlation will be deleted.
+        //Leg object will be updated.
         for(Leg leg : legsToBeCanceled){
             List<User> passengersOfLeg = leg.getPassengers();
             if(passengersOfLeg.contains(loggedIn)){
@@ -243,22 +272,29 @@ public class JourneyController {
             }
         }
 
+        //send driver a mail that a passenger canceled a booking for one of its journeys.
         try {
             GmailService.sendCancelBookedJourneyMailDriver(journeyToCancel.getDriver());
         } catch (MailException e) {
             e.printStackTrace();
         }
 
+        //send cancel succes mail to logged in user.
         try {
             GmailService.sendCancelBookedJourneyMailPassenger(loggedIn);
         } catch (MailException e) {
             e.printStackTrace();
         }
 
+        //add payed amou,t back to passenger account.
         accountPassenger.setBalance(accountPassenger.getBalance()+ booking.getAmount());
         accountService.updateAccount(accountPassenger);
+
+        //substract payed amount to driver account.
         accountDriver.setBalance(accountDriver.getBalance()- booking.getAmount());
         accountService.updateAccount(accountDriver);
+
+        //mark booking as canceled.
         booking.setActive(0);
         bookingService.update(booking);
 
@@ -267,13 +303,25 @@ public class JourneyController {
         return modelAndView;
     }
 
+    //      Handles display jounrey details.
+    //
+    //      @param id                   id of Journey Object.
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = "/journey/details", method = RequestMethod.GET)
     public ModelAndView handleDeatils(@RequestParam int id){
         ModelAndView modelAndView = new ModelAndView();
+
+        //get currenlty logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //get Jounrey object corresponding to parameter id.
         Journey journey = journeyService.findById(id);
+
+        //get all legs of Journey object.
         ArrayList<Leg> legs = legService.findByJourney(journey);
+
+        //facilitate display of empty legs depending on amount of legs.
         if(legs.size() == 3){
             Leg first = legs.get(1);
             Leg second = legs.get(2);
@@ -302,13 +350,25 @@ public class JourneyController {
         return modelAndView;
     }
 
+    //      Handles display of journey edit page..
+    //
+    //      @param id                   id of Journey object.
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = "/journey/edit", method = RequestMethod.GET)
     public ModelAndView handleEdit(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //get Journey object corresponding to parameter id.
         Journey journey = journeyService.findById(id);
+
+        //get all Legs of journey.
         ArrayList<Leg> legs = legService.findByJourney(journey);
+
+        //facilitate display of empty legs depending on amount of legs.
         if(legs.size() == 3){
             Leg first = legs.get(1);
             Leg second = legs.get(2);
@@ -331,6 +391,9 @@ public class JourneyController {
             modelAndView.addObject("leg2",second);
         }
 
+        //check if editor is driver of the journey.
+        //if false, then show details instead.
+        //if true, then show edit page.
         if (loggedIn != journey.getDriver()){
             modelAndView.addObject("user",loggedIn);
             modelAndView.addObject("journey",journey);
@@ -344,27 +407,38 @@ public class JourneyController {
         return modelAndView;
     }
 
+    //      Handles edit of journey objects.
+    //
+    //      @param id                   id of Journey Object.
+    //      @return modelAndView        the ModelAndView.
     @RequestMapping(value = "/journey/edit", method = RequestMethod.POST)
     public ModelAndView handleEdit(@RequestBody Journey journey) {
         ModelAndView modelAndView = new ModelAndView();
+
+        //get currently logged in user.
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User loggedIn = userService.findUserByEmail(auth.getName());
+
+        //get Journey object corresponding to id of received object journey.
         Journey journeyToUpdate = journeyService.findById(journey.getId());
+
+        //get car of journey.
         Car carofJourney = journeyToUpdate.getCar();
 
+        //set car to input values and safe it.
         carofJourney.setType(journey.getCar().getType());
         carofJourney.setColour(journey.getCar().getColour());
         carofJourney.setLicence(journey.getCar().getLicence());
-
         carService.save(carofJourney);
 
+        //set values of journey to edited input values and safe it.
         journeyToUpdate.setCar(carofJourney);
         journeyToUpdate.setSeats(journey.getSeats());
         journeyToUpdate.setPriceKm(journey.getPriceKm());
         journeyToUpdate.setBags(journey.getBags());
         journeyToUpdate.setPriceBag(journey.getPriceBag());
-
         journeyService.updateJourney(journeyToUpdate);
+
         modelAndView.addObject("user",loggedIn);
         modelAndView.setViewName("/journey/create/edit");
         return modelAndView;

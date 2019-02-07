@@ -56,38 +56,117 @@ public class User {
     @JoinTable(name = "user_bonus", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "bonus_id"))
     private Bonus bonus;
 
+    //      password id of object.
+    //
+    //      @return password                 the object's password.
     public String getPassword() { return this.password; }
+
+    //      sets password of object.
+    //
+    //      @param encodedPassword                  encodedPassword to be set.
+    //      @return void
     public void setPassword(String encodedPassword) {this.password = encodedPassword; }
 
+    //      sets active of object.
+    //
+    //      @param active                  active to be set.
+    //      @return void
     public void setActive(int active) {
         this.active = active;
     }
 
+    //      sets roles of object.
+    //
+    //      @param roles                  roles to be set.
+    //      @return void
     public void setRoles(HashSet<Role> roles) {
         this.roles = roles;
     }
+
+    //      email roles of object.
+    //
+    //      @return roles                 the object's roles.
     public Set<Role> getRoles(){return this.roles;}
 
+    //      email id of object.
+    //
+    //      @return email                 the object's email.
     public String getEmail() {return this.email; }
+
+    //      sets email of object.
+    //
+    //      @param email                  email to be set.
+    //      @return void
     public void setEmail(String email){this.email = email;}
 
+    //      email name of object.
+    //
+    //      @return name                 the object's name.
     public String getName() {return this.name; }
+
+    //      sets name of object.
+    //
+    //      @param name                  name to be set.
+    //      @return void
     public void setName(String name){this.name=name;}
 
+    //      email lastName of object.
+    //
+    //      @return lastName                 the object's lastName.
     public String getLastName() {return this.lastName; }
+
+    //      sets lastName of object.
+    //
+    //      @param lastName                  lastName to be set.
+    //      @return void
     public void setLastName(String lastName){this.lastName = lastName;}
 
+    //      email phone of object.
+    //
+    //      @return phone                 the object's phone.
     public String getPhone(){return this.phone;}
+
+    //      sets phone of object.
+    //
+    //      @param phone                  phone to be set.
+    //      @return void
     public void setPhone(String phone){this.phone = phone;}
 
+    //      email birth of object.
+    //
+    //      @return birth                 the object's birth.
     public String getBirth(){return this.birth;}
+
+    //      sets birth of object.
+    //
+    //      @param birth                  birth to be set.
+    //      @return void
     public void setBirth(String birth){this.birth = birth;}
 
+    //      email bonus of object.
+    //
+    //      @return bonus                 the object's bonus.
     public Bonus getBonus(){return this.bonus;}
+
+    //      sets bonus of object.
+    //
+    //      @param bonus                  bonus to be set.
+    //      @return void
     public void setBonus(Bonus bonus){this.bonus = bonus;}
 
+    //      gets id of object.
+    //
+    //      @return id                 the object's id.
     public int getId(){return this.id;}
 
+    //      gets comment of object.
+    //
+    //      @return comment                 the object's comment.
     public String getComment(){return this.comment;}
+
+    //      sets comment of object.
+    //
+    //      @param comment                  comment to be set.
+    //      @return void
     public void setComment(String comment){this.comment=comment;}
     }
