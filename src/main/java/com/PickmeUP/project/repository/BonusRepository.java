@@ -7,5 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BonusRepository extends JpaRepository<Bonus, Integer> {
 
+    //      finds Bonus by id.
+    //
+    //      @param bonus_id             id to be looked for.
+    //      @return Bonus               the Bonus.
     Bonus findById(int bonus_id);
 }
