@@ -12,5 +12,9 @@ public class BonusService {
     @Autowired
     private BonusRepository bonusRepository;
 
+    //      finds Bonus by id.
+    //
+    //      @param  id                  id to be looked for.
+    //      @return Bonus               the Bonus.
     public Bonus findBonusById(int id){return bonusRepository.findById(id);}
 }

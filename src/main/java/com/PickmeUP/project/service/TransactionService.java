@@ -12,5 +12,9 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    //      saves Transaction.
+    //
+    //      @param  transaction                     transaction to be saved.
+    //      @return void
     public void saveTransaction(Transaction transaction){transactionRepository.save(transaction);}
 }

@@ -38,25 +38,52 @@ public class UserService {
         this.accountRepository = accountRepository;
     }
 
+    //      finds user by email.
+    //
+    //      @param  email                     email to look for.
+    //      @return User                      the user.
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
+    //      saves User.
+    //      encrypts password before saving and sets default values for active status, role and bonusprogram.
+    //
+    //      @param  user                     user to be saved.
+    //      @return User
     public void saveUser(User user) {
         Account account = new Account();
+
+        //use bCrypt to encode password.
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        //mark user as active.
         user.setActive(1);
+
+        //set bonusprogram to no no bonusprogram.
         Bonus userBonus = bonusRepository.findById(1);
         user.setBonus(userBonus);
+
+        //set inital role as "USER"
         Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+
+        //save user.
         userRepository.save(user);
         account.setUser(user);
         accountRepository.save(account);
 
     }
 
+    //      updates User.
+    //
+    //      @param  user                     user to be updated..
+    //      @return void
     public void updateUser(User user) {userRepository.save(user);}
 
+    //      finds User by id.
+    //
+    //      @param  id                     id to be looked for.
+    //      @return User                   the User.
     public User findUserById(int id){return userRepository.findById(id);}
 }

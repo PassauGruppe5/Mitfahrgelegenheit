@@ -17,7 +17,15 @@ public class RatingService {
     @Autowired
     private UserService userService;
 
+    //      save Rating.
+    //
+    //      @param  rating              rating to be saved.
+    //      @return void
     public void saveRating(Rating rating){ratingRepository.save(rating);}
 
+    //      find ratings by receiver
+    //
+    //      @param  id                   receiver to look for.
+    //      @return List<Rating>         result ratings.
     public List<Rating> getRatingsOfUser(int id){return ratingRepository.findByReceiver(userService.findUserById(id));}
 }
